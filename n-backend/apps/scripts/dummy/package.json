@@ -1,0 +1,25 @@
+{
+  "name": "scripts",
+  "version": "1.0.0",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "generate": "npx ts-node src/main.ts",
+    "clean": "rimraf dist",
+    "format": "prettier --write \"src/**/*.ts\" \"*.json\"",
+    "lint": "npm run format && eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
+  },
+  "dependencies": {
+    "@cainz-next-gen/common": "*",
+    "@cainz-next-gen/logging": "*",
+    "@cainz-next-gen/types": "*",
+    "@faker-js/faker": "^8.0.2",
+    "@google-cloud/firestore": "^6.7.0",
+    "clui": "^0.3.6",
+    "firebase-admin": "^11.9.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1"
+  }
+}

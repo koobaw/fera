@@ -1,0 +1,22 @@
+// THis request will be failed.
+// If you want to success to migrate, you need to login on fireauth and use and AccessToken.
+// dummyMessage
+// payload: { anonymousUserId: 'anonymousUserId' }
+@encodedMessage = eyJhbm9ueW1vdXNVc2VySWQiOiJhbm9ueW1vdXNVc2VySWQiLCJpYXQiOjE2OTMzODEzMDgsImV4cCI6MjU1NzM4MTMwOH0
+
+POST {{base}}/{{version}}/users/anonymous/migrate
+Content-Type: application/json
+
+{
+  "message": {
+    "data": "{{encodedMessage}}"
+  }
+}
+
+###匿名ユーザーデータ作成
+POST {{base}}/{{version}}/users/anonymous
+Authorization: Bearer {{$dotenv bearer}}
+
+###匿名ユーザーデータ移行
+POST {{base}}/{{version}}/users/anonymous/migrate
+Authorization: Bearer {{$dotenv bearer}}

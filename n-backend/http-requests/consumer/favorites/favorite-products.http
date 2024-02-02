@@ -1,0 +1,19 @@
+@objectIds = 1,2
+@encryptedMemberId=6fe0d9ead469eb5eb617d5119e108cbbad26257da77744f6ef91ac58c53ff899
+@productId=4549509778318
+@targetFavoriteDocId=dummy_default
+
+### register favorite product
+POST {{base}}/{{version}}/consumer/favorites/products
+Content-Type: application/json
+cainzapp-api-key:{{$dotenv api-key}}
+
+{
+  "encryptedMemberId": "{{encryptedMemberId}}",
+  "productId": "{{productId}}",
+  "targetFavoriteDocId": "{{targetFavoriteDocId}}"
+}
+
+### delete favorite product
+DELETE {{base}}/{{version}}/consumer/favorites/products?objectIds={{objectIds}}
+cainzapp-api-key:{{$dotenv api-key}}

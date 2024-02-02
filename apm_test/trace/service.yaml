@@ -1,0 +1,27 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: opentelemetry-cloud-run-test-tt
+  annotations:
+    run.googleapis.com/launch-stage: BETA
+    run.googleapis.com/ingress: all
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/container-dependencies: "{app:[collector]}"
+    spec:
+      containers:
+      - image: asia-northeast1-docker.pkg.dev/cainz-cainzapp-infra-dev/run-otel/sample-metrics-app
+        name: app
+        ports:
+        - containerPort: 8080
+        env:
+        - name: "TEST_SERVICE"
+          value: "opentelemetry-cloud-run-test"
+      - image: asia-northeast1-docker.pkg.dev/cainz-cainzapp-infra-dev/run-otel/otel-collector-metrics
+        name: collector
+        startupProbe:
+          httpGet:
+            path: /
+            port: 13133

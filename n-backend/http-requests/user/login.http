@@ -1,0 +1,17 @@
+// THis request will be failed.
+// If you want to success to login, you need to login on fireauth.
+//
+// User local server can not access to fireauth.
+// You need to edit main.ts and load service_account.json.
+//
+// VS Code REST CLIENT Can not execute login process.
+// You need to client and steel the authorization code using a postman before use this.
+
+### ログインAPI
+POST {{base}}/{{version}}/users/login
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "code": "{{$dotenv auth-code}}"
+}

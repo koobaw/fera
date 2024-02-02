@@ -1,0 +1,41 @@
+import { StoreAnnouncement } from '@cainz-next-gen/types';
+import { faker } from '@faker-js/faker';
+import { CommonService } from '@cainz-next-gen/common';
+import { LoggingService } from '@cainz-next-gen/logging';
+
+import { FirestoreStructure } from '../types';
+import { makeAuditableFields } from './common/auditable';
+import { addCollectionData } from '../dummyGenerator';
+import { storeCodes } from './common/sources';
+
+const logger: LoggingService = new LoggingService();
+const commonService: CommonService = new CommonService(logger);
+
+const generateStoresAnnouncement = (storeCode: string): StoreAnnouncement => {
+  const storesAnnouncement: StoreAnnouncement = {
+    storeCode,
+    title: faker.word.noun(),
+    body: faker.word.words(),
+    ...makeAuditableFields(),
+  };
+  return storesAnnouncement;
+};
+
+const storesAnnouncementsStructure: FirestoreStructure = {
+  collectionName: 'stores',
+  documents: storeCodes.map((storeCode) => ({
+    documentName: commonService.createMd5(storeCode),
+    subCollection: {
+      collectionName: 'announcements',
+      documents: [
+        {
+          data: generateStoresAnnouncement(storeCode),
+        },
+      ],
+    },
+  })),
+};
+
+export const addStoresAnnouncementsData = async () => {
+  await addCollectionData(storesAnnouncementsStructure);
+};

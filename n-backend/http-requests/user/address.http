@@ -1,0 +1,5 @@
+### アドレス取得API
+GET {{base}}/{{version}}/users/member/addresses
+?isFavorite=false
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}

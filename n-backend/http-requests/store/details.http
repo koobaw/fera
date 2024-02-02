@@ -1,0 +1,6 @@
+@storeCodes = 666
+
+GET {{base}}/{{version}}/stores/detail/{{storeCodes}}
+?save=false
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}

@@ -1,0 +1,129 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Product",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:product"],
+      "console": "integratedTerminal",
+      "restart": true,
+      "autoAttachChildProcesses": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug User",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:user"],
+      "console": "integratedTerminal",
+      "restart": true,
+      "autoAttachChildProcesses": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Store",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:store"],
+      "console": "integratedTerminal",
+      "restart": true,
+      "autoAttachChildProcesses": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Consumer",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:consumer"],
+      "console": "integratedTerminal",
+      "restart": true,
+      "autoAttachChildProcesses": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug CreditCard",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:creditcard"],
+      "console": "integratedTerminal",
+      "restart": true,
+      "autoAttachChildProcesses": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Pocketregi",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:pocketregi"],
+      "console": "integratedTerminal",
+      "restart": true,
+      "autoAttachChildProcesses": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug flyer-import",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:flyer-import"],
+      "console": "integratedTerminal",
+      "restart": true,
+      "autoAttachChildProcesses": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug tonakai",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:tonakai"],
+      "console": "integratedTerminal",
+      "restart": true,
+      "autoAttachChildProcesses": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Floormap",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:floormap"],
+      "console": "integratedTerminal",
+      "restart": true,
+      "autoAttachChildProcesses": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Geomagnetism",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:geomagnetism"],
+      "console": "integratedTerminal",
+      "restart": true,
+      "autoAttachChildProcesses": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug scripts/dummy",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["ts-node", "apps/scripts/dummy/src/main.ts"],
+      "console": "integratedTerminal",
+      "restart": true,
+      "autoAttachChildProcesses": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug notification",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:notification"],
+      "console": "integratedTerminal",
+      "restart": true,
+      "autoAttachChildProcesses": true
+    }
+  ]
+}

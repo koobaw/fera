@@ -1,0 +1,18 @@
+{
+  "extends": "tsconfig/base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": "../../../",
+    "paths": {
+      "@cainz-next-gen/common": ["./packages/common/src"],
+      "@cainz-next-gen/types": ["./packages/types/src"],
+      "@cainz-next-gen/logging": ["./packages/logging/src"],
+      "@cainz-next-gen/firestore-batch": ["./packages/firestore/src"],
+      "@cainz-next-gen/exception": ["./packages/exception/src"],
+      "@cainz-next-gen/salesforce-api": ["./packages/salesforce-api/src"],
+      "@cainz-next-gen/guard": ["./packages/guard/src"],
+      "@cainz-next-gen/interceptor": ["./packages/interceptor/src"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 18",
+  "compilerOptions": {
+    "module": "commonjs",
+    "sourceMap": true,
+    "incremental": true,
+    "moduleResolution": "node",
+    "target": "es2022",
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "esModuleInterop": true,
+    "noFallthroughCasesInSwitch": false,
+    "composite": false,
+    "declaration": true,
+    "declarationMap": true,
+    "forceConsistentCasingInFileNames": true,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "paths": {
+      "@cainz-next-gen/common": ["./packages/common/src"],
+      "@cainz-next-gen/types": ["./packages/types/src"],
+      "@cainz-next-gen/logging": ["./packages/logging/src"],
+      "@cainz-next-gen/firestore-batch": ["./packages/firestore/src"],
+      "@cainz-next-gen/exception": ["./packages/exception/src"],
+      "@cainz-next-gen/salesforce-api": ["./packages/salesforce-api/src"],
+      "@cainz-next-gen/test": ["./packages/test/src"],
+      "@cainz-next-gen/guard": ["./packages/guard/src"],
+      "@cainz-next-gen/interceptor": ["./packages/interceptor/src"]
+    },
+    "allowJs": false
+  }
+}

@@ -1,0 +1,45 @@
+### Create Parameter
+@isFavorite=true
+@title=test title
+@firstName=太郎
+@lastName=山田
+@firstNameKana=タロウ
+@lastNameKana=ヤマダ
+@zipCode=1234567
+@prefecture=埼玉県
+@address1=本庄市早稲田の杜
+@address2=一丁目2番1号
+@address3=カインズマンション100号室
+@phone=09099999999
+@phone2=08099999999
+@email=test@example.com
+@companyName=テスト会社
+@departmentName=テスト部
+@memo=サンプルメモ
+@ownerId=591158720
+
+
+POST {{base}}/{{version}}/users/member/addresses
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "isFavorite": true,
+  "title": "{{title}}",
+  "firstName": "{{firstName}}",
+  "lastName": "{{lastName}}",
+  "firstNameKana": "{{firstNameKana}}",
+  "lastNameKana": "{{lastNameKana}}",
+  "zipCode": "{{zipCode}}",
+  "prefecture": "{{prefecture}}",
+  "address1": "{{address1}}",
+  "address2": "{{address2}}",
+  "address3": "{{address3}}",
+  "phone": "{{phone}}",
+  "phone2": "{{phone2}}",
+  "email": "{{email}}",
+  "companyName": "{{companyName}}",
+  "departmentName": "{{departmentName}}",
+  "memo": "{{memo}}",
+  "ownerId": "{{ownerId}}"
+}

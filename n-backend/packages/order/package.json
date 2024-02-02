@@ -1,0 +1,42 @@
+{
+  "name": "@cainz-next-gen/order",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./dist/index.js",
+  "source": "./src/index.ts",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "test": "jest --coverage --passWithNoTests",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"*.json\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"*.json\"",
+    "lint": "npm run format && eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "lint:check": "eslint \"{src,apps,libs,test}/**/*.ts\""
+  },
+  "dependencies": {
+    "@cainz-next-gen/common": "^0.0.0",
+    "@cainz-next-gen/firestore-batch": "^0.0.0",
+    "@cainz-next-gen/logging": "*",
+    "@cainz-next-gen/types": "*",
+    "@google-cloud/firestore": "^6.7.0",
+    "@google-cloud/tasks": "^4.0.1",
+    "@nestjs/axios": "^3.0.1",
+    "@nestjs/common": "^10.2.9",
+    "@nestjs/config": "^3.1.1",
+    "axios": "^1.4.0",
+    "dayjs": "^1.11.9",
+    "firebase-admin": "^11.9.0",
+    "rxjs": "^7.8.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^9.0.0",
+    "eslint-config-custom": "*",
+    "tsconfig": "*",
+    "typescript": "^4.5.3"
+  }
+}

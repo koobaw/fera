@@ -1,0 +1,8 @@
+@productIds = 4524804125739,4549509677314
+@storeCodes = 815,816
+@membershipRank = 1
+@save = true
+
+GET {{base}}/{{version}}/products/prices/{{productIds}}/{{storeCodes}}/{{membershipRank}}?save={{save}}
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}

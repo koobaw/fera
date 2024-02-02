@@ -1,0 +1,18 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "test",
+      "type": "typescript",
+      "tsconfig": "${workspaceFolder}/service/product-nestjs/tsconfig.json",
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Build service product",
+      "type": "npm", // npmによるタスクの実行を示す
+      "script": "build", // 実行するコマンド名
+      "group": "build", // ビルドタスクとして認識
+      "problemMatcher": []
+    }
+  ]
+}

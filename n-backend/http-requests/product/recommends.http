@@ -1,0 +1,9 @@
+GET {{base}}/{{version}}/products/recommend
+?eventType=category-page-view
+&recommendType=customRecommendations,recentViews
+&query=犬
+&categoryCode=231010
+&productId=4549509960683
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+visitor-id: {{$dotenv visitor-id}}

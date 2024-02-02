@@ -1,0 +1,4 @@
+### ポイント取得API
+GET {{base}}/{{version}}/users/member/point
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}

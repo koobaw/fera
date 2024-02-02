@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:js-app"],
+  "ignorePresets": [
+    ":semanticPrefixFixDepsChoreOthers"
+  ],
+  "timezone": "Asia/Tokyo",
+  "branchConcurrentLimit": 5,
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "minor and patch dependencies"
+    }
+  ],
+  "major": {
+    "enabled": false
+  },
+  "schedule": [
+    "before 7am on Tuesday"
+  ]
+}

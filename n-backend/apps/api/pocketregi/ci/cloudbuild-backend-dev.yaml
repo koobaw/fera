@@ -1,0 +1,50 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      [
+        'build',
+        '-f',
+        '$_DOCKER_FILE',
+        '-t',
+        'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA',
+        '--build-arg',
+        'SERVICE_NAME=${_SERVICE_NAME}',
+        '--build-arg',
+        'ENV_CONFIG_FILE_NAME=${_ENV_CONFIG_FILE_NAME}',
+        '.',
+      ]
+  - name: gcr.io/cloud-builders/docker
+    args:
+      [
+        'push',
+        'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA',
+      ]
+  # NOTE:`bash -c`を利用しない配列で書くパターンだと、Secret経由の環境変数を埋め込めなかった
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud run deploy $_SERVICE_NAME \
+        --image asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA \
+        --region ${_LOCATION} \
+        --min-instances=0 \
+        --max-instances=1 \
+        --allow-unauthenticated \
+        --set-env-vars=CRYPTO_KEY=$$CRYPTO_KEY \
+        --set-env-vars=CRYPTO_IV=$$CRYPTO_IV \
+    secretEnv: ['CRYPTO_KEY', 'CRYPTO_IV']
+images:
+  - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA'
+substitutions:
+  _LOCATION: 'asia-northeast1'
+  _SERVICE_NAME: 'pocketregi'
+  _DOCKER_FILE: 'apps/api/pocketregi/Dockerfile'
+  _ENV_CONFIG_FILE_NAME: '.env.backend.dev'
+  _CLOUD_BUILD_REPOSITORY: 'backend'
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/crypto_key/versions/latest
+      env: 'CRYPTO_KEY'
+    - versionName: projects/$PROJECT_ID/secrets/crypto_iv/versions/latest
+      env: 'CRYPTO_IV'

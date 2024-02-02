@@ -1,0 +1,14 @@
+{
+  "name": "pubsub-publisher",
+  "version": "1.0.0",
+  "description": "Publish messages to Pub/Sub from Node.js",
+  "main": "index.js", 
+  "scripts": {
+    "start": "index.js"
+  },
+  "author": "andre",
+  "license": "MIT",
+  "dependencies": {
+    "@google-cloud/pubsub": "^2.0.0"
+  }
+}

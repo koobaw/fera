@@ -1,0 +1,8 @@
+@limit = 10
+@sortBy = date
+@order = desc
+GET {{base}}/{{version}}/tonakai/articles
+?limit={{limit}}
+&sortBy={{sortBy}}
+&order={{order}}
+cainzapp-api-key:{{$dotenv api-key}}

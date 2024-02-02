@@ -1,0 +1,43 @@
+### Create param
+
+@productId=4549509419280
+
+POST {{base}}/{{version}}/users/member/favorites/products
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "productId": "{{productId}}"
+}
+
+### Read param with Full opiton
+
+@offset=0
+@limit=10
+@order=desc
+@save=true
+
+GET {{base}}/{{version}}/users/member/favorites/products?offset={{offset}}&limit={{limit}}&order={{order}}&save={{save}}
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}
+
+
+### Read param with Empty opiton
+
+GET {{base}}/{{version}}/users/member/favorites/products
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}
+
+### Delete
+
+@productIds=4549509419280
+
+DELETE {{base}}/{{version}}/users/member/favorites/products?productIds={{productIds}}
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}
+
+### Read favorite-products-availability
+@productIds=4549509419280,4549509646945,4549509804079
+GET {{base}}/{{version}}/users/member/favorites/products/availability?productIds={{productIds}}
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}

@@ -1,0 +1,62 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      [
+        'build',
+        '-f',
+        '$_DOCKER_FILE',
+        '-t',
+        'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA',
+        '--build-arg',
+        'SERVICE_NAME=${_SERVICE_NAME}',
+        '--build-arg',
+        'ENV_CONFIG_FILE_NAME=${_ENV_CONFIG_FILE_NAME}',
+        '.',
+      ]
+  - name: gcr.io/cloud-builders/docker
+    args:
+      [
+        'push',
+        'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA',
+      ]
+  # NOTE:`bash -c`を利用しない配列で書くパターンだと、Secret経由の環境変数を埋め込めなかった
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud run jobs deploy $_SERVICE_NAME \
+        --service-account category-import-service@cainz-cainzapp-backend-dev.iam.gserviceaccount.com \
+        --image asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA \
+        --region ${_LOCATION} \
+        --memory 2Gi \
+        --set-env-vars=PROJECT_ID=$PROJECT_ID \
+        --set-env-vars=MULE_API_CLIENT_ID=$$MULE_API_CLIENT_ID \
+        --set-env-vars=MULE_API_CLIENT_SECRET=$$MULE_API_CLIENT_SECRET \
+        --set-env-vars=MULE_CATEGORY_API_CLIENT_ID=$$MULE_CATEGORY_API_CLIENT_ID \
+        --set-env-vars=MULE_CATEGORY_API_CLIENT_SECRET=$$MULE_CATEGORY_API_CLIENT_SECRET \
+    secretEnv:
+      [
+        'MULE_API_CLIENT_ID',
+        'MULE_API_CLIENT_SECRET',
+        'MULE_CATEGORY_API_CLIENT_ID',
+        'MULE_CATEGORY_API_CLIENT_SECRET',
+      ]
+images:
+  - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA'
+substitutions:
+  _LOCATION: 'asia-northeast1'
+  _SERVICE_NAME: 'category-import'
+  _DOCKER_FILE: 'apps/batch/category-import/Dockerfile'
+  _ENV_CONFIG_FILE_NAME: '.env.backend.dev'
+  _CLOUD_BUILD_REPOSITORY: 'backend'
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/mule_api_client_id/versions/latest
+      env: 'MULE_API_CLIENT_ID'
+    - versionName: projects/$PROJECT_ID/secrets/mule_api_client_secret/versions/latest
+      env: 'MULE_API_CLIENT_SECRET'
+    - versionName: projects/$PROJECT_ID/secrets/mule_category_api_client_id/versions/latest
+      env: 'MULE_CATEGORY_API_CLIENT_ID'
+    - versionName: projects/$PROJECT_ID/secrets/mule_category_api_client_secret/versions/latest
+      env: 'MULE_CATEGORY_API_CLIENT_SECRET'

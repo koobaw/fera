@@ -1,0 +1,16 @@
+# 商品API
+@productIds = 4549509524328,4549509605683
+@save = false
+@select = price,inventory,detail
+@storeCodes = 840,888
+@coefficient = 1
+@membershipRank = 2
+
+GET {{base}}/{{version}}/products/{{productIds}}
+?save={{save}}
+&select={{select}}
+&storeCodes={{storeCodes}}
+&coefficient={{coefficient}}
+&membershipRank={{membershipRank}}
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}

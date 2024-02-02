@@ -1,0 +1,18 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": ".",
+  "testRegex": ".*\\.spec\\.ts$",
+  "transform": {
+    "^.+\\.ts$": "ts-jest"
+  },
+  "collectCoverageFrom": ["**/*.ts"],
+  "coverageDirectory": "./coverage",
+  "testEnvironment": "node",
+  "roots": ["<rootDir>"],
+  "moduleNameMapper": {
+    "@cainz-next-gen/firestore-batch": "<rootDir>/../../../packages/firestore/src",
+    "^@cainz-next-gen/(.*)$": "<rootDir>/../../../packages/$1/src"
+  },
+  "modulePaths": ["<rootDir>"],
+  "moduleDirectories": ["node_modules"]
+}

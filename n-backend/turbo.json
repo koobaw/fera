@@ -1,0 +1,70 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "globalEnv": [
+    "APP_ENV",
+    "PROJECT_ID",
+    "MULE_API_CLIENT_ID",
+    "MULE_API_CLIENT_SECRET",
+    "CC_CLIENT_ID",
+    "CC_ACCESS_KEY",
+    "MULE_ECF_CLIENT_ID",
+    "MULE_ECF_CLIENT_SECRET",
+    "SALESFORCE_CLIENT_ID",
+    "SALESFORCE_CLIENT_SECRET",
+    "MULE_CRM_API_CLIENT_ID",
+    "MULE_CRM_API_CLIENT_SECRET",
+    "MULE_YAP_API_CLIENT_ID",
+    "MULE_YAP_API_CLIENT_SECRET",
+    "MULE_POCKET_REGI_CLIENT_ID",
+    "MULE_POCKET_REGI_CLIENT_SECRET",
+    "MULE_CATEGORY_API_CLIENT_ID",
+    "MULE_CATEGORY_API_CLIENT_SECRET",
+    "CRYPTO_KEY",
+    "CRYPTO_IV",
+    "E2E_TEST_BASE_URL",
+    "CAINZAPP_API_KEY",
+    "LEGACY_MYSQL_ADDRESS",
+    "LEGACY_MYSQL_DB_NAME",
+    "LEGACY_MYSQL_PASSWORD",
+    "LEGACY_MYSQL_UNIX_SOCKET",
+    "LEGACY_MYSQL_USER_NAME",
+    "GEO_ACC_NUMBER",
+    "GEO_ADMIN_USER_NAME",
+    "GEO_ADMIN_PSWD",
+    "GEO_ACC_ID",
+    "GEO_GRP_ID",
+    "GEO_X_API_KEY",
+    "GEO_HMAC_SECRET_KEY",
+    "UNDELIVERABLE_CHECK_API"
+  ],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"],
+      "cache": false
+    },
+    "lint": {
+      "outputs": [],
+      "cache": false
+    },
+    "format:check": {
+      "outputs": [],
+      "cache": false
+    },
+    "lint:check": {
+      "outputs": [],
+      "cache": false
+    },
+    "dev": {
+      "cache": false
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "test:e2e": {
+      "cache": false
+    }
+  }
+}

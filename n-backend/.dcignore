@@ -1,0 +1,9 @@
+# This file is Snyk VS Code extension ignore file
+# document: https://docs.snyk.io/integrate-with-snyk/ide-tools/visual-studio-code-extension/create-a-.dcignore-file
+
+# Ignore spec files
+**/*.spec.ts
+**/*.e2e-spec.ts
+
+# Ignore mock files
+**/mock.*.ts

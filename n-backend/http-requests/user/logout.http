@@ -1,0 +1,7 @@
+// THis request will be failed.
+// If you want to success to logout, you need to login on fireauth
+
+### ログアウトAPI
+POST {{base}}/{{version}}/users/member/logout
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}

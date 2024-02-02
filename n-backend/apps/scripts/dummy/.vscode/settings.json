@@ -1,0 +1,27 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "terminal.integrated.profiles.osx": {
+    "zsh": { "path": "/bin/zsh", "args": ["-l", "-i"] }
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "cSpell.words": [
+    "cainz",
+    "firestore",
+    "clui",
+    "tonakai",
+    "flatty",
+    "PocketRegi",
+    "DIYSTYLE",
+    "kyuten"
+  ],
+  "jest.rootPath": "<rootDir>/apps/api/product",
+  "jest.autoRun": "on-save"
+}

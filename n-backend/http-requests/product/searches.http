@@ -1,0 +1,14 @@
+GET {{base}}/{{version}}/products/search
+?query=ハンガー
+&minPrice=0
+&maxPrice=499
+# &size=0003,0002
+# &color=025,003
+&originalFlag=true
+&categoryCode=23
+# &page=20
+# &offset=0
+&sortOrder=popularity
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+visitor-id: {{$dotenv visitor-id}}

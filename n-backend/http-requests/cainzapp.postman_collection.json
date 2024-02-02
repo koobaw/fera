@@ -1,0 +1,289 @@
+{
+	"info": {
+		"_postman_id": "0512e8f2-6b9f-443b-b567-a6c5b89f06fc",
+		"name": "cainzapp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14169476"
+	},
+	"item": [
+		{
+			"name": "dev stg",
+			"item": [
+				{
+					"name": "login authorization code flow(salesforce)",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "accessTokenUrl",
+									"value": "<this url need to dummy>https://cainz--full.sandbox.my.site.com/services/oauth2/token",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "client_authentication",
+									"value": "body",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "7A3E33A2A586C4CCBB083CFA332FDFDEDC9D414608F298DD143D52B66862E713",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "https://cainz--full.sandbox.my.site.com/services/oauth2/authorize",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "3MVG9Nvmjd9lcjRmlqds874VuC9C_ZZ7Bi3R.0HYrIxc787jmdIBpi6Eq3NCSXM2oWmKSgE5r4GwpaaXsKBtY",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://dev-next.cainz.com/mypage",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "mytoken",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login implicit flow(salesforce)",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "useBrowser",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "grant_type",
+									"value": "implicit",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "https://cainz--full.sandbox.my.site.com/services/oauth2/token",
+									"type": "string"
+								},
+								{
+									"key": "client_authentication",
+									"value": "body",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "7A3E33A2A586C4CCBB083CFA332FDFDEDC9D414608F298DD143D52B66862E713",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "https://cainz--full.sandbox.my.site.com/services/oauth2/authorize",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "3MVG9Nvmjd9lcjRmlqds874VuC9C_ZZ7Bi3R.0HYrIxc787jmdIBpi6Eq3NCSXM2oWmKSgE5r4GwpaaXsKBtY",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://dev-next.cainz.com/mypage",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "mytoken",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login resource owner password credentials flow(salesforce)",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "grant_type",
+									"value": "password_credentials",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "T34su100",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "t-yo@cainz.co.jp",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "https://cainz--full.sandbox.my.site.com/services/oauth2/token",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "client_authentication",
+									"value": "body",
+									"type": "string"
+								},
+								{
+									"key": "clientSecret",
+									"value": "7A3E33A2A586C4CCBB083CFA332FDFDEDC9D414608F298DD143D52B66862E713",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "https://cainz--full.sandbox.my.site.com/services/oauth2/authorize",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "3MVG9Nvmjd9lcjRmlqds874VuC9C_ZZ7Bi3R.0HYrIxc787jmdIBpi6Eq3NCSXM2oWmKSgE5r4GwpaaXsKBtY",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://dev-next.cainz.com/mypage",
+									"type": "string"
+								},
+								{
+									"key": "tokenName",
+									"value": "mytoken",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "prd",
+			"item": [
+				{
+					"name": "OAuth2.0-login-salesforce -shopApp本番",
+					"request": {
+						"auth": {
+							"type": "oauth2",
+							"oauth2": [
+								{
+									"key": "clientSecret",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "accessTokenUrl",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "clientId",
+									"value": "3MVG9pe2TCoA1Pf4QvsjPHwaTZHC6xfuxusmslq2dS5mymfbFQyKVvkob.X1tZO38s1sRrSJHS82yvLt2ZL05",
+									"type": "string"
+								},
+								{
+									"key": "authUrl",
+									"value": "https://customer.cainz.com/services/oauth2/authorize",
+									"type": "string"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https://customer.cainz.com/services/oauth2/success",
+									"type": "string"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"type": "string"
+								},
+								{
+									"key": "useBrowser",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "tokenName",
+									"value": "mytoken",
+									"type": "string"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

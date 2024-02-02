@@ -1,0 +1,145 @@
+### Full Paaram
+POST {{base}}/{{version}}/stores/search
+Content-Type: application/json
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "keywords": ["本庄"],
+  "landscape": {
+    "latitude": 35.90642614,
+    "longitude": 138.7136702
+  },
+  "prefectureCode": "11"
+}
+
+### Empty Paaram
+POST {{base}}/{{version}}/stores/search
+Content-Type: application/json
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+
+{
+}
+
+### Only keywords(name)
+
+POST {{base}}/{{version}}/stores/search
+Content-Type: application/json
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "keywords": ["本庄早稲田店"]
+}
+
+### Only keywords(address)
+
+POST {{base}}/{{version}}/stores/search
+Content-Type: application/json
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "keywords": ["ＦＣ"]
+}
+
+### Only keywords(name + address)
+
+POST {{base}}/{{version}}/stores/search
+Content-Type: application/json
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "keywords": ["ＦＣ", "岡山"]
+}
+
+### Only keywords(double name)
+
+POST {{base}}/{{version}}/stores/search
+Content-Type: application/json
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "keywords": ["本庄早稲田店", "ＦＣ"]
+}
+
+### Only keywords(double address)
+
+POST {{base}}/{{version}}/stores/search
+Content-Type: application/json
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "keywords": ["埼玉県", "さいたま市"]
+}
+
+### Only prefectureCode
+
+POST {{base}}/{{version}}/stores/search
+Content-Type: application/json
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "prefectureCode": "11"
+}
+
+### Only landscape
+
+POST {{base}}/{{version}}/stores/search
+Content-Type: application/json
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "landscape": {
+    "latitude": 36.22087561,
+    "longitude": 139.1841167
+  }
+}
+
+### keyword and landscape
+
+POST {{base}}/{{version}}/stores/search
+Content-Type: application/json
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "keywords": ["ＦＣ"],
+  "landscape": {
+    "latitude": 36.22087561,
+    "longitude": 139.1841167
+  }
+}
+
+### Failed landscape pattern
+
+POST {{base}}/{{version}}/stores/search
+Content-Type: application/json
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "landscape": {
+    "latitude": "35.90642614"
+  }
+}
+
+### Failed landscape pattern 2
+
+POST {{base}}/{{version}}/stores/search
+Content-Type: application/json
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "landscape": {
+    "latitude": "35.90642614",
+    "longitude": "138.713670"
+  }
+}

@@ -1,0 +1,7 @@
+// salesforce tokens are not correct. so this request will be failed.
+// If You want to pass this request, you can get salesforce tokens from postman login.
+
+### 個人情報取得API
+GET {{base}}/{{version}}/users/member/private-profile
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}

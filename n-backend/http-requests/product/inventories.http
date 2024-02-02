@@ -1,0 +1,8 @@
+@productIds = 4549509524328
+@storeCodes = 0840,0826
+@coefficient = 1
+@save = true
+
+GET {{base}}/{{version}}/products/inventories/{{productIds}}/{{storeCodes}}?coefficient={{coefficient}}&save={{save}}
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}

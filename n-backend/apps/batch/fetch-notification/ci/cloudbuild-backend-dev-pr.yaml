@@ -1,0 +1,30 @@
+steps:
+  - name: node:$_NODE_VERSION
+    id: install_npm
+    entrypoint: npm
+    args: ['install']
+  - name: node:$_NODE_VERSION
+    entrypoint: npm
+    args: ['run', 'lint', '--', '--scope', '${_SCOPE}']
+    waitFor: ['install_npm']
+  - name: node:$_NODE_VERSION
+    entrypoint: npm
+    args: ['run', 'test', '--', '--scope', '${_SCOPE}']
+    waitFor: ['install_npm']
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+    args:
+      [
+        'gcloud',
+        'builds',
+        'triggers',
+        'run',
+        '${_DEPLOY_TRIGGER_NAME}',
+        '--branch=${BRANCH_NAME}',
+        '--project=${PROJECT_ID}',
+        '--region=${_LOCATION}',
+      ]
+substitutions:
+  _NODE_VERSION: '18.16.0'
+  _SCOPE: 'flyer-import'
+  _DEPLOY_TRIGGER_NAME: 'flyer-import-deploy'
+  _LOCATION: 'asia-northeast1'

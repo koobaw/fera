@@ -1,0 +1,32 @@
+export enum ErrorCode {
+  // Favorite Products Delete API
+  FAVORITE_PRODUCTS_MULE_MY_PRODUCTS_API_FAILED = 'FAVORITE_PRODUCTS_DELETE_1000',
+  // Favorite Products register API
+  FAVORITE_PRODUCTS_MULE_MY_PRODUCTS_API_REGISTER_FAILED = 'FAVORITE_PRODUCTS_REGISTER_1000',
+
+  // Anonymous Migrate API
+  ANONYMOUS_MIGRATE_USER_NOT_EXIST = 'ANONYMOUS_MIGRATE_999',
+  ANONYMOUS_MIGRATE_NO_USER_DATA = 'ANONYMOUS_MIGRATE_1000',
+  ANONYMOUS_MIGRATE_STORE_TO_DB = 'ANONYMOUS_MIGRATE_1001',
+  ANONYMOUS_MIGRATE_MISSING_NEED_PARAM = 'ANONYMOUS_MIGRATE_1002',
+  ANONYMOUS_MIGRATE_MISSING_LEGACY_USER = 'ANONYMOUS_MIGRATE_1003',
+  ANONYMOUS_MIGRATE_INVALID_USER_TYPE = 'ANONYMOUS_MIGRATE_1004',
+}
+
+export const ErrorMessage = {
+  // Favorite Products Delete API
+  [ErrorCode.FAVORITE_PRODUCTS_MULE_MY_PRODUCTS_API_FAILED]:
+    'failed to delete from mule api',
+  [ErrorCode.FAVORITE_PRODUCTS_MULE_MY_PRODUCTS_API_REGISTER_FAILED]:
+    'failed to register from mule api',
+
+  // Anonymous Migrate API
+  [ErrorCode.ANONYMOUS_MIGRATE_USER_NOT_EXIST]: 'user not exist',
+  [ErrorCode.ANONYMOUS_MIGRATE_NO_USER_DATA]: 'no user data',
+  [ErrorCode.ANONYMOUS_MIGRATE_STORE_TO_DB]: 'failed to store prices to db',
+  [ErrorCode.ANONYMOUS_MIGRATE_MISSING_NEED_PARAM]:
+    'required params not registered',
+  [ErrorCode.ANONYMOUS_MIGRATE_MISSING_LEGACY_USER]:
+    'can not find legacy user data',
+  [ErrorCode.ANONYMOUS_MIGRATE_INVALID_USER_TYPE]: 'invalid user type',
+};

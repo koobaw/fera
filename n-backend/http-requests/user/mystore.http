@@ -1,0 +1,14 @@
+### マイストア取得API
+GET {{base}}/{{version}}/users/member/mystore/
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}
+
+### マイストア更新API
+PUT {{base}}/{{version}}/users/member/mystore/
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}
+
+{
+  "sfdcUserId": "{{$dotenv sfdcUserId}}",
+  "encryptedMemberId": "{{$dotenv encryptedMemberId}}"
+}

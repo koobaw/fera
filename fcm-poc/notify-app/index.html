@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .notificationPermission {
+        margin-bottom: 10px;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 13px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div class="notificationPermission">
+      <button onclick="requestNotificationPermission()">
+        Enable Notifications
+      </button>
+    </div>
+
+    <div class="container">
+      <div>
+        Notification data will receive here if the app is open and focused.
+      </div>
+      <div class="message" style="min-height: 80px"></div>
+      <div>Device Token:</div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-messaging-compat.js"></script>
+    <script>
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyD7RPNCu4zmS9uVm5TCYrszFef5WAVCwVY",
+        authDomain: "nova-fe.firebaseapp.com",
+        projectId: "nova-fe",
+        storageBucket: "nova-fe.appspot.com",
+        messagingSenderId: "805918845889",
+        appId: "1:805918845889:web:1af5cb3c8274e8c4375d40",
+        measurementId: "G-HMWN50GVLG",
+      };
+      const app = firebase.initializeApp(firebaseConfig);
+      const messaging = firebase.messaging();
+      // generate device token using public id
+      messaging
+        .getToken({
+          vapidKey:
+            "BISb_Nnmup9MijhPcB7MSZAyBsL8pH3DZm_R-rVSFOoCZ8rAKab52ygUbyuphyD2fJ1PWsuT8lp1wWCjkU4YfGc",         
+        })
+        .then((currentToken) => {
+          if (currentToken) {
+            console.log(currentToken);
+            document.querySelector("body").append(currentToken);
+            sendTokenToServer(currentToken);
+          } else {
+            // if token is empty
+            setTokenSentToServer(false);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          // if error
+          setTokenSentToServer(false);
+        });
+
+      messaging.onMessage((payload) => {
+        // if app is open and focus then notification data will receive here
+        // keep in mind if message receive here, it will not notify in background
+        // so here, use the message data however you want
+        console.log("Message received ", payload);
+        const messagesElement = document.querySelector(".message");
+        const dataHeaderElement = document.createElement("h5");
+        const dataElement = document.createElement("pre");
+        dataElement.style = "overflow-x: hidden;";
+        dataHeaderElement.textContent = "Message Received:";
+        dataElement.textContent = JSON.stringify(payload, null, 2);
+        messagesElement.appendChild(dataHeaderElement);
+        messagesElement.appendChild(dataElement);
+      });
+      // sent token to server where it is used for sending notification
+      function sendTokenToServer(currentToken) {
+        // first check it if we already send it or not
+        if (!isTokenSentToServer()) {
+          console.log("Sending token to server ...");
+          // if token is successfully sent to the server
+          // then set setTokenSentToServer to true
+          setTokenSentToServer(true);
+        } else {
+          console.log("Token already available in the server");
+        }
+      }
+      function isTokenSentToServer() {
+        return window.localStorage.getItem("sentToServer") === "1";
+      }
+
+      // we need to set the value of "sentToServer" to true in the localstorage
+      // so if we are sending second time, we will check from localstorage
+      function setTokenSentToServer(sent) {
+        window.localStorage.setItem("sentToServer", sent ? "1" : "0");
+      }
+
+      function requestNotificationPermission() {
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            console.log("Notification permission granted");
+          } else {
+            console.warn("Notification permission denied");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "terminal.integrated.profiles.osx": {
+    "zsh": { "path": "/bin/zsh", "args": ["-l", "-i"] }
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "rest-client.environmentVariables": {
+    "$shared": {
+      "version": "v1"
+    },
+    "local": {
+      "base": "http://localhost:8080"
+    },
+    "backend-consumer": {
+      "base": "https://consumer-eqqsu5fmdq-an.a.run.app"
+    },
+    "backend-product": {
+      "base": "https://product-eqqsu5fmdq-an.a.run.app"
+    },
+    "backend-store": {
+      "base": "https://store-eqqsu5fmdq-an.a.run.app"
+    },
+    "backend-tonakai": {
+      "base": "https://tonakai-eqqsu5fmdq-an.a.run.app"
+    },
+    "backend-user": {
+      "base": "https://user-eqqsu5fmdq-an.a.run.app"
+    },
+    "dev": {
+      "base": "https://dev-cainzapp-bff.cainz.com"
+    }
+  }
+}

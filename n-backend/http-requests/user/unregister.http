@@ -1,0 +1,7 @@
+// THis request will be failed.
+// If you want to success to unregister, you need to login on fireauth and use AccessToken.
+
+### 退会API
+POST {{base}}/{{version}}/users/member/unregister
+Content-Type: application/json
+Authorization: Bearer {{$dotenv bearer}}

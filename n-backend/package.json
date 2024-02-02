@@ -1,0 +1,45 @@
+{
+  "private": true,
+  "workspaces": [
+    "apps/api/*",
+    "apps/scripts/*",
+    "apps/batch/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "lint:check": "turbo run lint:check",
+    "format:check": "turbo run format:check",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
+    "dev:product": "turbo run dev --scope product",
+    "dev:user": "turbo run dev --scope user",
+    "dev:consumer": "turbo run dev --scope consumer",
+    "dev:creditcard": "turbo run dev --scope creditcard",
+    "dev:pocketregi": "turbo run dev --scope pocketregi",
+    "dev:store": "turbo run dev --scope store",
+    "dev:tonakai": "turbo run dev --scope tonakai",
+    "dev:floormap": "turbo run dev --scope floormap",
+    "dev:geomagnetism": "turbo run dev --scope geomagnetism",
+    "dev:cart": "turbo run dev --scope cart",
+    "dev:checkout": "turbo run dev --scope checkout",
+    "dev:notification": "turbo run dev --scope notification",
+    "generate": "npx ts-node apps/scripts/dummy/src/main.ts",
+    "dev:flyer-import": " turbo run dev --scope flyer-import",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "eslint": "^8.39.0",
+    "husky": "^8.0.0",
+    "prettier": "^2.3.2",
+    "rimraf": "^5.0.0",
+    "turbo": "1.9.3"
+  },
+  "packageManager": "npm@8.19.4",
+  "dependencies": {
+    "@amazonpay/amazon-pay-api-sdk-nodejs": "^2.3.1",
+    "@cainz-next-gen/common": "^0.0.0",
+    "@google-cloud/firestore": "^6.7.0"
+  }
+}

@@ -1,0 +1,18 @@
+steps:
+  - name: node:$_NODE_VERSION
+    entrypoint: npm
+    args: ['install']
+  - name: node:$_NODE_VERSION
+    entrypoint: npm
+    args: ['run', 'test:e2e', '--', '--scope', '${_SCOPE}']
+    env:
+      - 'PROJECT_ID=$PROJECT_ID'
+      - 'E2E_TEST_BASE_URL=https://dev-cainzapp-bff.cainz.com/v1/checkouts'
+    secretEnv: ['CAINZAPP_API_KEY']
+substitutions:
+  _NODE_VERSION: '18.16.0'
+  _SCOPE: 'checkout'
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_ID/secrets/cainzapp_api_key/versions/latest
+      env: 'CAINZAPP_API_KEY'
