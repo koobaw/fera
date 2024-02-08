@@ -12,6 +12,6 @@
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "jest.rootPath": "<rootDir>/apps/batch/interval-execution",
+  "jest.rootPath": "<rootDir>/n-backend/apps/batch/interval-execution",
   "jest.autoRun": "on-save"
 }

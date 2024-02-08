@@ -49,7 +49,7 @@ options:
 substitutions:
   _LOCATION: 'asia-northeast1'
   _SERVICE_NAME: 'interval-execution'
-  _DOCKER_FILE: 'apps/batch/interval-execution/Dockerfile'
+  _DOCKER_FILE: 'n-backend/apps/batch/interval-execution/Dockerfile'
   _ENV_CONFIG_FILE_NAME: '.env.backend.dev'
   _CLOUD_BUILD_REPOSITORY: 'backend'
 availableSecrets:

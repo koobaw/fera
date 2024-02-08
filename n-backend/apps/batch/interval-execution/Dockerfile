@@ -27,9 +27,9 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/packages ./packages
 
 # copy node_modules .env and the generated build files
-COPY --from=builder /app/apps/batch/${SERVICE_NAME}/package.json ./${SERVICE_NAME}/
-COPY --from=builder /app/apps/batch/${SERVICE_NAME}/dist ./${SERVICE_NAME}/dist
-COPY --from=builder /app/apps/batch/${SERVICE_NAME}/envs/${ENV_CONFIG_FILE_NAME} ./${SERVICE_NAME}/.env
+COPY --from=builder /app/n-backend/apps/batch/${SERVICE_NAME}/package.json ./${SERVICE_NAME}/
+COPY --from=builder /app/n-backend/apps/batch/${SERVICE_NAME}/dist ./${SERVICE_NAME}/dist
+COPY --from=builder /app/n-backend/apps/batch/${SERVICE_NAME}/envs/${ENV_CONFIG_FILE_NAME} ./${SERVICE_NAME}/.env
 RUN ls -la .
 # change workdir to inside the admin folder to run the starting script
 WORKDIR /app/${SERVICE_NAME}

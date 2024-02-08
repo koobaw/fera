@@ -5,5 +5,5 @@
   "compilerOptions": {
     "deleteOutDir": true
   },
-  "entryFile": "apps/batch/interval-execution/src/main"
+  "entryFile": "n-backend/apps/batch/interval-execution/src/main"
 }
