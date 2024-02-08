@@ -22,11 +22,15 @@ export interface ProductDetail {
 
 export interface ProductDetailResponse extends ProductDetail {
   priceIncludingTax: number;
-  salePriceIncludingTax: number;
   isAlcoholic?: boolean;
   code128DiscountDetails: [
     { discountMethod: 'string'; discount: 'number'; appliedCount: 'number' },
   ];
+  subItems?: Array<any>;
+  mixMatchCode?: string;
+  setItemCode?: string;
+  subtotalAmount?: number;
+  unitPrice?: number;
 }
 
 export interface ProductDeleteRequest {
@@ -38,6 +42,7 @@ export interface ProductAndPriceDetailRes {
   message: string;
   data: ProductDetailResponse;
 }
+
 export interface MuleErrorResponse {
   status?: number;
   cid?: string;
@@ -45,7 +50,13 @@ export interface MuleErrorResponse {
   description?: string;
   errors?: ErrorObject[];
 }
+
 interface ErrorObject {
   code: string;
   message: string;
+}
+
+export enum Code128 {
+  PERCENT = 'percent',
+  YEN = 'yen',
 }

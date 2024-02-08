@@ -7,7 +7,7 @@ import firestore from '@google-cloud/firestore';
 import { Mystore } from '@cainz-next-gen/types';
 import { LoggingService } from '@cainz-next-gen/logging';
 
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { MemberAuthGuard } from '@cainz-next-gen/guard';
 import { MockAuthGuard } from '@cainz-next-gen/test';
 import { MystoreController } from './mystore.controller';
 import { GlobalsModule } from '../../globals.module';
@@ -46,7 +46,7 @@ describe('MystoreController', () => {
         },
       ],
     })
-      .overrideGuard(AuthGuard)
+      .overrideGuard(MemberAuthGuard)
       .useClass(MockAuthGuard)
       .compile();
 

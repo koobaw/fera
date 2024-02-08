@@ -89,7 +89,7 @@ export class CartService {
       throw new HttpException(
         {
           code: GlobalErrorCode.BAD_PARAMETER,
-          message: ErrorMessage[GlobalErrorCode.BAD_PARAMETER],
+          message: `ProductItem is not present for itemId Id ${deleteId}`,
           errorCode: GlobalErrorCode.BAD_PARAMETER,
         },
         HttpStatus.BAD_REQUEST,

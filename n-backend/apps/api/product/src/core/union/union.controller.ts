@@ -25,7 +25,7 @@ export class UnionController {
 
   @Get('/:productIds(\\d*)/')
   @UseGuards(AuthGuard)
-  async findInventories(
+  async getProducts(
     @Req() req: Request,
     @Param() paramDto: FindUnionParamDto,
     @Query() queryDto: FindUnionQueryDto,

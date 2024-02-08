@@ -10,6 +10,7 @@ import {
 
 import { CommonService } from '@cainz-next-gen/common';
 import { LoggingService } from '@cainz-next-gen/logging';
+import { Claims } from '@cainz-next-gen/types';
 import { CainzAppError, ErrorMessage, GlobalErrorCode } from '../error-code';
 
 @Catch()
@@ -26,11 +27,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    const request = ctx.getRequest<Request>();
+    const request = ctx.getRequest<Request & { claims?: Claims }>();
     const requestId = request.headers['x-request-id'];
     const correlationId = request.headers['x-correlation-id'];
 
-    // TODO objectの場合はstringifyする
+    // TODO: objectの場合はstringifyする
     this.logger.error(
       JSON.stringify({
         url: request.url,
@@ -40,6 +41,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
       }),
     );
     this.logger.error('Exception', exception.toString());
+    this.logger.error(
+      `Exception userId: ${request.claims?.userId ?? 'unknown'}`,
+    );
 
     if (exception instanceof HttpException) {
       const status = exception.getStatus();

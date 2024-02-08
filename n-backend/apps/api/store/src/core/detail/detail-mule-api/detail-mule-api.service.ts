@@ -89,6 +89,10 @@ export class DetailMuleApiService {
             publiclyAccessible: true,
             publiclyAccessibleFrom: '2000-09-23T00:00:00Z',
             publiclyAccessibleTo: '2099-09-23T00:00:00Z',
+            renovationDateFrom: null,
+            renovationDateTo: null,
+            temporarilyClosedFrom: '2020-03-23T00:00:00Z',
+            temporarilyClosedTo: '2020-03-24T00:00:00Z',
             code: '666',
             landscape: {
               latitude: 35.808684,
@@ -122,12 +126,14 @@ export class DetailMuleApiService {
             showVisitingNumber: true,
             messageSettings: [
               {
+                title: '',
                 from: '2021-12-29T20:00:00Z',
                 to: '2022-01-03T20:00:00Z',
                 message:
                   '年末年始の営業時間は下記の店舗詳細WEBページからご確認ください。',
               },
               {
+                title: '',
                 from: '2021-08-10T20:00:00Z',
                 to: '2022-08-12T20:00:00Z',
                 message:

@@ -1,7 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import request from 'supertest';
-import { INestApplication, HttpStatus } from '@nestjs/common';
+import {
+  INestApplication,
+  HttpStatus,
+  ExecutionContext,
+  HttpException,
+} from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { AuthGuard } from '@cainz-next-gen/guard';
 import { loadEnvsForLocal } from '../src/config/load-envs-for-local';
 import { AppModule } from '../src/app.module';
 import { CheckoutController } from '../src/core/checkout/checkout.controller';
@@ -20,61 +26,143 @@ describe('Checkout (e2e)', () => {
   beforeAll(async () => {
     await loadEnvsForLocal();
   }, 30000);
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      imports: [AppModule, CheckoutModule],
-      controllers: [CheckoutController],
-      providers: [CheckoutService],
-    }).compile();
-
-    app = module.createNestApplication();
-    await app.init();
-  }, 30000);
 
   describe('checkout-begin', () => {
+    beforeEach(async () => {
+      const module: TestingModule = await Test.createTestingModule({
+        imports: [AppModule, CheckoutModule],
+        controllers: [CheckoutController],
+        providers: [CheckoutService],
+      })
+        .overrideGuard(AuthGuard)
+        .useValue({
+          canActivate: (context: ExecutionContext) => {
+            const req = context.switchToHttp().getRequest();
+            const cainzappApiKey = req.headers?.['cainzapp-api-key'];
+
+            if (cainzappApiKey && typeof cainzappApiKey === 'string') {
+              return true;
+            }
+
+            const authorizationHeader = req.headers?.authorization;
+            if (
+              authorizationHeader &&
+              typeof authorizationHeader === 'string'
+            ) {
+              req.claims = { userId: '123456' };
+              return true;
+            }
+            throw new HttpException({}, HttpStatus.UNAUTHORIZED);
+          },
+        })
+        .compile();
+
+      app = module.createNestApplication();
+      await app.init();
+    }, 30000);
     it('should post products and create a checkout id', async () => {
+      const commonHeaders = {
+        authorization: 'bearer 34234324323432322342',
+        'Content-Type': 'application/json',
+      };
       const response = await request(app.getHttpServer())
-        .post('/')
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY })
+        .post('')
+        .set(commonHeaders)
         .send({
-          userId: '48677635-ac6a-4412-8f68-5a933a166a29',
-          selectedItems: ['4549509524322', '4549509524323'],
+          amazonCheckoutSessionId: '97361744-42c9-4d1b-80f2-be2fb371a506',
+          selectedItems: [
+            'MlgzTxGMz9XWS4J81BB0',
+            'LlgzTxGMz9XWS4J81TT0',
+            'NlgzTxGMz9XWS4J81AA0',
+          ],
         });
       expect(response.statusCode).toBe(HttpStatus.OK);
     }, 10000);
     it('should throw a not found exception after entering wrong url', async () => {
+      const commonHeaders = {
+        authorization: 'bearer 34234324323432322342',
+        'Content-Type': 'application/json',
+      };
       const response = await request(app.getHttpServer())
-        .post('/checkout')
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY })
+        .post('/checkouts')
+        .set(commonHeaders)
         .send({
-          userId: '021cb8f6-3a6a-44f9-9abc-8e7a53331f67',
-          selectedItems: ['4549509524322', '4549509524323'],
+          amazonCheckoutSessionId: '97361744-42c9-4d1b-80f2-be2fb371a506',
+          selectedItems: [
+            'MlgzTxGMz9XWS4J81BB0',
+            'LlgzTxGMz9XWS4J81TT0',
+            'NlgzTxGMz9XWS4J81AA0',
+          ],
         });
       expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);
     }, 10000);
-    it('should throw a unauthorized exception if the api key is not passed', async () => {
+    it('should throw a unauthorized exception if the bearer token is not passed', async () => {
       const response = await request(app.getHttpServer())
-        .post('/')
+        .post('')
         .send({
-          userId: '021cb8f6-3a6a-44f9-9abc-8e7a53331f67',
-          selectedItems: ['4549509524322', '4549509524323'],
+          amazonCheckoutSessionId: '97361744-42c9-4d1b-80f2-be2fb371a506',
+          selectedItems: [
+            'MlgzTxGMz9XWS4J81BB0',
+            'LlgzTxGMz9XWS4J81TT0',
+            'NlgzTxGMz9XWS4J81AA0',
+          ],
         });
       expect(response.statusCode).toBe(HttpStatus.UNAUTHORIZED);
     }, 10000);
   });
 
   describe('checkout-change', () => {
+    beforeEach(async () => {
+      const module: TestingModule = await Test.createTestingModule({
+        imports: [AppModule, CheckoutModule],
+        controllers: [CheckoutController],
+        providers: [CheckoutService],
+      })
+        .overrideGuard(AuthGuard)
+        .useValue({
+          canActivate: (context: ExecutionContext) => {
+            const req = context.switchToHttp().getRequest();
+            const cainzappApiKey = req.headers?.['cainzapp-api-key'];
+
+            if (cainzappApiKey && typeof cainzappApiKey === 'string') {
+              return true;
+            }
+
+            const authorizationHeader = req.headers?.authorization;
+            if (
+              authorizationHeader &&
+              typeof authorizationHeader === 'string'
+            ) {
+              req.claims = { userId: '123456' };
+              return true;
+            }
+            throw new HttpException({}, HttpStatus.UNAUTHORIZED);
+          },
+        })
+        .compile();
+
+      app = module.createNestApplication();
+      await app.init();
+    }, 30000);
     it('should update data checkout change', async () => {
+      const commonHeaders = {
+        authorization: 'bearer 34234324323432322342',
+        'Content-Type': 'application/json',
+      };
       const response = await request(app.getHttpServer())
         .patch(`/${mockcheckoutId}`)
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY })
+        .set(commonHeaders)
         .send(mockCheckOutChangeData);
       expect(response.statusCode).toBe(HttpStatus.OK);
     }, 10000);
     it('should throw a not found exception after entering wrong url', async () => {
+      const commonHeaders = {
+        authorization: 'bearer 34234324323432322342',
+        'Content-Type': 'application/json',
+      };
       const response = await request(app.getHttpServer())
         .patch(`/checkout/${mockcheckoutId}`)
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY })
+        .set(commonHeaders)
         .send(mockCheckOutChangeData);
       expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);
     }, 10000);

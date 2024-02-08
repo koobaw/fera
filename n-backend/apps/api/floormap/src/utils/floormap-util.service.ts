@@ -38,10 +38,11 @@ export class FloorMapUtilService {
    * Retrieves the product location details from MySQL database based on the current environment.
    * 現在の環境に基づいて、MySQL データベースから製品の場所の詳細を取得します。
    *
+   * @param query - The query to be inserted. / 挿入するクエリ
    * @returns String value with product location details / 製品の場所の詳細を含む文字列値
    */
-  public getQuery(): string {
-    return `SELECT
+  public getQuery(query: string): string {
+    return `${query} SELECT
     sls.prd_cd AS prd_cd,
     sf.name AS name,
     sf.sheet_name AS title,
@@ -104,10 +105,11 @@ export class FloorMapUtilService {
    * Retrieves the store map from MySQL database based on the current environment.
    * 現在の環境に基づいて MySQL データベースからストア マップを取得します。
    *
+   * @param query - The query to be inserted. / 挿入するクエリ
    * @returns String value with store map / ストアマップを含む文字列値
    */
-  public getQueryWithoutProducts(): string {
-    return `SELECT DISTINCT
+  public getQueryWithoutProducts(query: string): string {
+    return `${query} SELECT DISTINCT
     sf.url AS url,
     sf.name AS name,
     sf.sheet_name AS title

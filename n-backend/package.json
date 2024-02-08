@@ -9,7 +9,6 @@
   "scripts": {
     "build": "turbo run build",
     "lint": "turbo run lint",
-    "lint:check": "turbo run lint:check",
     "format:check": "turbo run format:check",
     "test": "turbo run test",
     "test:e2e": "turbo run test:e2e",
@@ -26,7 +25,10 @@
     "dev:checkout": "turbo run dev --scope checkout",
     "dev:notification": "turbo run dev --scope notification",
     "generate": "npx ts-node apps/scripts/dummy/src/main.ts",
+    "dev:category-import": " turbo run dev --scope category-import",
+    "dev:description-import": " turbo run dev --scope description-import",
     "dev:flyer-import": " turbo run dev --scope flyer-import",
+    "dev:interval-execution": " turbo run dev --scope interval-execution",
     "prepare": "husky install"
   },
   "devDependencies": {
@@ -37,9 +39,5 @@
     "turbo": "1.9.3"
   },
   "packageManager": "npm@8.19.4",
-  "dependencies": {
-    "@amazonpay/amazon-pay-api-sdk-nodejs": "^2.3.1",
-    "@cainz-next-gen/common": "^0.0.0",
-    "@google-cloud/firestore": "^6.7.0"
-  }
+  "dependencies": {}
 }

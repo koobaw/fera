@@ -7,6 +7,8 @@ import {
   Store,
   StoreAnnouncement,
   StoreDetail,
+  OmitTimestampStore,
+  OmitTimestampStoreDetail,
   STORES_COLLECTION_NAME,
   STORES_DETAIL_COLLECTION_NAME,
   STORES_ANNOUNCEMENTS_COLLECTION_NAME,
@@ -77,6 +79,8 @@ export class DetailService {
       ...data,
       detail: {
         ...data.detail,
+        supportFlyer: false,
+        supportProductMap: false,
         messageSettings: data.detail.messageSettings.map((setting) => ({
           ...setting,
         })),
@@ -94,7 +98,7 @@ export class DetailService {
   ): Promise<void> {
     this.logger.debug('start batchSetBasic');
     try {
-      const saveData: Store = {
+      const storeItems: OmitTimestampStore = {
         code: detail.code,
         name: detail.name,
         address: detail.address,
@@ -104,12 +108,28 @@ export class DetailService {
         businessTimeNote: detail.businessTimeNote,
         regularHoliday: detail.regularHoliday,
         regularHolidayNote: detail.regularHolidayNote,
-
-        createdAt: firestore.FieldValue.serverTimestamp(),
-        createdBy: operatorName,
-        updatedAt: firestore.FieldValue.serverTimestamp(),
-        updatedBy: operatorName,
       };
+      let saveData: Store;
+      const oldStore = await docRef.get();
+      if (oldStore.exists) {
+        // 更新の場合
+        saveData = {
+          ...storeItems,
+          createdAt: oldStore.data().createdAt,
+          createdBy: oldStore.data().createdBy,
+          updatedAt: firestore.FieldValue.serverTimestamp(),
+          updatedBy: operatorName,
+        };
+      } else {
+        // 新規の場合
+        saveData = {
+          ...storeItems,
+          createdAt: firestore.FieldValue.serverTimestamp(),
+          createdBy: operatorName,
+          updatedAt: firestore.FieldValue.serverTimestamp(),
+          updatedBy: operatorName,
+        };
+      }
 
       await this.firestoreBatchService.batchSet(docRef, saveData, {
         merge: true,
@@ -130,7 +150,7 @@ export class DetailService {
    */
   private async batchSetDetail(
     docRef: DocumentReference,
-    { detail }: DetailApiResponse,
+    detail: DetailApiResponse,
     operatorName: string,
   ): Promise<void> {
     this.logger.debug('start batchSetDetail');
@@ -139,79 +159,34 @@ export class DetailService {
         .collection(STORES_DETAIL_COLLECTION_NAME)
         .doc(detail.code);
 
-      const saveData: StoreDetail = {
-        code: detail.code,
-        landscape: new firestore.GeoPoint(
-          detail.landscape.latitude,
-          detail.landscape.longitude,
-        ),
-        floorGuideList: detail.floorGuideList,
-        prefectureName: detail.prefectureName,
-        prefectureCode: detail.prefectureCode,
-        openingDate: firestore.Timestamp.fromDate(new Date(detail.openingDate)),
-        closingDate: firestore.Timestamp.fromDate(new Date(detail.openingDate)),
-        supportPickup: detail.supportPickup,
-        supportCredit: detail.supportCredit,
-        supportPickupInnerLocker: detail.supportPickupInnerLocker,
-        supportPickupPlace: detail.supportPickupPlace,
-        supportPickupPlaceParking: detail.supportPickupPlaceParking,
-        supportBackOrder: detail.supportBackOrder,
-        supportGeomagnetism: detail.supportGeomagnetism,
-        geomagnetismMapId: detail.geomagnetismMapId,
-        supportPocketRegi: detail.supportPocketRegi,
-        supportCuttingService: detail.supportCuttingService,
-        supportDIYReserve: detail.supportDIYReserve,
-        supportDogRun: detail.supportDogRun,
-        supportToolRental: detail.supportToolRental,
-        showVisitingNumber: detail.showVisitingNumber,
-        messageSettings: detail.messageSettings.map((setting) => ({
-          from: firestore.Timestamp.fromDate(new Date(setting.from)),
-          to: firestore.Timestamp.fromDate(new Date(setting.to)),
-          message: setting.message,
-        })),
-        digitalFlyerURL: detail.digitalFlyerURL,
-        materialHallExistence: detail.materialHallExistence,
-        cultureClassExistence: detail.cultureClassExistence,
-        cycleParkExistence: detail.cycleParkExistence,
-        DIYSTYLEFloorExistence: detail.DIYSTYLEFloorExistence,
-        dogParkExistence: detail.dogParkExistence,
-        exteriorPlazaExistence: detail.exteriorPlazaExistence,
-        foodAreaExistence: detail.foodAreaExistence,
-        gardeningHallExistence: detail.gardeningHallExistence,
-        greenAdvisorExistence: detail.greenAdvisorExistence,
-        petsOneExistence: detail.petsOneExistence,
-        reformCenterExistence: detail.reformCenterExistence,
-        workshopExistence: detail.workshopExistence,
-        storePickupExistence: detail.storePickupExistence,
-        supermarketExistence: detail.supermarketExistence,
+      const oldDetailData = await detailDocRef.get();
 
-        createdAt: firestore.FieldValue.serverTimestamp(),
-        createdBy: operatorName,
-        updatedAt: firestore.FieldValue.serverTimestamp(),
-        updatedBy: operatorName,
-        mainBuildingOpeningTime: firestore.Timestamp.fromDate(
-          new Date(detail.mainBuildingOpeningTime),
-        ),
-        mainBuildingClosingTime: firestore.Timestamp.fromDate(
-          new Date(detail.mainBuildingClosingTime),
-        ),
-        ResourceBuildingOpeningTime: firestore.Timestamp.fromDate(
-          new Date(detail.ResourceBuildingOpeningTime),
-        ),
-        ResourceBuildingClosingTime: firestore.Timestamp.fromDate(
-          new Date(detail.ResourceBuildingClosingTime),
-        ),
-        storeMapUrl: detail.storeMapUrl,
-        visible: detail.visible,
-        publiclyAccessible: detail.publiclyAccessible,
-        publiclyAccessibleFrom: firestore.Timestamp.fromDate(
-          new Date(detail.publiclyAccessibleFrom),
-        ),
-        publiclyAccessibleTo: firestore.Timestamp.fromDate(
-          new Date(detail.publiclyAccessibleTo),
-        ),
-        supportFacilityReservation: false,
-      };
+      const detailItems = this.generateStoreDetail(detail);
+      let saveData: StoreDetail;
+
+      if (oldDetailData.exists) {
+        // 更新の場合
+        saveData = {
+          ...detailItems,
+          // firestore腹持ち項目
+          supportFlyer: oldDetailData.data().supportFlyer,
+          supportProductMap: oldDetailData.data().supportProductMap,
+          // timestamp
+          createdAt: oldDetailData.data().createdAt,
+          createdBy: oldDetailData.data().createdBy,
+          updatedAt: firestore.FieldValue.serverTimestamp(),
+          updatedBy: operatorName,
+        };
+      } else {
+        // 新規の場合
+        saveData = {
+          ...detailItems,
+          createdAt: firestore.FieldValue.serverTimestamp(),
+          createdBy: operatorName,
+          updatedAt: firestore.FieldValue.serverTimestamp(),
+          updatedBy: operatorName,
+        };
+      }
 
       await this.firestoreBatchService.batchSet(detailDocRef, saveData, {
         merge: true,
@@ -292,5 +267,94 @@ export class DetailService {
     }
 
     this.logger.debug('end batchSetAnnouncement');
+  }
+
+  private generateStoreDetail({
+    detail,
+  }: DetailApiResponse): OmitTimestampStoreDetail {
+    return {
+      code: detail.code,
+      landscape: new firestore.GeoPoint(
+        detail.landscape.latitude,
+        detail.landscape.longitude,
+      ),
+      floorGuideList: detail.floorGuideList,
+      prefectureName: detail.prefectureName,
+      prefectureCode: detail.prefectureCode,
+      openingDate: firestore.Timestamp.fromDate(new Date(detail.openingDate)),
+      closingDate: firestore.Timestamp.fromDate(new Date(detail.openingDate)),
+      supportPickup: detail.supportPickup,
+      supportPickupInnerLocker: detail.supportPickupInnerLocker,
+      supportPickupPlace: detail.supportPickupPlace,
+      supportPickupPlaceParking: detail.supportPickupPlaceParking,
+      supportGeomagnetism: detail.supportGeomagnetism,
+      geomagnetismMapId: detail.geomagnetismMapId,
+      supportPocketRegi: detail.supportPocketRegi,
+      supportCuttingService: detail.supportCuttingService,
+      supportDIYReserve: detail.supportDIYReserve,
+      supportDogRun: detail.supportDogRun,
+      supportToolRental: detail.supportToolRental,
+      showVisitingNumber: detail.showVisitingNumber,
+      messageSettings: detail.messageSettings.map((setting) => ({
+        title: setting.title,
+        from: firestore.Timestamp.fromDate(new Date(setting.from)),
+        to: firestore.Timestamp.fromDate(new Date(setting.to)),
+        message: setting.message,
+      })),
+      digitalFlyerURL: detail.digitalFlyerURL,
+      materialHallExistence: detail.materialHallExistence,
+      cultureClassExistence: detail.cultureClassExistence,
+      cycleParkExistence: detail.cycleParkExistence,
+      DIYSTYLEFloorExistence: detail.DIYSTYLEFloorExistence,
+      dogParkExistence: detail.dogParkExistence,
+      exteriorPlazaExistence: detail.exteriorPlazaExistence,
+      foodAreaExistence: detail.foodAreaExistence,
+      gardeningHallExistence: detail.gardeningHallExistence,
+      greenAdvisorExistence: detail.greenAdvisorExistence,
+      petsOneExistence: detail.petsOneExistence,
+      reformCenterExistence: detail.reformCenterExistence,
+      workshopExistence: detail.workshopExistence,
+      storePickupExistence: detail.storePickupExistence,
+      supermarketExistence: detail.supermarketExistence,
+
+      mainBuildingOpeningTime: firestore.Timestamp.fromDate(
+        new Date(detail.mainBuildingOpeningTime),
+      ),
+      mainBuildingClosingTime: firestore.Timestamp.fromDate(
+        new Date(detail.mainBuildingClosingTime),
+      ),
+      resourceBuildingOpeningTime: firestore.Timestamp.fromDate(
+        new Date(detail.ResourceBuildingOpeningTime),
+      ),
+      resourceBuildingClosingTime: firestore.Timestamp.fromDate(
+        new Date(detail.ResourceBuildingClosingTime),
+      ),
+      storeMapUrl: detail.storeMapUrl,
+      visible: detail.visible,
+      publiclyAccessible: detail.publiclyAccessible,
+      publiclyAccessibleFrom: firestore.Timestamp.fromDate(
+        new Date(detail.publiclyAccessibleFrom),
+      ),
+      publiclyAccessibleTo: firestore.Timestamp.fromDate(
+        new Date(detail.publiclyAccessibleTo),
+      ),
+      renovationDateFrom: detail.renovationDateFrom
+        ? firestore.Timestamp.fromDate(new Date(detail.renovationDateFrom))
+        : null,
+      renovationDateTo: detail.renovationDateFrom
+        ? firestore.Timestamp.fromDate(new Date(detail.renovationDateTo))
+        : null,
+      temporarilyClosedFrom: detail.renovationDateFrom
+        ? firestore.Timestamp.fromDate(new Date(detail.temporarilyClosedFrom))
+        : null,
+      temporarilyClosedTo: detail.renovationDateFrom
+        ? firestore.Timestamp.fromDate(new Date(detail.temporarilyClosedTo))
+        : null,
+      supportFacilityReservation: false,
+
+      // Firestore腹持ち項目は一旦falseをセット
+      supportFlyer: false,
+      supportProductMap: false,
+    };
   }
 }

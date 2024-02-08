@@ -18,10 +18,14 @@ export interface StoreDetail extends Auditable {
   prefectureCode: string; // 都道府県コード
   openingDate: Timestamp; // 開店日
   closingDate: Timestamp; // 閉店日 (閉店予定がない場合は9999年12月31日をセット)
+  renovationDateFrom: Timestamp | null; // 改装開始年月日
+  renovationDateTo: Timestamp | null; // 改装終了年月日
+  temporarilyClosedFrom: Timestamp | null; // 一時閉店開始日
+  temporarilyClosedTo: Timestamp | null; // 一時閉店終了日
   mainBuildingOpeningTime: Timestamp; // 本館（開店時間）
   mainBuildingClosingTime: Timestamp; // 本館（閉店時間）
-  ResourceBuildingOpeningTime: Timestamp; // 資材館（開店時間）
-  ResourceBuildingClosingTime: Timestamp; // 資材館（閉店時間）
+  resourceBuildingOpeningTime: Timestamp; // 資材館（開店時間）
+  resourceBuildingClosingTime: Timestamp; // 資材館（閉店時間）
   storeMapUrl: string[]; // 店舗マップURL
   visible: boolean; // ネット公開可否
   publiclyAccessible: boolean; // ネット公開対象店舗
@@ -29,11 +33,9 @@ export interface StoreDetail extends Auditable {
   publiclyAccessibleTo: Timestamp; // 公開終了日
 
   supportPickup: boolean; // pickup 店舗取り置き利用可否
-  supportCredit: boolean; // クレジット支払い可否
   supportPickupInnerLocker: boolean; // pickup店内ロッカー利用可否
   supportPickupPlace: boolean; // pickup店外ロッカー利用可否
   supportPickupPlaceParking: boolean; // pickupパーキング駐車場受け取り利用可否
-  supportBackOrder: boolean; // 取り寄せ可否
   supportGeomagnetism: boolean; // 地磁気利用可否
   geomagnetismMapId: string; // 地磁気マップID
   supportPocketRegi: boolean; // ポケレジ利用可否
@@ -43,9 +45,12 @@ export interface StoreDetail extends Auditable {
   supportToolRental: boolean; // レンタル工具利用可否
   supportFacilityReservation: boolean; // 施設予約利用可否
   showVisitingNumber: boolean; // 店舗混雑状況表示可否 TODO要確認
+  supportFlyer: boolean; // チラシ利用可否
+  supportProductMap: boolean; // 商品マップ利用可否
 
   messageSettings: // メッセージ設定
   {
+    title: string; // タイトル
     from: Timestamp; // 実施開始日時
     to: Timestamp; // 実施終了日時
     message: string; // メッセージ
@@ -66,3 +71,8 @@ export interface StoreDetail extends Auditable {
   storePickupExistence: boolean; // 店舗受取サービス有無 (EC用)
   supermarketExistence: boolean; // スーパーマーケット併設有無 (EC用)
 }
+
+export type OmitTimestampStoreDetail = Omit<
+  StoreDetail,
+  'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'
+>;

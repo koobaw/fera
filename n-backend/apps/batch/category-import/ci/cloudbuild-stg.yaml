@@ -32,22 +32,14 @@ steps:
       - '-c'
       - |
         gcloud run jobs deploy $_SERVICE_NAME \
-        --service-account category-import-service@cainz-cainzapp-stg.iam.gserviceaccount.com \
+        --service-account ${_SERVICE_NAME}-service@${PROJECT_ID}.iam.gserviceaccount.com \
         --image asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA \
         --region ${_LOCATION} \
         --memory 2Gi \
         --set-env-vars=PROJECT_ID=$PROJECT_ID \
         --set-env-vars=MULE_API_CLIENT_ID=$$MULE_API_CLIENT_ID \
         --set-env-vars=MULE_API_CLIENT_SECRET=$$MULE_API_CLIENT_SECRET \
-        --set-env-vars=MULE_CATEGORY_API_CLIENT_ID=$$MULE_CATEGORY_API_CLIENT_ID \
-        --set-env-vars=MULE_CATEGORY_API_CLIENT_SECRET=$$MULE_CATEGORY_API_CLIENT_SECRET \
-    secretEnv:
-      [
-        'MULE_API_CLIENT_ID',
-        'MULE_API_CLIENT_SECRET',
-        'MULE_CATEGORY_API_CLIENT_ID',
-        'MULE_CATEGORY_API_CLIENT_SECRET',
-      ]
+    secretEnv: ['MULE_API_CLIENT_ID', 'MULE_API_CLIENT_SECRET']
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
     args:
       [
@@ -62,6 +54,8 @@ steps:
       ]
 images:
   - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA'
+options:
+  logging: CLOUD_LOGGING_ONLY
 substitutions:
   _SERVICE_NAME: 'category-import'
   _DOCKER_FILE: 'apps/batch/category-import/Dockerfile'
@@ -77,7 +71,3 @@ availableSecrets:
       env: 'MULE_API_CLIENT_ID'
     - versionName: projects/$PROJECT_ID/secrets/mule_api_client_secret/versions/latest
       env: 'MULE_API_CLIENT_SECRET'
-    - versionName: projects/$PROJECT_ID/secrets/mule_category_api_client_id/versions/latest
-      env: 'MULE_CATEGORY_API_CLIENT_ID'
-    - versionName: projects/$PROJECT_ID/secrets/mule_category_api_client_secret/versions/latest
-      env: 'MULE_CATEGORY_API_CLIENT_SECRET'

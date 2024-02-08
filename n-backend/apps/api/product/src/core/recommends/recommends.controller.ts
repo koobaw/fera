@@ -2,6 +2,7 @@ import { Request } from 'express';
 import {
   Controller,
   Get,
+  HttpException,
   HttpStatus,
   Query,
   Req,
@@ -11,6 +12,7 @@ import { AuthGuard } from '@cainz-next-gen/guard';
 
 import { RecommendsService } from './recommends.service';
 import { FindRecommendQueryDto } from './dto/find.recommend-query.dto';
+import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 
 @Controller('recommend')
 export class RecommendsController {
@@ -24,12 +26,20 @@ export class RecommendsController {
   ) {
     const visitorIdHeader = request.headers['visitor-id'];
 
-    let visitorId = 'unknownUser';
-    if (visitorIdHeader) {
-      visitorId = Array.isArray(visitorIdHeader)
-        ? visitorIdHeader[0]
-        : visitorIdHeader;
+    if (!visitorIdHeader) {
+      throw new HttpException(
+        {
+          code: HttpStatus.INTERNAL_SERVER_ERROR,
+          errorCode: ErrorCode.RECOMMEND_VISITOR_ID_NOT_FOUND,
+          message: ErrorMessage[ErrorCode.RECOMMEND_VISITOR_ID_NOT_FOUND],
+        },
+        HttpStatus.BAD_REQUEST,
+      );
     }
+
+    const visitorId = Array.isArray(visitorIdHeader)
+      ? visitorIdHeader[0]
+      : visitorIdHeader;
 
     const data = await this.recommendsService.getRecommend(
       findRecommendsQueryDto,

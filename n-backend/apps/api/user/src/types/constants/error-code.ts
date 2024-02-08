@@ -1,4 +1,6 @@
 export enum ErrorCode {
+  // common
+  FAILED_FIRESTORE_OPERATION = 'FIRESTORE_1000',
   // Addresses API
   ADDRESSES_UPDATE_API_CONNECTION_ERROR = 'ADDRESSES_1000',
   ADDRESSES_UPDATE_API_UPDATE_ERROR = 'ADDRESSES_1001',
@@ -34,14 +36,11 @@ export enum ErrorCode {
 
   // Favorite Products Delete API
   FAVORITE_PRODUCTS_DELETE_FAILED_REFERENCE_USER_FROM_DB = 'FAVORITE_PRODUCTS_DELETE_1000',
-  FAVORITE_PRODUCTS_DELETE_CLAIM_EMPTY = 'FAVORITE_PRODUCTS_DELETE_1001',
+
   FAVORITE_PRODUCTS_DELETE_USER_DATA_NOT_EXISTS = 'FAVORITE_PRODUCTS_DELETE_1002',
   FAVORITE_PRODUCTS_DELETE_FROM_DB = 'FAVORITE_PRODUCTS_DELETE_1003',
   FAVORITE_PRODUCTS_DELETE_PUSH_TO_TASK_QUEUE = 'FAVORITE_PRODUCTS_DELETE_1004',
   FAVORITE_PRODUCTS_DELETE_INVALID_USER_DATA = 'FAVORITE_PRODUCTS_DELETE_1005',
-
-  // Address Common API
-  ADDRESSES_CLAIM_EMPTY = 'ADDRESSES_1000',
 
   // Address Find API
   ADDRESSES_MULE_FIND_API_FAILED = 'ADDRESSES_FIND_1000',
@@ -80,7 +79,6 @@ export enum ErrorCode {
   MEMBER_POINT_GET_PARSE_USER_ID = 'MemberPoint_1003',
   MEMBER_POINT_GET_GET_POINT_FAILED = 'MemberPoint_1004',
   MEMBER_POINT_GET_STORE_TO_DB = 'MemberPoint_1005',
-  MEMBER_POINT_GET_CLAIM_MEMBER_NOT_FOUND = 'MemberPoint_1006',
 
   // 退会API
   UNREGISTER_CLAIM_EMPTY = 'UNREGISTER_1000',
@@ -89,6 +87,8 @@ export enum ErrorCode {
 }
 
 export const ErrorMessage = {
+  // Common
+  [ErrorCode.FAILED_FIRESTORE_OPERATION]: 'failed to operate firestore',
   // Addresses API
   [ErrorCode.ADDRESSES_UPDATE_API_CONNECTION_ERROR]:
     'failed to connect mule api for update address',
@@ -131,8 +131,6 @@ export const ErrorMessage = {
   // Favorite Products Delete API
   [ErrorCode.FAVORITE_PRODUCTS_DELETE_FAILED_REFERENCE_USER_FROM_DB]:
     'failed to reference user data from firestore',
-  [ErrorCode.FAVORITE_PRODUCTS_DELETE_CLAIM_EMPTY]:
-    'user is already logout or not login',
   [ErrorCode.FAVORITE_PRODUCTS_DELETE_USER_DATA_NOT_EXISTS]:
     'user data is not exists',
   [ErrorCode.FAVORITE_PRODUCTS_DELETE_FROM_DB]: 'failed to delete from db',
@@ -142,9 +140,6 @@ export const ErrorMessage = {
     'failed to push task queue',
   [ErrorCode.FAVORITE_PRODUCTS_DELETE_INVALID_USER_DATA]:
     'default mylist is not single',
-
-  // Address Common API
-  [ErrorCode.ADDRESSES_CLAIM_EMPTY]: 'user is already logout or not login',
 
   // Address Find API
   [ErrorCode.ADDRESSES_MULE_FIND_API_FAILED]:
@@ -183,8 +178,6 @@ export const ErrorMessage = {
     'Failed to get user id from sended token',
   [ErrorCode.MEMBER_POINT_GET_GET_POINT_FAILED]: 'Failed to get point',
   [ErrorCode.MEMBER_POINT_GET_STORE_TO_DB]: 'Firestore save was failure',
-  [ErrorCode.MEMBER_POINT_GET_CLAIM_MEMBER_NOT_FOUND]:
-    'Your claims were expired',
   // 退会API
   [ErrorCode.UNREGISTER_CLAIM_EMPTY]: 'user is already logout or not login',
   [ErrorCode.UNREGISTER_DELETE_FROM_DB]: 'failed delete user data from db',

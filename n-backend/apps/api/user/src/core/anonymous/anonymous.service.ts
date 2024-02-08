@@ -18,7 +18,8 @@ import { QUEUES } from './interface/anonymos-task-queue.interface';
 export class AnonymousService {
   private readonly DEFAULT_USER_TYPE: UserType = 'anonymous';
 
-  private readonly DEFAULT_MYSTORE_CODE = '813';
+  // ご利用店舗が設定ナシの場合に利用される
+  private readonly DEFAULT_MYSTORE_CODE = '814';
 
   constructor(
     private readonly env: ConfigService,

@@ -49,12 +49,12 @@ import {
   GetShippingCost,
   CheckNonDeliverResponse,
   CheckNonDeliveryValue,
-  GetCreditCards,
   ReceiptMethodPatternResponse,
   GetCartsFromDb,
   UpdateCartsToDbResponse,
   UpdateCartsToDbData,
   AmazonPayButtonConfig,
+  CreateCartsToDb,
   GetEcTemplateRecords,
   GetEcTemplateResponse,
 } from './interfaces/orderInterfaces.interface';
@@ -64,7 +64,6 @@ import {
   bffStoreData,
   memberData,
   myStoresData,
-  bffCreditCardData,
 } from './BFF_data/data';
 import { StatusCode } from './constants/status-code';
 import {
@@ -297,7 +296,7 @@ export class OrderService {
       // BFF Store Details API Call reponsedata as storeInfo,temporary using mock data from docusaurus
       const responseObj = {
         status: 1,
-        data: bffStoreData,
+        data: [bffStoreData],
       };
       this.logger.info('End: getStore');
       return responseObj;
@@ -1602,7 +1601,8 @@ export class OrderService {
       const targetProductItems = productItems.filter(
         (productItem) =>
           productItem.receivingMethod ===
-          ReceivingMethod.DELIVERY_TO_DESIGNATED_ADDRESS,
+            ReceivingMethod.DELIVERY_TO_DESIGNATED_ADDRESS &&
+          productItem.isCheckoutTarget,
       );
       if (targetProductItems.length === 0)
         return {
@@ -1670,8 +1670,16 @@ export class OrderService {
     }
   }
 
-  public async createCartsToDb(userId: string, isMember: boolean, req: any) {
-    const returnObj = { status: StatusCode.FAILURE, cartId: null };
+  public async createCartsToDb(
+    userId: string,
+    isMember: boolean,
+    req: any,
+  ): Promise<CreateCartsToDb> {
+    const returnObj = {
+      status: StatusCode.FAILURE,
+      cartId: null,
+      cartInUse: null,
+    };
     if (!(userId && typeof isMember === 'boolean')) {
       return returnObj;
     }
@@ -1711,10 +1719,11 @@ export class OrderService {
     return autoId;
   }
 
-  public async updateUserInfoInDb(userId, userDocRef, cartObj, req) {
+  public async updateUserInfoInDb(userId, userDocRef, cartObj, req, isMember) {
     const returnFailureObj = {
       status: StatusCode.FAILURE,
       cartId: null,
+      cartInUse: null,
     };
     try {
       this.logger.info('start: updateUserInfoInDb');
@@ -1735,16 +1744,29 @@ export class OrderService {
           req.method,
         );
         const updatedAt = new Date();
-        const cartInUse = `users/${userId}/carts/${docID}`;
-        const res = await userDocRef.update({
+        const cartInUse = isMember
+          ? `${this.FIRESTORE_COLLECTION_USER}/${userId}/${this.FIRESTORE_SUB_COLLECTION_NAME}/${docID}`
+          : `${this.FIRESTORE_COLLECTION_NAME_ANNONYMOUS}/${userId}/${this.FIRESTORE_SUB_COLLECTION_NAME}/${docID}`;
+
+        const updatedDataInUser = {
           updatedAt,
           updatedBy,
-          cartInUse,
-        });
+          cartInUse: await this.firestoreBatchService
+            .findCollection(
+              isMember
+                ? this.FIRESTORE_COLLECTION_USER
+                : this.FIRESTORE_COLLECTION_NAME_ANNONYMOUS,
+            )
+            .doc(userId)
+            .collection(this.FIRESTORE_SUB_COLLECTION_NAME)
+            .doc(docID),
+        };
+        const res = await userDocRef.update(updatedDataInUser);
 
         return {
           status: StatusCode.SUCCESS,
           cartId: docID,
+          cartInUse,
         };
       }
       return returnFailureObj;
@@ -1758,6 +1780,7 @@ export class OrderService {
     const returnFailureObj = {
       status: StatusCode.FAILURE,
       cartId: null,
+      cartInUse: null,
     };
     try {
       this.logger.info('start: doPreProcessingCreateCartsToDb');
@@ -1781,6 +1804,7 @@ export class OrderService {
         userDocRef,
         cartObj,
         req,
+        isMember,
       );
       return result;
     } catch (error) {
@@ -1810,33 +1834,6 @@ export class OrderService {
         'method doPreProcessingGetUserInfo error',
         error,
       );
-    }
-  }
-
-  /**
-   * @param {memberId} String -memberId from getmember
-   * @return {object} registeredCreditCardList
-   *
-   * @throws {Error} Will throw an error if something goes wrong
-   */
-  public getCreditCards(memberId): GetCreditCards {
-    try {
-      this.logger.info('start: getCreditCards');
-      if (memberId === null || memberId.length === 0) {
-        return {
-          status: 0,
-          registeredCreditCardList: null,
-        };
-      }
-      const responseObj = {
-        status: 1,
-        registeredCreditCardList: bffCreditCardData,
-      };
-      this.logger.info('End: getCreditCards');
-      return responseObj;
-    } catch (error) {
-      this.commonService.logException('method getCreditCards error', error);
-      throw new Error('Failed to access getCreditCards');
     }
   }
 

@@ -14,7 +14,12 @@ export enum ErrorCode {
   CARDS_STORE_TO_DB = 'CARDS_1001',
   CARDS_DELETE_TO_DB = 'CARDS_1002',
   CARDS_UPDATE_TO_DB = 'CARDS_1003',
+  PURCHASE_LOG_EVENT = 'PURCHASE_LOG_2002',
+  PRODUCT_DETAIL_API_ERROR = '7002',
   CARD_COLLECTION_NOT_EXISTS_IN_DB = 'CARDS_1004',
+  CREDIT_CARD_API_SERVER_ERROR = 'APIError.7008',
+  SHOP_COLLECTION_NOT_EXISTS_IN_DB = 'SHOP_1001',
+  FAILED_TO_DELETE_COLLECTION = 'APIError.7009',
 }
 
 export const ErrorMessage = {
@@ -34,6 +39,13 @@ export const ErrorMessage = {
   [ErrorCode.CARDS_STORE_TO_DB]: 'failed to store credit card to db',
   [ErrorCode.CARDS_DELETE_TO_DB]: 'failed to delete credit card to db',
   [ErrorCode.CARDS_UPDATE_TO_DB]: 'failed to update credit card to db',
+  [ErrorCode.PURCHASE_LOG_EVENT]: 'purchase log event failed.',
+  [ErrorCode.PRODUCT_DETAIL_API_ERROR]: 'Product detail not found',
   [ErrorCode.CARD_COLLECTION_NOT_EXISTS_IN_DB]:
     'targetcardCollection is not exists in db',
+  [ErrorCode.CREDIT_CARD_API_SERVER_ERROR]:
+    'Internal server/credit card list error',
+  [ErrorCode.SHOP_COLLECTION_NOT_EXISTS_IN_DB]: 'Shop detail not found',
+  [ErrorCode.FAILED_TO_DELETE_COLLECTION]:
+    'error occured while deleting the collection',
 };

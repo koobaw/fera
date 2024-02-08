@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { of } from 'rxjs';
 
 import { LoggingService } from '@cainz-next-gen/logging';
@@ -8,16 +9,24 @@ import { GlobalsModule } from '../../../globals.module';
 import { DetailMuleApiService } from './detail-mule-api.service';
 import { DetailDto } from '../dto/detail.dto';
 
+jest.mock('@nestjs/config', () => ({
+  ...jest.requireActual('@nestjs/config'),
+  ConfigService: jest.fn().mockReturnValue({
+    get: jest.fn(),
+  }),
+}));
+
 describe('DetailMuleApiService', () => {
   let service: DetailMuleApiService;
-  let mockedEnv: jest.MockedObjectDeep<ConfigService>;
-  let mockedHttpService: jest.MockedObjectDeep<HttpService>;
+  let mockedEnv: jest.Mocked<ConfigService>;
+  let httpService: HttpService;
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [GlobalsModule],
       providers: [
         DetailMuleApiService,
+        ConfigService,
         {
           provide: LoggingService,
           useFactory: () => ({
@@ -31,10 +40,8 @@ describe('DetailMuleApiService', () => {
     }).compile();
 
     service = module.get<DetailMuleApiService>(DetailMuleApiService);
-    const httpService = module.get<HttpService>(HttpService);
-    mockedHttpService = jest.mocked<HttpService>(httpService);
-    const configService = module.get<ConfigService>(ConfigService);
-    mockedEnv = jest.mocked<ConfigService>(configService);
+    mockedEnv = jest.mocked<ConfigService>(module.get(ConfigService));
+    httpService = module.get<HttpService>(HttpService);
   });
 
   afterEach(() => {
@@ -218,7 +225,7 @@ describe('DetailMuleApiService', () => {
       ];
 
       jest
-        .spyOn(mockedHttpService, 'get')
+        .spyOn(httpService as any, 'get')
         .mockReturnValue(of({ data: muleResponse }));
 
       await expect(service.getDetailFromMule(detailDto)).resolves.toEqual(
@@ -409,7 +416,7 @@ describe('DetailMuleApiService', () => {
       ];
 
       const spyHttpGet = jest
-        .spyOn(mockedHttpService, 'get')
+        .spyOn(httpService as any, 'get')
         .mockReturnValue(of({ data: muleResponse }));
 
       await service.getDetailFromMule(detailDto);

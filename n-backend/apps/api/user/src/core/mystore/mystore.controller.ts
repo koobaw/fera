@@ -14,7 +14,7 @@ import {
   HttpException,
 } from '@nestjs/common';
 
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { MemberAuthGuard } from '@cainz-next-gen/guard';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 
 import { UserIdDto } from './dto/userid.dto';
@@ -36,7 +36,7 @@ export class MystoreController {
   ) {}
 
   @Put('/')
-  @UseGuards(AuthGuard)
+  @UseGuards(MemberAuthGuard)
   async update(@Req() req: Request, @Body() userId: UserIdDto) {
     const { sfdcUserId, encryptedMemberId } = userId;
     const operatorName = this.commonService.createFirestoreSystemName(
@@ -79,7 +79,7 @@ export class MystoreController {
   }
 
   @Get('/')
-  @UseGuards(AuthGuard)
+  @UseGuards(MemberAuthGuard)
   async getMystore(@Req() req: Request & { claims?: Claims }) {
     const userClaims: Claims = req.claims;
     const { encryptedMemberId } = userClaims;

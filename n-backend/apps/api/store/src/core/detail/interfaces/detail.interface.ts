@@ -10,6 +10,7 @@ interface FloorGuide {
 }
 
 interface MessageSetting {
+  title: string;
   from: string;
   to: string;
   message: string;
@@ -25,6 +26,10 @@ interface DetailItem {
   publiclyAccessible: boolean;
   publiclyAccessibleFrom: string | number | Date;
   publiclyAccessibleTo: string | number | Date;
+  renovationDateFrom: string | number | Date | null;
+  renovationDateTo: string | number | Date | null;
+  temporarilyClosedFrom: string | number | Date | null;
+  temporarilyClosedTo: string | number | Date | null;
   code: string;
   landscape: Landscape;
   floorGuideList: FloorGuide[];
@@ -33,11 +38,9 @@ interface DetailItem {
   openingDate: string;
   closingDate: string;
   supportPickup: boolean;
-  supportCredit: boolean;
   supportPickupInnerLocker: boolean;
   supportPickupPlace: boolean;
   supportPickupPlaceParking: boolean;
-  supportBackOrder: boolean;
   supportGeomagnetism: boolean;
   geomagnetismMapId?: string;
   supportPocketRegi: boolean;
@@ -46,6 +49,8 @@ interface DetailItem {
   supportDogRun: boolean;
   supportToolRental: boolean;
   showVisitingNumber: boolean;
+  supportFlyer: boolean;
+  supportProductMap: boolean;
   messageSettings: MessageSetting[];
   digitalFlyerURL: string;
   materialHallExistence: boolean;

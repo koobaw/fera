@@ -9,6 +9,9 @@ import {
   IsBoolean,
   IsObject,
   MinLength,
+  IsInt,
+  IsIn,
+  isBoolean,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -169,17 +172,13 @@ class CustomerInfoValidate {
     /^[a-zA-Z0-9_+-]+[a-zA-Z0-9._+-]*@([a-zA-Z0-9.-]*[a-zA-Z0-9])+\.[a-zA-Z]{2,6}$/,
   )
   customerEmail: string;
-}
 
-class ShippingInfoValidate {
   @IsNotEmpty()
   @IsBoolean()
-  isSameAsPurchaser: boolean;
+  isSameAsShippingInfo: boolean;
+}
 
-  @IsNotEmpty()
-  @IsString()
-  selectedAddressBookId: string;
-
+class GuestInfoValidate {
   @IsNotEmpty()
   @IsString()
   // eslint-disable-next-line no-control-regex
@@ -241,6 +240,18 @@ class ShippingInfoValidate {
   @IsString()
   @Matches(/^([0-9]{10,11})$/)
   shippingPhone: string;
+}
+
+class ShippingInfoValidate {
+  @IsNotEmpty()
+  @IsString()
+  selectedAddressBookId: string;
+
+  @ValidateNested()
+  @IsOptional()
+  @IsObject()
+  @Type(() => GuestInfoValidate)
+  guestInputInfo: GuestInfoValidate;
 
   @IsOptional()
   @IsString()
@@ -252,18 +263,50 @@ class ShippingInfoValidate {
 
   @IsNotEmpty()
   @IsBoolean()
-  isDeliveryBox: boolean;
+  unattendedDeliveryFlag: boolean;
 
   @IsNotEmpty()
   @IsBoolean()
   isGift: boolean;
 }
-export class CheckoutCompleteDto {
+
+class StoreInfoValidate {
   @IsNotEmpty()
   @IsString()
-  @Matches(/^[a-zA-Z0-9-]+$/)
-  userId: string;
+  selectedStoreCode: string;
 
+  @IsOptional()
+  @IsInt()
+  selectedReceiptLocation: number;
+}
+
+class PaymentMethodInfoValidate {
+  @IsNotEmpty()
+  @IsBoolean()
+  isStorePaymentSelected: boolean;
+
+  @IsOptional()
+  @IsString()
+  selectedPaymentMethodId: string;
+
+  @IsOptional()
+  @IsInt()
+  cardSequentialNumber: number;
+
+  @IsOptional()
+  @IsBoolean()
+  isSaveCard: boolean;
+
+  @IsOptional()
+  @IsString()
+  selectedConvenienceCode: string;
+
+  @IsOptional()
+  @IsString()
+  creditCardToken: string;
+}
+
+export class CheckoutCompleteDto {
   @ValidateNested()
   @IsOptional()
   @IsObject()
@@ -276,6 +319,22 @@ export class CheckoutCompleteDto {
   @Type(() => ShippingInfoValidate)
   shippingInfo: ShippingInfoValidate;
 
+  @ValidateNested()
+  @IsOptional()
+  @IsObject()
+  @Type(() => StoreInfoValidate)
+  storeInfo: StoreInfoValidate;
+
+  @ValidateNested()
+  @IsOptional()
+  @IsObject()
+  @Type(() => PaymentMethodInfoValidate)
+  paymentMethodInfo: PaymentMethodInfoValidate;
+
+  @IsOptional()
+  @IsInt()
+  redeemedPoints: number;
+
   @IsOptional()
   @IsString()
   @Matches(/^([a-zA-Z0-9_./*-]{1,34})$/)
@@ -285,10 +344,6 @@ export class CheckoutCompleteDto {
   @IsString()
   @Matches(/^([0-9]{4}-[0-9]{2}-[0-9]{2}T+([0-9]{2}:[0-9]{2}:[0-9]{2}Z))$/)
   affiliateVisitDateTime: string;
-
-  @IsOptional()
-  @IsArray()
-  creditCardTokenList: TokenList[] | null;
 
   @IsOptional()
   @IsObject()

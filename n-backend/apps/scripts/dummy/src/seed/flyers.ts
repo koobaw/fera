@@ -7,7 +7,8 @@ import { LoggingService } from '@cainz-next-gen/logging';
 import { addCollectionData } from '../dummyGenerator';
 import { makeAuditableFields } from './common/auditable';
 import { FirestoreDocument, FirestoreStructure } from '../types';
-import { campaignIds, planIds, storeCodes } from './common/sources';
+import { campaignIds, planIds } from './common/sources';
+import { storeCodes } from './data/storeCodes';
 
 const logger: LoggingService = new LoggingService();
 const commonService: CommonService = new CommonService(logger);

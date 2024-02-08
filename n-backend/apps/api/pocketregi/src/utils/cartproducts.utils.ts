@@ -162,7 +162,7 @@ export class PocketRegiCartCommonService {
     const groupedProductsInfo: ProductIdsAndQuantity[] = [];
 
     cartProducts.forEach((product) => {
-      if (!product.subItems) {
+      if (!product.subItems || !product.subItems.length) {
         const savedProductQty = productCodeMap.get(product.productId);
         if (savedProductQty !== undefined) {
           productCodeMap.set(
@@ -209,7 +209,7 @@ export class PocketRegiCartCommonService {
     // find the product whose details are required when cart product does not have subItems
     const foundProduct = cartProducts.find(
       (cartProd) =>
-        !cartProd.subItems &&
+        (!cartProd.subItems || !cartProd.subItems.length) &&
         cartProd.productId === discountProduct.productCode,
     );
     // if details were not found then check the subitems field of all the products in cart
@@ -236,7 +236,7 @@ export class PocketRegiCartCommonService {
     let subItemDetail;
     cartProducts.some((cartProd) => {
       // check for only those products in cart which has subItems field
-      if (cartProd.subItems) {
+      if (cartProd.subItems && cartProd.subItems.length) {
         subItemDetail = cartProd.subItems.find(
           (subitem) => subitem.productId === discountProduct.productCode,
         );
@@ -254,10 +254,12 @@ export class PocketRegiCartCommonService {
    */
   public createCartProductData(findProduct, discountProduct) {
     const mergedData = {
-      code128DiscountDetails: findProduct.code128DiscountDetails,
+      code128DiscountDetails: findProduct.code128DiscountDetails
+        ? findProduct.code128DiscountDetails
+        : [],
       productId: findProduct.productId,
       productName: findProduct.productName,
-      imageUrls: findProduct.imageUrls,
+      imageUrls: findProduct.imageUrls ? findProduct.imageUrls : [],
       isAlcoholic: findProduct.isAlcoholic,
       taxRate: findProduct.taxRate,
       quantity: discountProduct.quantity,

@@ -13,6 +13,7 @@ import {
   USERS_COLLECTION_NAME,
 } from '@cainz-next-gen/types';
 import {
+  Code128,
   ProductDetailRequest,
   ProductDetailResponse,
 } from '../interfaces/cartproducts.interface';
@@ -56,22 +57,31 @@ export class AddProductDetailService {
   ) {
     let productId = '';
     let code128Discount;
+    let discountMethod = '';
     // check for discount sticker barcode
     if (productDetailReq.productId.length > 13) {
       productId = productDetailReq.productId.slice(0, 13);
+      if (productDetailReq.productId.slice(13, 15) === '03') {
+        discountMethod = Code128.PERCENT;
+      }
+      if (productDetailReq.productId.slice(13, 15) === '02') {
+        discountMethod = Code128.YEN;
+      }
       code128Discount = [
         {
-          discountMethod: productDetailReq.productId.slice(13, 15),
+          discountMethod,
           discount: Number(productDetailReq.productId.slice(15, 21)),
           appliedCount: 1,
         },
       ];
     } else {
       productId = productDetailReq.productId;
-      code128Discount = null;
+      code128Discount = [];
     }
     const { encryptedMemberId } = claims;
-    const url = `${this.env.get<string>('GET_PRODUCT_DETAIL_API')}${productId}`;
+    const baseUrl = `${this.env.get<string>('PRODUCT_BASE_URL')}`;
+    const endPoint = `${this.env.get<string>('GET_PRODUCT_DETAIL_END_POINT')}`;
+    const url = `${baseUrl}${endPoint}${productId}`;
     this.loggingService.info('Calling Get product Detail Api');
     const { data } = await firstValueFrom(
       this.httpService
@@ -82,9 +92,10 @@ export class AddProductDetailService {
         })
         .pipe(
           catchError((error: AxiosError) => {
+            this.commonService.logException('Mule Error occurred', error);
+
             const { errCode, errMessage, status } =
               this.pocketRegiCartCommonService.handleException(error);
-            this.commonService.logException('Mule Error occurred', error);
             throw new HttpException(
               {
                 errorCode: errCode,
@@ -112,15 +123,17 @@ export class AddProductDetailService {
     const productDetailResponse: ProductDetailResponse = {
       productId: data.data[0].productId,
       productName: data.data[0].name,
-      imageUrls: data.data[0].imageUrls,
+      imageUrls: data.data[0].imageUrls ? data.data[0].imageUrls : [],
       quantity: 1,
       taxRate: data.data[0].consumptionTaxRate,
       priceIncludingTax: priceDetail.data[0].priceIncludingTax,
-      salePriceIncludingTax: priceDetail.data[0].salePriceIncludingTax
-        ? priceDetail.data[0].salePriceIncludingTax
-        : null,
       isAlcoholic: data.data[0].departmentCode === this.DPT_CODE,
       code128DiscountDetails: code128Discount,
+      subItems: [],
+      mixMatchCode: null,
+      setItemCode: null,
+      subtotalAmount: null,
+      unitPrice: null,
     };
     this.loggingService.info('Product Details successful');
     await this.saveProductDetailToFirestore(
@@ -154,9 +167,9 @@ export class AddProductDetailService {
       .get();
     const { rank } = (await userData).data();
     const productId = productDetailReq.productId.slice(0, 13);
-    const url = `${this.env.get<string>('GET_PRICE_API')}${productId}/${
-      productDetailReq.storeCode
-    }/${rank}`;
+    const baseUrl = `${this.env.get<string>('PRODUCT_BASE_URL')}`;
+    const endPoint = `${this.env.get<string>('GET_PRODUCT_PRICES_END_POINT')}`;
+    const url = `${baseUrl}${endPoint}${productId}/${productDetailReq.storeCode}/${rank}`;
     const { data } = await firstValueFrom(
       this.httpService
         .get(url, {
@@ -214,6 +227,7 @@ export class AddProductDetailService {
         productDetail.productId,
         productDetail.code128DiscountDetails,
       );
+
       // update the existing productDetail if the product is already present
       if (existingProductIndex !== -1) {
         existingProducts[existingProductIndex].quantity +=
@@ -242,7 +256,6 @@ export class AddProductDetailService {
         .doc(encryptedMemberId)
         .collection(this.FIRESTORE_SUB_COLLECTION_NAME);
       const docRef = productsInCart.doc(this.FIRESTORE_CART_PRODUCTS);
-
       await this.firestoreBatchService.batchSet(
         docRef,
         { products: existingProducts },
@@ -323,7 +336,7 @@ export class AddProductDetailService {
     let discountExist = 0;
     const updatedDiscount = existingDiscount;
     let codeIndex = -1;
-    if (existingDiscount) {
+    if (existingDiscount && existingDiscount.length) {
       existingDiscount.forEach((code128Details) => {
         codeIndex++;
         if (

@@ -1827,6 +1827,32 @@ const selectedItems = [
   '87092821394372',
   '48677635-ac6a-4412-8f68-5a933a166a27',
 ];
+
+const cartData = {
+  createdAt: {
+    _seconds: 1703583249,
+    _nanoseconds: 711000000,
+  },
+  productItems: getCartData.productItems,
+  shippingAddress: null,
+  userId: 'RzMlOcujJMZS2CmaBZzD',
+  storeCode: null,
+  updatedAt: {
+    _seconds: 1703583249,
+    _nanoseconds: 711000000,
+  },
+};
+
+const overwriteContent = {
+  productItems: getCartData.productItems,
+  storeCode: '0809',
+  shippingAddress: {
+    zipCode: '0809',
+    prefecture: 'Hokkaido',
+    city: 'Tokyo',
+    addressBookId: '123566',
+  },
+};
 export {
   anonymousUserdata,
   membersData,
@@ -1837,4 +1863,6 @@ export {
   products,
   emptyProductItem,
   selectedItems,
+  cartData,
+  overwriteContent,
 };

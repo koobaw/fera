@@ -263,7 +263,7 @@ export interface GetProduct {
 
 export interface GetStore {
   status: number;
-  data: GetStoreData;
+  data: Array<GetStoreData>;
 }
 
 interface Member {
@@ -469,35 +469,6 @@ export interface CheckNonDeliverResponse {
   canShip: boolean;
   items: Array<Items>;
 }
-export interface GetEcTemplateResponse {
-  status: number;
-  informations: Array<object> | null;
-}
-
-export type GetEcTemplateRecords = Array<GetEcTemplateRecord>;
-
-interface GetEcTemplateRecord {
-  ecTemplateId: string;
-  class1: string;
-  class2: string;
-  class3: string;
-  content: string;
-  remarks: string;
-  publishStatus: string;
-}
-
-interface CreditCardData {
-  cardSequentialNumber: string;
-  cardNumber: string;
-  expirationDate: string;
-  isDeleted: boolean;
-  isDefault: boolean;
-}
-
-export interface GetCreditCards {
-  status: number;
-  registeredCreditCardList: Array<CreditCardData>;
-}
 
 interface EstimatedOrderAmount {
   amount: number;
@@ -525,11 +496,11 @@ export interface AmazonPayButtonConfig {
   amazonPayButtonConfig: AmazonPayButton;
 }
 
-interface ShippingAddress {
+export interface ShippingAddress {
   zipCode: string;
   prefecture: string;
   city: string;
-  addressBookId: string;
+  addressBookId?: string;
 }
 
 export interface UpdateCartsToDbData {
@@ -552,4 +523,26 @@ export interface ReceiptMethodPatternResponse {
 export interface GetCartsFromDb {
   status: number;
   cartData: object;
+}
+
+export interface CreateCartsToDb {
+  status: number;
+  cartId: string;
+  cartInUse?: string;
+}
+export interface GetEcTemplateResponse {
+  status: number;
+  informations: GetEcTemplateRecords | null;
+}
+
+export type GetEcTemplateRecords = Array<GetEcTemplateRecord>;
+
+interface GetEcTemplateRecord {
+  ecTemplateId: string;
+  class1: string;
+  class2: string;
+  class3: string;
+  content: string;
+  remarks: string;
+  publishStatus: string;
 }

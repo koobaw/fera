@@ -1,109 +1,212 @@
-import { CommonModule, CommonService } from '@cainz-next-gen/common';
+import request from 'supertest';
+import { CommonService } from '@cainz-next-gen/common';
 import {
   SalesforceApiModule,
   SalesforceApiService,
 } from '@cainz-next-gen/salesforce-api';
-import { HttpStatus } from '@nestjs/common';
+import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-
+import { MemberAuthGuard } from '@cainz-next-gen/guard';
+import { MockAuthGuard } from '@cainz-next-gen/test';
 import { GlobalsModule } from '../../globals.module';
-import { PrivateProfile } from './interface/private-profile.interface';
+import { MuleMembershipRecord } from './interface/private-profile.interface';
 import { PrivateProfileController } from './private-profile.controller';
 import { PrivateProfileService } from './private-profile.service';
 
 describe('PrivateProfileController', () => {
-  let controller: PrivateProfileController;
-  let commonService: CommonService;
+  let app: INestApplication;
   let salesforceApiService: SalesforceApiService;
   let privateProfileService: PrivateProfileService;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [GlobalsModule, SalesforceApiModule, CommonModule],
-      providers: [PrivateProfileService],
+      imports: [GlobalsModule, SalesforceApiModule],
       controllers: [PrivateProfileController],
-    }).compile();
+      providers: [
+        PrivateProfileService,
+        {
+          provide: CommonService,
+          useFactory: () => ({
+            saveToFirebaseAuthClaims: jest.fn(),
+            createFirestoreSystemName: () => 'test',
+          }),
+        },
+      ],
+    })
+      .overrideGuard(MemberAuthGuard)
+      .useClass(MockAuthGuard)
+      .compile();
 
-    controller = module.get<PrivateProfileController>(PrivateProfileController);
-    commonService = module.get<CommonService>(CommonService);
+    app = module.createNestApplication();
+    app.useGlobalPipes(new ValidationPipe());
+    await app.init();
+
     salesforceApiService =
       module.get<SalesforceApiService>(SalesforceApiService);
     privateProfileService = module.get<PrivateProfileService>(
       PrivateProfileService,
     );
+
+    jest
+      .spyOn(privateProfileService, 'updateUserSchema')
+      .mockImplementation(async () => {});
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should success response when user have usable access_token', async () => {
-    const mockedClaims = {
-      claims: {
-        userId: 'dummyUserId',
-        encryptedMemberId: 'dummyEncryptedMemberId',
-        accessToken: 'dummyAccessToken',
-        refreshToken: 'dummyRefreshToken',
-      },
+    // define parameter
+    const expectedResponseData = {
+      lastNameKana: 'テスト',
+      firstNameKana: 'タロウ',
+      lastName: 'テスト',
+      firstName: '太郎',
+      phoneNumber: '09099999999',
+      postalCode: '100-0005',
+      prefecture: '東京都',
+      address1: '千代田区',
+      address2: '丸の内1丁目',
+      address3: '東京駅',
+      memberId: 'dummyId',
+      createdDate: '2023-10-24T02:00:00.000Z',
     };
+    // define mock
     jest
       .spyOn(salesforceApiService, 'getSalesforceUserId')
       .mockImplementation(async () => 'dummySalesForceUserId');
-
     jest
-      .spyOn(privateProfileService, 'getPrivateProfile')
-      .mockImplementation(async () => {
-        const privateProfile: PrivateProfile = {};
-        return privateProfile;
-      });
-
-    await expect(
-      controller.getPrivateProfile(<never>mockedClaims),
-    ).resolves.toEqual({
+      .spyOn(privateProfileService, 'getMuleMembershipRecord')
+      .mockImplementation(
+        async () =>
+          ({
+            lastKana: 'テスト',
+            firstKana: 'タロウ',
+            lastName: 'テスト',
+            firstName: '太郎',
+            phoneHome: '09099999999',
+            postalCode: '100-0005',
+            prefecture: '東京都',
+            address1: '千代田区',
+            address2: '丸の内1丁目',
+            address3: '東京駅',
+            cardNoContact: 'dummyId',
+            createdDate: '2023-10-24T02:00:00.000Z',
+          } as unknown as MuleMembershipRecord),
+      );
+    // check api
+    const response = await request(app.getHttpServer())
+      .get('/member/private-profile')
+      .set({ Authorization: 'Bearer VALID_TOKEN' });
+    expect({ ...response.body, timestamp: '' }).toEqual({
       code: HttpStatus.OK,
-      data: expect.anything(),
+      data: expectedResponseData,
       message: 'ok',
+      timestamp: '',
     });
   });
 
   it('should success response when user have expired access_token', async () => {
-    const mockedClaims = {
-      claims: {
-        userId: 'dummyUserId',
-        encryptedMemberId: 'dummyEncryptedMemberId',
-        accessToken: 'dummyAccessToken',
-        refreshToken: 'dummyRefreshToken',
-      },
+    // define parameter
+    const expectedResponseData = {
+      lastNameKana: 'テスト',
+      firstNameKana: 'タロウ',
+      lastName: 'テスト',
+      firstName: '太郎',
+      phoneNumber: '09099999999',
+      postalCode: '100-0005',
+      prefecture: '東京都',
+      address1: '千代田区',
+      address2: '丸の内1丁目',
+      address3: '東京駅',
+      memberId: 'dummyId',
+      createdDate: '2023-10-24T02:00:00.000Z',
     };
+    // define mock
     jest
       .spyOn(salesforceApiService, 'getSalesforceUserId')
       .mockImplementationOnce(async () => {
-        throw new Error();
+        console.log('one');
+        throw new Error('here');
+      })
+      .mockImplementationOnce(async () => {
+        console.log('two');
+        return 'dummySalesForceUserId';
       });
     jest
       .spyOn(salesforceApiService, 'refreshAccessToken')
       .mockImplementation(async () => 'dummyAccessToken');
-
     jest
-      .spyOn(commonService, 'saveToFirebaseAuthClaims')
-      .mockImplementation(jest.fn());
+      .spyOn(privateProfileService, 'getMuleMembershipRecord')
+      .mockImplementation(
+        async () =>
+          ({
+            lastKana: 'テスト',
+            firstKana: 'タロウ',
+            lastName: 'テスト',
+            firstName: '太郎',
+            phoneHome: '09099999999',
+            postalCode: '100-0005',
+            prefecture: '東京都',
+            address1: '千代田区',
+            address2: '丸の内1丁目',
+            address3: '東京駅',
+            cardNoContact: 'dummyId',
+            createdDate: '2023-10-24T02:00:00.000Z',
+          } as unknown as MuleMembershipRecord),
+      );
+    // check api
+    const response = await request(app.getHttpServer())
+      .get('/member/private-profile')
+      .set({ Authorization: 'Bearer VALID_TOKEN' });
+    expect({ ...response.body, timestamp: '' }).toEqual({
+      code: HttpStatus.OK,
+      data: expectedResponseData,
+      message: 'ok',
+      timestamp: '',
+    });
+  });
 
+  it('should success response with select query', async () => {
+    // define parameter
+    const expectedResponseData = {
+      memberId: 'dummyId',
+      createdDate: '2023-10-24T02:00:00.000Z',
+    };
+    // define mock
     jest
       .spyOn(salesforceApiService, 'getSalesforceUserId')
-      .mockImplementationOnce(async () => 'dummySalesForceUserId');
-
+      .mockImplementation(async () => 'dummySalesForceUserId');
     jest
-      .spyOn(privateProfileService, 'getPrivateProfile')
-      .mockImplementation(async () => {
-        const privateProfile: PrivateProfile = {};
-        return privateProfile;
-      });
-    await expect(
-      controller.getPrivateProfile(<never>mockedClaims),
-    ).resolves.toEqual({
+      .spyOn(privateProfileService, 'getMuleMembershipRecord')
+      .mockImplementation(
+        async () =>
+          ({
+            lastKana: 'テスト',
+            firstKana: 'タロウ',
+            lastName: 'テスト',
+            firstName: '太郎',
+            phoneHome: '09099999999',
+            postalCode: '100-0005',
+            prefecture: '東京都',
+            address1: '千代田区',
+            address2: '丸の内1丁目',
+            address3: '東京駅',
+            cardNoContact: 'dummyId',
+            createdDate: '2023-10-24T02:00:00.000Z',
+          } as unknown as MuleMembershipRecord),
+      );
+    // check api
+    const response = await request(app.getHttpServer())
+      .get('/member/private-profile')
+      .set({ Authorization: 'Bearer VALID_TOKEN' })
+      .query({ select: 'memberId,createdDate' });
+    expect({ ...response.body, timestamp: '' }).toEqual({
       code: HttpStatus.OK,
-      data: expect.anything(),
+      data: expectedResponseData,
       message: 'ok',
+      timestamp: '',
     });
   });
 });

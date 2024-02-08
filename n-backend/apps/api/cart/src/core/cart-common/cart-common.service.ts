@@ -11,6 +11,7 @@ import {
   UserInfo,
 } from '@cainz-next-gen/order';
 import { ConfigService } from '@nestjs/config';
+import assert from 'assert';
 import {
   CalculateCartAmountResponse,
   CreateProductItem,
@@ -20,9 +21,9 @@ import {
   ErrorInformation,
   OrderSpecification,
   NeedsItemCreationResponse,
-  StoreInfoResponse,
-  PickUpLocationResponse,
-  CheckOutCanBeStarted,
+  CartData,
+  OverwriteContent,
+  OverwriteContents,
 } from '../interfaces/cart-productItem.interface';
 import { ReceivingMethod } from '../cart/dto/post.cart-add-item-body.dto';
 import {
@@ -266,24 +267,35 @@ export class CartCommonService {
       const priceToFreeBasicShipping = shippingCost.result.shortToDiscount
         ? shippingCost.result.shortToDiscount
         : 0;
-
+      let isCheckOutTargetFlag = false;
       for (let i = 0; i < productItems.length; i++) {
         const productItem = productItems[i];
         // Amount Calculation
-
         if (
-          productItem.receivingMethod ===
-          ReceivingMethod.DELIVERY_TO_SPECIFIED_ADDRESS
+          Object.values(ReceivingMethod).includes(
+            productItem.receivingMethod as ReceivingMethod,
+          )
         ) {
-          totalProductAmountEc += productItem.subtotalProductAmount;
-          totalIndividualShippingCost +=
-            productItem.subtotalIndividualShippingCost;
-          shippingItemCount += 1;
-        } else if (
-          productItem.receivingMethod === ReceivingMethod.STORE_RESERVE
-        ) {
-          totalProductAmountStore += productItem.subtotalProductAmount;
-          storeItemCount += 1;
+          if (
+            productItem.receivingMethod ===
+            ReceivingMethod.DELIVERY_TO_SPECIFIED_ADDRESS
+          ) {
+            shippingItemCount += 1;
+            if (productItem.isCheckoutTarget === true) {
+              totalProductAmountEc += productItem.subtotalProductAmount;
+              totalIndividualShippingCost +=
+                productItem.subtotalIndividualShippingCost;
+              isCheckOutTargetFlag = true;
+            }
+          } else if (
+            productItem.receivingMethod === ReceivingMethod.STORE_RESERVE
+          ) {
+            if (productItem.isCheckoutTarget === true) {
+              totalProductAmountStore += productItem.subtotalProductAmount;
+              isCheckOutTargetFlag = true;
+            }
+            storeItemCount += 1;
+          }
         } else {
           error = true;
           this.logger.error(
@@ -306,13 +318,23 @@ export class CartCommonService {
       const result = {
         status: StatusCode.SUCCESS,
         amountInfo: {
-          totalProductAmountStore: totalProductAmountStore || 0,
-          totalProductAmountEc: totalProductAmountEc || 0,
-          basicShippingCost: basicShippingCost || 0,
-          regionalShippingCost: regionalShippingCost || 0,
-          totalIndividualShippingCost: totalIndividualShippingCost || 0,
-          totalGrossAmount: totalGrossAmount || 0,
-          priceToFreeBasicShipping: priceToFreeBasicShipping || 0,
+          totalProductAmountStore: isCheckOutTargetFlag
+            ? totalProductAmountStore || 0
+            : 0,
+          totalProductAmountEc: isCheckOutTargetFlag
+            ? totalProductAmountEc || 0
+            : 0,
+          basicShippingCost: isCheckOutTargetFlag ? basicShippingCost || 0 : 0,
+          regionalShippingCost: isCheckOutTargetFlag
+            ? regionalShippingCost || 0
+            : 0,
+          totalIndividualShippingCost: isCheckOutTargetFlag
+            ? totalIndividualShippingCost || 0
+            : 0,
+          totalGrossAmount: isCheckOutTargetFlag ? totalGrossAmount || 0 : 0,
+          priceToFreeBasicShipping: isCheckOutTargetFlag
+            ? priceToFreeBasicShipping || 0
+            : 0,
         },
         storeItemCount,
         shippingItemCount,
@@ -868,7 +890,8 @@ export class CartCommonService {
             orderSpecification,
             productItems,
           );
-
+        delete productItemValue.checkoutId;
+        delete productItemValue.checkoutStatus;
         return {
           status: StatusCode.SUCCESS,
           needsItemCreation,
@@ -1068,167 +1091,108 @@ export class CartCommonService {
   }
 
   /**
-   * @param {cartData} array - Array of productitems object
-   * @param {selectedItems} array - Array of selectedItems strings
-   * @return {object}
+   * @param {productItems} array<ProductItem> - array of ProductItem object
+   * @param {itemId} string - itemId
+   *
+   * @return {array<object>}
    */
-  public async checkoutCanBeStarted(
-    cartData: Array<ProductItem>,
-    selectedItems: Array<string>,
-  ): Promise<CheckOutCanBeStarted> {
-    const failStatus = {
-      status: StatusCode.FAILURE,
-      isValid: false,
-      checkoutItems: null,
-    };
-    this.logger.info('start: checkoutCanBeStarted');
-    if (
-      !cartData ||
-      cartData.length === 0 ||
-      !selectedItems ||
-      selectedItems.length === 0 ||
-      selectedItems.some((str) => str.length === 0 || !str) ||
-      cartData.some(
-        (obj) =>
-          !obj ||
-          Object.keys(obj).length === 0 ||
-          !obj.itemId ||
-          obj.itemId.length === 0,
-      ) ||
-      !(cartData.length === selectedItems.length)
-    ) {
-      return failStatus;
-    }
+  public deleteItemFromProductItems(
+    productItems: Array<ProductItem>,
+    itemId: string,
+  ) {
     try {
-      let isValid = true;
-      const checkoutItems = [];
-      const checkOutItemsData = cartData.filter((obj) =>
-        selectedItems.includes(obj.itemId),
+      this.logger.info('start: deleteItemFromProductItems');
+      const product = productItems.find(
+        (productObj) => productObj.itemId === itemId,
       );
-      checkOutItemsData.forEach((item) => {
-        if (item.isCheckoutTarget === true) {
-          checkoutItems.push(item);
-        } else {
-          isValid = false;
-        }
-      });
-      this.logger.info('end: checkoutCanBeStarted');
-      if (isValid && checkoutItems.length === selectedItems.length) {
-        return {
-          status: StatusCode.SUCCESS,
-          isValid,
-          checkoutItems,
-        };
+      if (!product) {
+        this.logger.info(
+          `itemId Id ${itemId} not found so returning productItems as it is `,
+        );
+        return productItems;
+      } else {
+        this.logger.info(
+          `itemId Id ${itemId}  found so deleting matching productItems and returning `,
+        );
+        productItems.splice(productItems.indexOf(product), 1);
+        return productItems;
       }
-      return failStatus;
     } catch (error) {
       this.commonService.logException(
-        'method checkoutCanBeStarted error',
+        'method deleteItemFromProductItems error',
         error,
       );
-      return failStatus;
+      throw new Error('Failed in deleteItemFromProductItems');
     }
   }
 
   /**
-   * @param {storeInfo} object - storeInfo object
-   * @param {isMember} boolean - set Member flag
-   * @param {isStorePaymentSelected} boolean - check In-store payment is selected
+   * @param {cartData} object - The data of items present in the cart
+   * @param {overwriteContent} object - The data that will be used to overwrite cart content
    * @return {object}
    */
-  public getSelectablePickUpLocation(
-    storeInfo: StoreInfoResponse,
-    isMember: boolean,
-    isStorePaymentSelected: boolean,
-  ): PickUpLocationResponse {
-    this.logger.info('start: getSelectablePickUpLocation');
-    try {
-      if (!storeInfo) {
-        this.logger.info(
-          'Either the property storeInfo object not passed or it may be null',
-        );
-        return { status: StatusCode.FAILURE };
-      } else if (!isMember && typeof isMember !== 'boolean') {
-        this.logger.info(
-          'the property isMember should be exist and be a boolean',
-        );
-        return { status: StatusCode.FAILURE };
-      } else if (
-        !isStorePaymentSelected &&
-        typeof isStorePaymentSelected !== 'boolean'
-      ) {
-        this.logger.info(
-          'the property isStorePaymentSelected should be exist and be a boolean',
-        );
-        return { status: StatusCode.FAILURE };
-      } else {
-        this.checkStoreMasterAvailableFlag(
-          storeInfo,
-          isStorePaymentSelected,
-          isMember,
-        );
-      }
-      this.logger.info('end: getSelectablePickUpLocation');
-      return {
-        status: StatusCode.SUCCESS,
-        supportPickupInnerLocker: storeInfo.detail.supportPickupInnerLocker,
-        supportPickupPlace: storeInfo.detail.supportPickupPlace,
-        supportPickupPlaceParking: storeInfo.detail.supportPickupPlaceParking,
-      };
-    } catch (e: any) {
-      this.commonService.logException(
-        'while checking Selectable PickUpLocations for store getting error',
-        `${e.message}`,
-      );
-      return { status: StatusCode.FAILURE };
+  public async overwriteCartContents(
+    cartData: CartData,
+    overwriteContent: OverwriteContent,
+  ): Promise<OverwriteContents> {
+    const failStatus = {
+      status: 0,
+      cartData: null,
+    };
+    if (!cartData) {
+      return failStatus;
     }
-  }
-
-  public checkStoreMasterAvailableFlag(
-    storeInfo: StoreInfoResponse,
-    isStorePaymentSelected: boolean,
-    isMember: boolean,
-  ) {
-    if (
-      storeInfo?.detail?.supportPickupInnerLocker === true &&
-      storeInfo?.detail?.supportPickupPlace === true &&
-      storeInfo?.detail?.supportPickupPlaceParking === true
-    ) {
-      if (isStorePaymentSelected === true) {
-        if (isMember === true) {
-          this.logger.info(`chosen isStorePaymentSelected && isMember is true`);
-          storeInfo.detail.supportPickupInnerLocker = true;
-          storeInfo.detail.supportPickupPlace = true;
-          storeInfo.detail.supportPickupPlaceParking = true;
-        } else if (isMember === false) {
-          this.logger.info(
-            `chosen isStorePaymentSelected is true && isMember is false`,
+    try {
+      this.logger.info('start: overwriteCartContents');
+      if (
+        overwriteContent &&
+        overwriteContent.productItems &&
+        overwriteContent.productItems.length > 0
+      ) {
+        overwriteContent.productItems.forEach((overwriteItem) => {
+          const matchingCartItem = cartData.productItems.find(
+            (cartItem) => cartItem.itemId === overwriteItem.itemId,
           );
-          storeInfo.detail.supportPickupInnerLocker = true;
-          storeInfo.detail.supportPickupPlace = false;
-          storeInfo.detail.supportPickupPlaceParking = false;
-        }
-      } else if (isStorePaymentSelected === false) {
-        if (isMember === true || isMember === false) {
-          this.logger.info(
-            `chosen isStorePaymentSelected is false && isMember is true or false`,
-          );
-          storeInfo.detail.supportPickupInnerLocker = true;
-          storeInfo.detail.supportPickupPlace = false;
-          storeInfo.detail.supportPickupPlaceParking = false;
-        }
+          if (matchingCartItem) {
+            if (
+              matchingCartItem.quantity !== overwriteItem.quantity ||
+              matchingCartItem.receivingMethod !== overwriteItem.receivingMethod
+            ) {
+              delete overwriteItem.checkoutId;
+              delete overwriteItem.checkoutStatus;
+            }
+          }
+        });
+        cartData.productItems = overwriteContent.productItems;
       }
-    } else if (
-      storeInfo?.detail?.supportPickupInnerLocker === false ||
-      storeInfo?.detail?.supportPickupPlace === false ||
-      storeInfo?.detail?.supportPickupPlaceParking === false
-    ) {
-      this.logger.info(
-        `If any store master flag is false in store Info then set supportPickupInnerLocker,supportPickupPlace,supportPickupPlaceParking to false`,
+
+      if (
+        overwriteContent &&
+        overwriteContent.storeCode &&
+        overwriteContent.storeCode.length > 0
+      ) {
+        cartData.storeCode = overwriteContent.storeCode;
+      }
+      if (
+        overwriteContent &&
+        overwriteContent.shippingAddress &&
+        'zipCode' in overwriteContent.shippingAddress &&
+        'prefecture' in overwriteContent.shippingAddress &&
+        'city' in overwriteContent.shippingAddress
+      ) {
+        cartData.shippingAddress = overwriteContent.shippingAddress;
+      }
+      this.logger.info('end: overwriteCartContents');
+      return {
+        status: 1,
+        cartData,
+      };
+    } catch (error) {
+      this.commonService.logException(
+        'method overwriteCartContents error',
+        error,
       );
-      storeInfo.detail.supportPickupInnerLocker = false;
-      storeInfo.detail.supportPickupPlace = false;
-      storeInfo.detail.supportPickupPlaceParking = false;
+      return failStatus;
     }
   }
 }

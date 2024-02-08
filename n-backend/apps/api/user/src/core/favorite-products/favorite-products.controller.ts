@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpException,
   HttpCode,
   HttpStatus,
   Post,
@@ -12,7 +11,7 @@ import {
   Query,
   Body,
 } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { MemberAuthGuard } from '@cainz-next-gen/guard';
 import { Claims } from '@cainz-next-gen/types';
 import { CommonService } from '@cainz-next-gen/common';
 import { LoggingService } from '@cainz-next-gen/logging';
@@ -25,7 +24,6 @@ import {
   FavoriteProductsAvailabilityResponseObject,
   FavoriteProductsResponseObject,
 } from './interfaces/favorite-products.interface';
-import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import { RegisterFavoriteProductsParamDto } from './dto/register.favorite-products-param.dto';
 import { ReadFavoriteProductsService } from './read.favorite-products/read.favorite-products.service';
 import { RegisterFavoriteProductsService } from './register.favorite-products/register.favorite-products.service';
@@ -47,7 +45,7 @@ export class FavoriteProductsController {
   ) {}
 
   @Get('/')
-  @UseGuards(AuthGuard)
+  @UseGuards(MemberAuthGuard)
   public async getFavoriteProducts(
     @Req() req: Request & { claims?: Claims },
     @Query() getFavoriteProductsQueryDto: GetFavoriteProductsQueryDto,
@@ -97,7 +95,7 @@ export class FavoriteProductsController {
 
   @Post('/')
   @HttpCode(HttpStatus.CREATED)
-  @UseGuards(AuthGuard)
+  @UseGuards(MemberAuthGuard)
   public async registerFavoriteProducts(
     @Req() req: Request & { claims?: Claims },
     @Body() registerFavoriteProductsParamDto: RegisterFavoriteProductsParamDto,
@@ -105,8 +103,6 @@ export class FavoriteProductsController {
   ) {
     const userClaims: Claims = req.claims;
     const { encryptedMemberId } = userClaims;
-
-    this.assertEncryptedMemberIdExists(encryptedMemberId);
 
     const targetFavoriteDoc =
       await this.registerFavoriteProductsService.getTargetFavoriteDoc(
@@ -140,7 +136,7 @@ export class FavoriteProductsController {
   }
 
   @Delete('/')
-  @UseGuards(AuthGuard)
+  @UseGuards(MemberAuthGuard)
   public async deleteFavoriteProducts(
     @Headers('x-correlation-id') correlationId: string,
     @Req() req: Request & { claims?: Claims },
@@ -150,8 +146,6 @@ export class FavoriteProductsController {
     const { encryptedMemberId } = userClaims;
     const { productIds } = deleteFavoriteProductsParamDto;
     let { mylistId } = deleteFavoriteProductsParamDto;
-
-    this.assertEncryptedMemberIdExists(encryptedMemberId);
 
     if (typeof mylistId === 'undefined') {
       // mylistIdがパラメータで指定されなかった場合は規定のmylistIdを取得
@@ -198,18 +192,6 @@ export class FavoriteProductsController {
     };
   }
 
-  private assertEncryptedMemberIdExists(encryptedMemberId: string) {
-    if (typeof encryptedMemberId === 'undefined' || encryptedMemberId === '') {
-      throw new HttpException(
-        {
-          errorCode: ErrorCode.FAVORITE_PRODUCTS_DELETE_CLAIM_EMPTY,
-          message: ErrorMessage[ErrorCode.FAVORITE_PRODUCTS_DELETE_CLAIM_EMPTY],
-        },
-        HttpStatus.UNAUTHORIZED,
-      );
-    }
-  }
-
   // TODO: Mule側の実装が完了していないためoffset/limitによる制御は保留としている
   private async convertToFavoriteProductsResponse(
     favoriteProducts: MuleFavoriteProductReadResponseSuccess[],
@@ -239,7 +221,7 @@ export class FavoriteProductsController {
   }
 
   @Get('/availability/')
-  @UseGuards(AuthGuard)
+  @UseGuards(MemberAuthGuard)
   public async getFavoriteProductsAvailability(
     @Req() req: Request & { claims?: Claims },
     @Query()

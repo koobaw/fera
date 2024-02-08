@@ -24,18 +24,19 @@ export interface CombinedData {
   mapUrl: string;
   productIds: {
     productId: string;
-    gondolaCount: number;
     gondolas: {
-      fill: string;
-      'fill-opacity': string;
-      height: string;
       id: string;
-      width: string;
-      x: string;
-      y: string;
       sections: TransformedLocation[];
     }[];
   }[];
+}
+
+export interface SqlData {
+  prd_cd?: string;
+  name?: string;
+  title?: string;
+  url?: string;
+  data?: string; // Assuming 'data' is a JSON string; if you need a more detailed structure, you can create a separate interface for it
 }
 
 export interface MuleErrorResponse {

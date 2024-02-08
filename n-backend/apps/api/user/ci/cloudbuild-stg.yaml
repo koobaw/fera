@@ -71,6 +71,8 @@ steps:
       ]
 images:
   - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA'
+options:
+  logging: CLOUD_LOGGING_ONLY
 substitutions:
   _HCL_FILE: 'shared/stg/backend.hcl'
   _HCL_ATTRIBUTE_NAME: 'user_service_image'

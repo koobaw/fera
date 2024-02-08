@@ -25,13 +25,17 @@ import {
 } from '@cainz-next-gen/types';
 import { FieldValue } from 'firebase-admin/firestore';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
-import { TokenData } from './interface/login.interface';
+import {
+  MuleMembershipReadResponseFailure,
+  MuleMembershipReadResponseSuccess,
+  TokenData,
+} from './interface/login.interface';
 
 @Injectable()
 export class LoginService {
   private readonly DEFAULT_MYSTORE_CODE = '813';
 
-  private readonly DEFAULT_USER_RANK = 'E';
+  private readonly DEFAULT_USER_RANK = '4';
 
   // TODO カートの移行?
   constructor(
@@ -42,7 +46,9 @@ export class LoginService {
     private readonly commonService: CommonService,
   ) {}
 
-  public async getUserInfo(salesforceUserId: string): Promise<string> {
+  public async getUserInfo(
+    salesforceUserId: string,
+  ): Promise<MuleMembershipReadResponseSuccess> {
     // salesforce_userIdをmule APIに渡して、ユーザー情報を取得
     this.logger.info('start getUserInfo');
     const muleCrmApiBaseUrl = this.env.get<string>('MULE_CRM_API_BASE_URL');
@@ -54,7 +60,7 @@ export class LoginService {
 
     const { data } = await firstValueFrom(
       this.httpService
-        .get(
+        .get<MuleMembershipReadResponseSuccess>(
           `${muleCrmApiBaseUrl}${muleCrmApiUserEndpoint}/${salesforceUserId}`,
           {
             headers: {
@@ -64,7 +70,7 @@ export class LoginService {
           },
         )
         .pipe(
-          catchError((error: AxiosError) => {
+          catchError((error: AxiosError<MuleMembershipReadResponseFailure>) => {
             this.commonService.logException('Mule API occurred Error', error);
             throw new HttpException(
               {
@@ -77,7 +83,7 @@ export class LoginService {
         ),
     );
     this.logger.info('end getUserInfo');
-    return data.cardNoContact;
+    return data;
   }
 
   public async saveToFirebaseAuthClaims(
@@ -105,6 +111,7 @@ export class LoginService {
     userId: string,
     encryptedMemberId: string,
     operatorName: string,
+    userInfo: MuleMembershipReadResponseSuccess,
   ) {
     this.logger.info('start transferToMember');
 
@@ -122,6 +129,8 @@ export class LoginService {
 
     const userDocumentSnapshot = await userDocumentRef.get();
     if (userDocumentSnapshot.exists) {
+      // rankの更新
+      await this.updateUserSchema(userDocumentRef, userInfo, operatorName);
       // 初回会員ログイン時のみ、匿名ユーザーのdocumentを会員用のdocumentに移す。２回目移行以降はスキップ
       this.logger.info(
         `${encryptedMemberId}:user document exists, which means already transferred to member once, so skip`,
@@ -135,6 +144,7 @@ export class LoginService {
           userDocumentRef,
           anonymousUserDocumentSnapshot.data() as AnonymousUser,
           operatorName,
+          userInfo,
         );
 
         await Promise.all(
@@ -156,7 +166,11 @@ export class LoginService {
       } else {
         // 基本的にここの処理は通らないはず
         this.logger.warn(`${userId}:anonymous user document does not exist!!!`);
-        await this.initialUser(anonymousUserDocumentRef, operatorName);
+        await this.initialUser(
+          anonymousUserDocumentRef,
+          operatorName,
+          userInfo,
+        );
       }
       await this.initialMyStore(myStoreDocumentRef, operatorName);
       await this.firestoreBatchService.batchCommit();
@@ -168,6 +182,7 @@ export class LoginService {
     userDocumentRef: FirebaseFirestore.DocumentReference,
     anonymousUserData: AnonymousUser,
     operatorName: string,
+    userInfo?: MuleMembershipReadResponseSuccess,
   ) {
     this.logger.info('start initialUserFromAnonymousUser');
     const userData: User = {
@@ -182,7 +197,7 @@ export class LoginService {
       lastCheckTvTime: anonymousUserData.lastCheckTvTime ?? null,
       reviewDisable: anonymousUserData.reviewDisable ?? false,
       reviewSkipAt: anonymousUserData.reviewSkipAt ?? null,
-      rank: this.DEFAULT_USER_RANK,
+      rank: userInfo.membershipLevel ?? this.DEFAULT_USER_RANK,
       cartInUse: null,
       createdAt: FieldValue.serverTimestamp(),
       createdBy: operatorName,
@@ -198,6 +213,7 @@ export class LoginService {
   private async initialUser(
     userDocumentRef: FirebaseFirestore.DocumentReference,
     operatorName: string,
+    userInfo: MuleMembershipReadResponseSuccess,
   ) {
     this.logger.info('start initialUser');
     const userData: User = {
@@ -209,7 +225,7 @@ export class LoginService {
       lastCheckTvTime: null,
       reviewDisable: false,
       reviewSkipAt: null,
-      rank: this.DEFAULT_USER_RANK,
+      rank: userInfo.membershipLevel ?? this.DEFAULT_USER_RANK,
       cartInUse: null,
       createdAt: FieldValue.serverTimestamp(),
       createdBy: operatorName,
@@ -269,5 +285,23 @@ export class LoginService {
     this.logger.info(
       `end copyAndDeleteOriginalCollection(${sourceCollectionRef.id})`,
     );
+  }
+
+  private async updateUserSchema(
+    userDocRef: FirebaseFirestore.DocumentReference,
+    userInfo: MuleMembershipReadResponseSuccess,
+    operatorName: string,
+  ) {
+    const userSchemaData = (await userDocRef.get()).data() as User;
+    const updateUserSchema: User = {
+      ...userSchemaData,
+      rank: userInfo.membershipLevel,
+      updatedBy: operatorName,
+      updatedAt: FieldValue.serverTimestamp(),
+    };
+    await this.firestoreBatchService.batchSet(userDocRef, updateUserSchema, {
+      merge: true,
+    });
+    await this.firestoreBatchService.batchCommit();
   }
 }

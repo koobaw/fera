@@ -7,6 +7,9 @@ import { HttpService } from '@nestjs/axios';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
+import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { USERS_COLLECTION_NAME, User } from '@cainz-next-gen/types';
+import { FieldValue } from '@google-cloud/firestore';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import {
   MuleMembershipRecord,
@@ -20,14 +23,13 @@ export class PrivateProfileService {
     private readonly commonService: CommonService,
     private readonly httpService: HttpService,
     private readonly logger: LoggingService,
+    private readonly firestoreBatchService: FirestoreBatchService,
   ) {}
 
-  public async getPrivateProfile(
-    salesforceUserId: string,
-  ): Promise<PrivateProfile> {
-    const membershipRecord = await this.getMuleMembershipRecord(
-      salesforceUserId,
-    );
+  public convertProfileFromUMembershipRecord(
+    membershipRecord: MuleMembershipRecord,
+    targets?: string[],
+  ): PrivateProfile {
     const privateProfile: PrivateProfile = {
       lastNameKana: membershipRecord.lastKana,
       firstNameKana: membershipRecord.firstKana,
@@ -40,11 +42,54 @@ export class PrivateProfileService {
       address2: membershipRecord.address2,
       address3: membershipRecord.address3,
       memberId: membershipRecord.cardNoContact,
+      createdDate: membershipRecord.createdDate,
     };
+    // select response parameter based on query
+    if (targets?.length) {
+      Object.keys(privateProfile)
+        .filter((key) => !targets.includes(key))
+        .forEach((target) => {
+          delete privateProfile[target];
+        });
+    }
     return privateProfile;
   }
 
-  private async getMuleMembershipRecord(
+  public async updateUserSchema(
+    rank: string,
+    encryptedMemberId: string,
+    operatorName: string,
+  ) {
+    try {
+      this.logger.info('start updateUserSchema');
+      const userDocRef = this.firestoreBatchService
+        .findCollection(USERS_COLLECTION_NAME)
+        .doc(encryptedMemberId);
+      const userSchemaData: User = (await userDocRef.get()).data() as User;
+      const userUpdateSchema: User = {
+        ...userSchemaData,
+        rank,
+        updatedBy: operatorName,
+        updatedAt: FieldValue.serverTimestamp(),
+      };
+      await this.firestoreBatchService.batchSet(userDocRef, userUpdateSchema, {
+        merge: true,
+      });
+      await this.firestoreBatchService.batchCommit();
+    } catch (e) {
+      throw new HttpException(
+        {
+          errorCode: ErrorCode.FAILED_FIRESTORE_OPERATION,
+          message: ErrorMessage[ErrorCode.FAILED_FIRESTORE_OPERATION],
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    } finally {
+      this.logger.info('end updateUserSchema');
+    }
+  }
+
+  public async getMuleMembershipRecord(
     salesforceUserId: string,
   ): Promise<MuleMembershipRecord> {
     this.logger.info('start getMuleMembershipRecord');

@@ -9,7 +9,6 @@ import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
 import { MockAuthGuard } from '@cainz-next-gen/test';
 import { AuthGuard } from '@cainz-next-gen/guard';
 import { GlobalsModule } from '../../globals.module';
-import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import { PointController } from './point.controller';
 import { PointService } from './point.service';
 import { PointMuleApiService } from './point-mule-api/point-mule-api.service';
@@ -143,19 +142,6 @@ describe('PointController', () => {
         message: 'ok',
         data: result,
       });
-    });
-
-    it('should be thrown claim error', async () => {
-      await expect(
-        pointController.getPoint(<never>{
-          claims: {
-            userId: 'dummyUserId',
-            encryptedMemberId: undefined,
-          },
-        }),
-      ).rejects.toThrow(
-        ErrorMessage[ErrorCode.MEMBER_POINT_GET_CLAIM_MEMBER_NOT_FOUND],
-      );
     });
   });
 });

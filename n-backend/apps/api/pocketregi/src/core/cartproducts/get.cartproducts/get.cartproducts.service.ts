@@ -20,6 +20,7 @@ import {
   GetDiscountedPriceResponseMule,
   ProductIdsAndQuantity,
 } from '../interfaces/getdiscountedPrice.interface';
+import { Code128 } from '../interfaces/cartproducts.interface';
 
 @Injectable()
 export class CartProductsService {
@@ -51,18 +52,15 @@ export class CartProductsService {
     if (cartProductsFromFirestore) {
       const cartProducts =
         cartProductsFromFirestore.products as Array<CartProducts>;
-
       // Get all the productIds and quantity to send to discountprice api / すべての productId と数量を取得して、discountprice API に送信します
       const productIdsAndQuantity: ProductIdsAndQuantity[] =
         this.pocketregiCartUtilService.getProductIdsAndQuantity(cartProducts);
-
       const discountedPriceForProducts: GetDiscountedPriceResponseMule =
         await this.getDiscountedPriceApiService.getDiscountedPriceFromMule(
           storeCode,
           productIdsAndQuantity,
           membershipRank,
         );
-
       if (discountedPriceForProducts === null) {
         this.commonService.createHttpException(
           ErrorCode.DETAIL_NG_NOT_FOUND,
@@ -198,6 +196,9 @@ export class CartProductsService {
           // 売上タイプが 0 または 1 であるため、結合された製品の詳細に subtotalmount フィールドが追加されます。
           const finalDataToSave = {
             subtotalAmount: discountProduct.subtotalAmount,
+            subItems: [],
+            mixMatchCode: null,
+            setItemCode: null,
             ...saveData,
           };
           productDetail = finalDataToSave;
@@ -223,10 +224,13 @@ export class CartProductsService {
         // merge the new subitems field which has price and product details with other details from discount mule api
         // 価格と製品の詳細を含む新しいサブアイテムフィールドを、割引ミュール API の他の詳細とマージします。
         productDetail = {
-          ...(discountProduct.mixMatchCode
-            ? { mixMatchCode: discountProduct.mixMatchCode }
-            : { setItemCode: discountProduct.setItemCode }),
           subtotalAmount: discountProduct.subtotalAmount,
+          mixMatchCode: discountProduct.mixMatchCode
+            ? discountProduct.mixMatchCode
+            : null,
+          setItemCode: discountProduct.setItemCode
+            ? discountProduct.setItemCode
+            : null,
           subItems: mergedData,
         };
       }
@@ -250,7 +254,7 @@ export class CartProductsService {
   private applyDiscount(dataBeforeDiscount: CartProducts[]): CartProducts[] {
     const productsAfterDiscount = dataBeforeDiscount.map((prodToApply) => {
       let finalObjectAfterDiscount;
-      if (!prodToApply.subItems) {
+      if (!prodToApply.subItems || !prodToApply.subItems.length) {
         // only if product has discount sticker details apply discount else return the object
         // 製品に割引ステッカーの詳細がある場合のみ割引を適用し、それ以外の場合はオブジェクトを返します
         if (prodToApply.code128DiscountDetails) {
@@ -380,9 +384,9 @@ export class CartProductsService {
     unitPrice: number,
   ) {
     let discountPrice: number;
-    if (discountMethod === '02') {
+    if (discountMethod === Code128.YEN) {
       discountPrice = discount;
-    } else if (discountMethod === '03') {
+    } else if (discountMethod === Code128.PERCENT) {
       discountPrice = unitPrice * (discount / 100);
     }
     return discountPrice;

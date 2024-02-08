@@ -113,7 +113,7 @@ describe('anonymousService', () => {
       const expectedUser = {
         id: anonymousUserId,
         userType: DEFAULT_USER_TYPE,
-        storeCodeInUse: '813',
+        storeCodeInUse: '814',
         legacyMemberId: null,
         lastApplicationStartDate: null,
         lastCheckCampaignTime: null,

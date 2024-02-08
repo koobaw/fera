@@ -43,3 +43,31 @@ Authorization: Bearer {{$dotenv bearer}}
   "memo": "{{memo}}",
   "ownerId": "{{ownerId}}"
 }
+
+### Update Parameter
+
+@addressId = 4f5c57f2-5727-4d22-b4c9-1e4f3341d2f6
+
+PUT {{base}}/{{version}}/users/addresses/{{addressId}}
+Content-Type: application/json
+
+{
+  "isFavorite": true,
+  "title": "{{title}}",
+  "firstName": "{{firstName}}",
+  "lastName": "{{lastName}}",
+  "firstNameKana": "{{firstNameKana}}",
+  "lastNameKana": "{{lastNameKana}}",
+  "zipCode": "{{zipCode}}",
+  "prefecture": "{{prefecture}}",
+  "address1": "{{address1}}",
+  "address2": "{{address2}}",
+  "address3": "{{address3}}",
+  "phone": "{{phone}}",
+  "phone2": "{{phone2}}",
+  "email": "{{email}}",
+  "companyName": "{{companyName}}",
+  "departmentName": "{{departmentName}}",
+  "memo": "{{memo}}",
+  "ownerId": "{{ownerId}}"
+}

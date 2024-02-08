@@ -1,0 +1,65 @@
+steps:
+  - name: node:$_NODE_VERSION
+    entrypoint: npm
+    args: ['install']
+  - name: node:$_NODE_VERSION
+    entrypoint: npm
+    args: ['run', 'test', '--', '--scope', '${_SCOPE}']
+  - name: gcr.io/cloud-builders/docker
+    args:
+      [
+        'build',
+        '-f',
+        '$_DOCKER_FILE',
+        '-t',
+        'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA',
+        '--build-arg',
+        'SERVICE_NAME=${_SERVICE_NAME}',
+        '--build-arg',
+        'ENV_CONFIG_FILE_NAME=${_ENV_CONFIG_FILE_NAME}',
+        '.',
+      ]
+  - name: gcr.io/cloud-builders/docker
+    args:
+      [
+        'push',
+        'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA',
+      ]
+  # NOTE:`bash -c`を利用しない配列で書くパターンだと、Secret経由の環境変数を埋め込めなかった
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud run jobs deploy $_SERVICE_NAME \
+        --service-account ${_SERVICE_NAME}-service@${PROJECT_ID}.iam.gserviceaccount.com \
+        --image asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA \
+        --region ${_LOCATION} \
+        --memory 2Gi \
+        --set-env-vars=PROJECT_ID=$PROJECT_ID
+    secretEnv: []
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+    args:
+      [
+        'gcloud',
+        'builds',
+        'triggers',
+        'run',
+        '${_E2E_TRIGGER_NAME}',
+        '--branch=${BRANCH_NAME}',
+        '--project=${PROJECT_ID}',
+        '--region=${_LOCATION}',
+      ]
+images:
+  - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA'
+options:
+  logging: CLOUD_LOGGING_ONLY
+substitutions:
+  _SERVICE_NAME: 'description-import'
+  _DOCKER_FILE: 'apps/batch/description-import/Dockerfile'
+  _ENV_CONFIG_FILE_NAME: '.env.prd'
+  _NODE_VERSION: '18.16.0'
+  _SCOPE: 'description-import'
+  _LOCATION: 'asia-northeast1'
+  _E2E_TRIGGER_NAME: 'description-import-e2e'
+  _WORKFLOW_NAME: 'description-import'

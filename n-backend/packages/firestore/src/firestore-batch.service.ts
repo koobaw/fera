@@ -3,6 +3,7 @@ import {
   CollectionReference,
   DocumentData,
   Firestore,
+  CollectionGroup,
 } from '@google-cloud/firestore';
 import { Inject, Injectable, Scope } from '@nestjs/common';
 
@@ -34,6 +35,13 @@ export class FirestoreBatchService {
    */
   findCollection(collectionName: string): CollectionReference<DocumentData> {
     return this.db.collection(collectionName);
+  }
+
+  /**
+   * Finds collection group / コレクショングループを検索します
+   */
+  findCollectionGroup(collectionName: string): CollectionGroup<DocumentData> {
+    return this.db.collectionGroup(collectionName);
   }
 
   /**

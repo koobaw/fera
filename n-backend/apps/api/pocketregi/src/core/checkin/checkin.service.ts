@@ -8,6 +8,7 @@ import {
   STORES_COLLECTION_NAME,
   STORES_DETAIL_COLLECTION_NAME,
   POCKET_REGI_CART_PRODUCTS_COLLECTION_NAME,
+  POCKET_REGI_CART_PRODUCTS_SUB_COLLECTION_NAME,
 } from '@cainz-next-gen/types';
 import { FieldValue } from '@google-cloud/firestore';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
@@ -18,16 +19,6 @@ import { PocketRegiCheckinCommonService } from '../../utils/checkin.utils';
 
 @Injectable()
 export class CheckinService {
-  private readonly USERS_COLLECTION_NAME = USERS_COLLECTION_NAME;
-
-  private readonly USERS_POKETREGI_CART_PRODUCTS_COLLECTION_NAME =
-    POCKET_REGI_CART_PRODUCTS_COLLECTION_NAME;
-
-  private readonly STORE_COLLECTION_NAME = STORES_COLLECTION_NAME;
-
-  private readonly STORE_DETAILS_COLLECTION_NAME =
-    STORES_DETAIL_COLLECTION_NAME;
-
   constructor(
     private readonly logger: LoggingService,
     private readonly commonService: CommonService,
@@ -38,14 +29,14 @@ export class CheckinService {
   /**
    * Main service method for pocket regi check in / ポケットレジチェックインの主なサービス方法
    * @param qrCodeData string value / 文字列値
-   * @param checkInTime string value / 文字列値
    * @param encryptedMemberId string value / 文字列値
+   * @param operatorName system name which gets saved in firestore / Firestoreに保存されるシステム名
    * @returns promise of object CheckinResponse / オブジェクト CheckinResponse の約束
    */
   public async pocketRegiCheckIn(
     qrCodeData: string,
-    checkInTime: string,
     encryptedMemberId: string,
+    operatorName: string,
   ): Promise<CheckinResponse> {
     this.logger.info('pocket regi check in starts');
 
@@ -55,17 +46,6 @@ export class CheckinService {
         {
           errorCode: ErrorCode.INVALID_SHOP_CODE,
           message: ErrorMessage[ErrorCode.INVALID_SHOP_CODE],
-        },
-        HttpStatus.BAD_REQUEST,
-      );
-    }
-
-    // validating proper check in date format
-    if (!this.checkInUtils.validateAllowedCheckInDate(checkInTime)) {
-      throw new HttpException(
-        {
-          errorCode: ErrorCode.INVALID_CHECKIN_TIME,
-          message: ErrorMessage[ErrorCode.INVALID_CHECKIN_TIME],
         },
         HttpStatus.BAD_REQUEST,
       );
@@ -98,17 +78,13 @@ export class CheckinService {
     }
 
     const resObj: CheckinResponse = {
-      data: {
-        storeName: docs.data.name,
-        storeCode: docs.data.code,
-        storeAddress: docs.data.address,
-      },
-      code: HttpStatus.OK,
+      code: HttpStatus.CREATED,
       message: 'OK',
     };
 
     // アプリからのアクセスの場合firestoreに格納する
-    this.saveToFirestore(encryptedMemberId, checkInTime, docs.shopcode);
+    const storeCode = docs.shopcode;
+    this.saveToFirestore(encryptedMemberId, storeCode, operatorName);
 
     this.logger.info('pocket regi check in ends');
 
@@ -127,7 +103,7 @@ export class CheckinService {
       const docId = this.commonService.createMd5(shopcode);
 
       const { doc, docRef } = await this.checkInUtils.getDocumentFromCollection(
-        this.STORE_COLLECTION_NAME,
+        STORES_COLLECTION_NAME,
         docId,
       );
       if (!doc) {
@@ -139,7 +115,7 @@ export class CheckinService {
 
       const { subDoc } = await this.checkInUtils.getDocumentFromSubCollection(
         docRef,
-        this.STORE_DETAILS_COLLECTION_NAME,
+        STORES_DETAIL_COLLECTION_NAME,
         shopcode,
       );
       if (!subDoc) {
@@ -164,7 +140,7 @@ export class CheckinService {
       };
     } catch (e: unknown) {
       this.commonService.logException(
-        `Getting data from to firestore/${this.STORE_COLLECTION_NAME} is failed`,
+        `Getting data from to firestore/${STORES_COLLECTION_NAME} is failed`,
         e,
       );
       throw new HttpException(
@@ -180,39 +156,41 @@ export class CheckinService {
   /**
    * saving check in time to firestore database & empt cart products poket regi cart products collection / Firestore データベースへのチェックイン時間を節約し、カート製品を空にする ポケット レジ カート製品コレクション
    * @param docId string value / 文字列値
-   * @param checkInTime string value / 文字列値
-   * @param shopcode string value / 文字列値
+   * @param storeCode storecode string value /ストアコード文字列値
+   * @param operatorName system name which gets saved in firestore / Firestoreに保存されるシステム名
    */
   public async saveToFirestore(
     docId: string,
-    checkInTime: string,
-    shopcode: string,
+    storeCode: string,
+    operatorName: string,
   ) {
     this.logger.info('start saveToFirestore(pocket regi check in)');
-    const collectionName = this.USERS_COLLECTION_NAME;
-    const subCollectionName =
-      this.USERS_POKETREGI_CART_PRODUCTS_COLLECTION_NAME;
+    const collectionName = USERS_COLLECTION_NAME;
+    const subCollectionName = POCKET_REGI_CART_PRODUCTS_COLLECTION_NAME;
     try {
       const docRef = this.checkInUtils.getFirestoreDocRef(
         collectionName,
         docId,
       );
-
-      const subDocId = this.commonService.createMd5(shopcode);
+      const subDocId = POCKET_REGI_CART_PRODUCTS_SUB_COLLECTION_NAME;
       const subDocRef = this.checkInUtils.getFirestoreSubDocRef(
         docRef,
         subCollectionName,
         subDocId,
       );
 
-      const formattedCheckInTime = new Date(checkInTime);
-
       const data = {
         products: [],
         totalAmount: 0,
         totalQuantity: 0,
-        checkInAt: formattedCheckInTime,
+        storeCode,
+        cartLockUntil: null,
+        productUpdatedAt: null,
+        checkInAt: FieldValue.serverTimestamp(),
+        createdAt: FieldValue.serverTimestamp(),
+        createdBy: operatorName,
         updatedAt: FieldValue.serverTimestamp(),
+        updatedBy: operatorName,
       };
 
       await this.firestoreBatchService.batchSet(subDocRef, data, {

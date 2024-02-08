@@ -8,6 +8,7 @@ import {
 } from '@cainz-next-gen/types';
 import { LoggingService } from '@cainz-next-gen/logging';
 import { CommonService } from '@cainz-next-gen/common';
+
 import { SearchStoreDto } from './dto/searchStore.dto';
 import {
   SearchApiResponse,
@@ -38,6 +39,7 @@ export class SearchService {
       name: it.name,
       address: it.address,
       businessTime: it.businessTime,
+      selectable: this.isSelectable(it),
     }));
 
     return result;
@@ -96,5 +98,61 @@ export class SearchService {
     this.logger.debug('end fetchAllStoreDetails');
 
     return storeDetails;
+  }
+
+  private isSelectable(storeDetail: StoreIncludingDetail): boolean {
+    const nowDate = new Date();
+    const openDate = storeDetail.detail.openingDate.toDate();
+    const closeDate = storeDetail.detail.closingDate.toDate();
+    const renovationDateFrom =
+      storeDetail.detail.renovationDateFrom?.toDate() ?? null;
+    const renovationDateTo =
+      storeDetail.detail.renovationDateTo?.toDate() ?? null;
+    const temporarilyClosedFrom =
+      storeDetail.detail.temporarilyClosedFrom?.toDate() ?? null;
+    const temporarilyClosedTo =
+      storeDetail.detail.temporarilyClosedTo?.toDate() ?? null;
+
+    let isSelectable = false;
+
+    // 開店中
+    const isOpen = this.checkOnGoing(openDate, closeDate);
+
+    // 改装中
+    const isRenovate = this.checkOnGoing(renovationDateFrom, renovationDateTo);
+
+    // 一時閉店中
+    const isTemporarilyClose = this.checkOnGoing(
+      temporarilyClosedFrom,
+      temporarilyClosedTo,
+    );
+
+    if (isOpen && !isRenovate && !isTemporarilyClose) {
+      // 開店中かつ改装中でも一時閉店中でもない場合
+      isSelectable = true;
+    }
+
+    if (nowDate < openDate) {
+      // プレオープンの場合
+      isSelectable = true;
+    }
+
+    return isSelectable;
+  }
+
+  private checkOnGoing(fromDate: Date | null, toDate: Date | null) {
+    const nowDate = new Date();
+    // 両方nullであれば期間外
+    if (fromDate === null && toDate === null) {
+      return false;
+    }
+    // どちらかがnullのケース
+    if (fromDate === null) {
+      return nowDate <= toDate;
+    }
+    if (toDate === null) {
+      return nowDate >= fromDate;
+    }
+    return nowDate >= fromDate && nowDate <= toDate;
   }
 }

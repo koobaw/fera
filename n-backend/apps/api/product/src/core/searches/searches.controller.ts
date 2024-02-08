@@ -2,6 +2,7 @@ import { Request } from 'express';
 import {
   Controller,
   Get,
+  HttpException,
   HttpStatus,
   Query,
   Req,
@@ -11,6 +12,7 @@ import { AuthGuard } from '@cainz-next-gen/guard';
 
 import { FindSearchesDto } from './dto/find.search-query.dto';
 import { SearchesService } from './searches.service';
+import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 
 @Controller('search')
 export class SearchController {
@@ -23,13 +25,20 @@ export class SearchController {
     @Query() findSearchesDto: FindSearchesDto,
   ) {
     const visitorIdHeader = request.headers['visitor-id'];
-
-    let visitorId = 'unknownUser';
-    if (visitorIdHeader) {
-      visitorId = Array.isArray(visitorIdHeader)
-        ? visitorIdHeader[0]
-        : visitorIdHeader;
+    if (!visitorIdHeader) {
+      throw new HttpException(
+        {
+          code: HttpStatus.INTERNAL_SERVER_ERROR,
+          errorCode: ErrorCode.SEARCH_VISITOR_ID_NOT_FOUND,
+          message: ErrorMessage[ErrorCode.SEARCH_VISITOR_ID_NOT_FOUND],
+        },
+        HttpStatus.BAD_REQUEST,
+      );
     }
+
+    const visitorId = Array.isArray(visitorIdHeader)
+      ? visitorIdHeader[0]
+      : visitorIdHeader;
 
     const data = await this.searchService.search(findSearchesDto, visitorId);
 

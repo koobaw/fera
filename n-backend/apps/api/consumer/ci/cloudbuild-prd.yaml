@@ -54,6 +54,8 @@ steps:
       ]
 images:
   - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA'
+options:
+  logging: CLOUD_LOGGING_ONLY
 substitutions:
   _SERVICE_NAME: 'consumer'
   _DOCKER_FILE: 'apps/api/consumer/Dockerfile'

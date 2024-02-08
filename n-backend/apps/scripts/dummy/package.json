@@ -7,7 +7,7 @@
   "scripts": {
     "generate": "npx ts-node src/main.ts",
     "clean": "rimraf dist",
-    "format": "prettier --write \"src/**/*.ts\" \"*.json\"",
+    "format": "prettier --write \"src/**/*.ts\"",
     "lint": "npm run format && eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {

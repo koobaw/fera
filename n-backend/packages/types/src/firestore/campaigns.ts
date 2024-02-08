@@ -5,8 +5,10 @@ export const CAMPAIGNS_COLLECTION_NAME = 'campaigns';
 
 export interface Campaign extends Auditable {
   title: string;
-  thumbnailUrl: string;
   campaignUrl: string;
-  startAt: Timestamp;
-  endAt: Timestamp;
+  startDate: Timestamp;
+  endDate: Timestamp | null;
+  publiclyAccessibleStartDate: Timestamp;
+  publiclyAccessibleEndDate: Timestamp;
+  thumbnailUrl: string;
 }

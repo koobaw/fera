@@ -41,6 +41,10 @@
       "path": "apps/api/geomagnetism"
     },
     {
+      "name": "notification",
+      "path": "apps/api/notification"
+    },
+    {
       "name": "scripts/dummy",
       "path": "apps/scripts/dummy"
     },
@@ -67,6 +71,10 @@
     {
       "name": "category-import",
       "path": "apps/batch/category-import"
+    },
+    {
+      "name": "interval-execution",
+      "path": "apps/batch/interval-execution"
     }
   ],
   "settings": {
@@ -85,6 +93,20 @@
       "tsconfig",
       "firestore",
       "scripts/dummy"
+    ],
+    "cSpell.words": [
+      "cainz",
+      "cainzapp",
+      "datetime",
+      "Dropship",
+      "firestore",
+      "mystore",
+      "mystores",
+      "ONLINESALESTYPE",
+      "protos",
+      "sfdc",
+      "SPECCATEGORIES",
+      "tonakai"
     ]
   }
 }

@@ -6,7 +6,7 @@ import { LoggingService } from '@cainz-next-gen/logging';
 import { FirestoreStructure } from '../types';
 import { makeAuditableFields } from './common/auditable';
 import { addCollectionData } from '../dummyGenerator';
-import { storeCodes } from './common/sources';
+import { storeCodes } from './data/storeCodes';
 
 const logger: LoggingService = new LoggingService();
 const commonService: CommonService = new CommonService(logger);

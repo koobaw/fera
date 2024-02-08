@@ -4,6 +4,7 @@ import { Claims } from 'packages/types/src/claims';
 export interface RegisterCardRequest {
   claims: Claims;
   token: string;
+  bearerToken: string;
 }
 
 export interface RegisterCard {

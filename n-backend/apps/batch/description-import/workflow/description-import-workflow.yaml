@@ -1,0 +1,75 @@
+# import test
+#
+main:
+  params: [event]
+  steps:
+    #各種設定
+    - init:
+        assign:
+          - project_id: ${sys.get_env("GOOGLE_CLOUD_PROJECT_ID")}
+          - event_bucket: ${event.data.bucket}
+          - event_file: ${event.data.name}
+          - job_name: description-import
+          - job_location: asia-northeast1
+          # 連携モード falseにするとstorageにファイルをアップしてもjobが起動しなくなる。(local環境などでの確認用)通常はtrueにすること
+          - relation_mode: true
+    #環境取得
+    - getenv_str:
+        assign:
+          - prj_arr: ${text.split(project_id, "-")}
+          - env_str: ${prj_arr[2]}
+    #バケット名設定
+    - set_bucket_name:
+        switch:
+          - condition: ${env_str == "backend"}
+            steps:
+              - set_bacnend_dev:
+                  assign:
+                    - target_bucket: backenddev-cainzapp-product-extend-description-jp
+                  next: check_input_bucket
+          - condition: ${env_str != "backend"}
+            steps:
+              - set_not_backend_dev:
+                  assign:
+                    - target_bucket: ${env_str + "-cainzapp-product-extend-description"}
+    #トリガバケットチェック
+    - check_input_bucket:
+        switch:
+          - condition: ${event_bucket == target_bucket}
+            next: logging_event
+          - condition: true
+            next: end
+    - logging_event:
+        call: sys.log
+        args:
+          text: ${"event_bucket:" + event_bucket + " event_file:" + event_file}
+          severity: DEBUG
+    - logging_job:
+        call: sys.log
+        args:
+          text: ${"job_name:" + job_name}
+          severity: DEBUG
+    #連携モードチェック
+    - check_relation_mode:
+        switch:
+          - condition: ${relation_mode == true}
+            next: run_job
+          - condition: true
+            next: end
+    #起動
+    - run_job:
+        call: googleapis.run.v1.namespaces.jobs.run
+        args:
+          name: ${"namespaces/" + project_id + "/jobs/" + job_name}
+          location: ${job_location}
+          body:
+            overrides:
+              containerOverrides:
+                env:
+                  - name: INPUT_BUCKET
+                    value: ${event_bucket}
+                  - name: INPUT_FILE
+                    value: ${event_file}
+        result: job_execution
+    - finish:
+        return: ${job_execution}

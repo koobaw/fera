@@ -12,6 +12,7 @@ import {
   Gondola,
   TransformedLocation,
   TransformedProduct,
+  SqlData,
 } from './interface/floormap.interface';
 import { FloorMapUtilService } from '../../utils/floormap-util.service';
 
@@ -41,71 +42,17 @@ export class FloormapService {
   ) {
     this.logger.debug('start get data from legacy DB');
 
-    const dbConfig = this.floorMapUtilService.getLegacyDbConfig();
-
     let data = [];
-    let connection;
-    try {
-      // Create a database connection using the provided configuration / 提供された設定を使用してデータベース接続を作成
-      connection = await mysql.createConnection(dbConfig);
-      // Get the SQL query for retrieving floor map data / フロアマップデータを取得するためのSQLクエリを取得
+    data = await this.getMapUrl(productIdArray, storeCode);
 
-      const sql =
-        productIdArray.length === 0
-          ? this.floorMapUtilService.getQueryWithoutProducts()
-          : this.floorMapUtilService.getQuery();
-      const finalSql: string = sql.replace(
-        /IN \(\?\)/g,
-        `IN ('${productIdArray.join("','")}')`,
-      );
-
-      // Define the parameters for the SQL query / SQLクエリのパラメータを定義
-      const queryParams = [
-        this.COMPANY_CODE,
-        Number(storeCode),
-        this.COMPANY_CODE,
-        Number(storeCode),
-        Number(storeCode),
-      ];
-      // Execute the SQL query with the specified parameters / 指定されたパラメータでSQLクエリを実行
-      const [rows] = await connection.execute(finalSql, queryParams);
-
-      // Convert the result into an array and store it in the 'data' variable / 結果を配列に変換し、'data'変数に格納
-      data = Object.values(JSON.parse(JSON.stringify(rows)));
-    } catch (e) {
-      this.commonService.logException(
-        `import  error. failed to connect legacy DB`,
-        e,
-      );
-      // Create an HTTP exception with appropriate error codes and status / 適切なエラーコードとステータスを持つHTTP例外を生成
-      this.commonService.createHttpException(
-        ErrorCode.FlOOR_MAP_CONNECT_LEGACY_DB,
-        ErrorMessage[ErrorCode.FlOOR_MAP_CONNECT_LEGACY_DB],
-        HttpStatus.FORBIDDEN,
-      );
-    } finally {
-      // Close the database connection, whether an exception occurred or not / 例外が発生しているかどうかに関係なくデータベース接続を閉じる
-      connection.end();
-    }
     let transformLocations = [];
     if (productIdArray.length !== 0) {
       const locations = await this.fetchLocations(productIdArray, storeCode);
       transformLocations = this.transformLocation(locations);
     }
-    // Create a set of existing prd_cd values / 既存の prd_cd 値のセットを作成する
-    const existingPrdCodes = new Set(data.map((item) => item.prd_cd));
-    let counter = 1;
-    // Check and add missing values / 欠損値を確認して追加する
-    productIdArray.forEach((productId) => {
-      if (!existingPrdCodes.has(productId)) {
-        const newObj = {
-          prd_cd: productId,
-          url: `undefined ${counter}`,
-        };
-        data.push(newObj);
-        counter++;
-      }
-    });
+
+    data = await this.addMissingProducts(data, productIdArray, storeCode);
+
     const combinedData = this.combineData(data, transformLocations);
     const output = {
       data: {
@@ -142,7 +89,9 @@ export class FloormapService {
     };
     // Get the base URL for the Mule API from environment variables and construct the full URL.
     // 環境変数からMule APIのベースURLを取得し、完全なURLを構築します。
-    const url = this.env.get<string>('MULE_FLOOR_MAP_API');
+    const baseUrl = `${this.env.get<string>('MULE_API_BASE_URL')}`;
+    const endPoint = `${this.env.get<string>('MULE_API_FLOOR_MAP_ENDPOINT')}`;
+    const url = `${baseUrl}${endPoint}`;
     const fullurl = `${url}/${storeCode}/locations`;
 
     // Make an HTTP GET request to the Mule API using the constructed URL, headers, and parameters.
@@ -181,7 +130,6 @@ export class FloormapService {
   ): CombinedData[] {
     this.logger.debug('start combine data from legacy DB and Mule API');
     const combinedData: { [key: string]: CombinedData } = {};
-
     // Combine gondolas with the same title / 同じタイトルのゴンドラを結合する
     gondolas.forEach((gondola) => {
       if (!combinedData[gondola.url]) {
@@ -194,8 +142,7 @@ export class FloormapService {
             : this.floorMapUtilService.getFullUrl(gondola.url),
           productIds: [
             {
-              productId: gondola.prd_cd,
-              gondolaCount: 0,
+              productId: gondola.prd_cd ? gondola.prd_cd : '',
               gondolas: [],
             },
           ],
@@ -211,8 +158,10 @@ export class FloormapService {
       // Check if gondola data is null. If true, initialize a new product entry with the product code and no associated gondolas.
       // ゴンドラデータがnullかどうかを確認します。trueの場合、製品コードと関連するゴンドラがない新しい製品エントリを初期化します。
       if (gondola.data == null) {
-        const productId = matchingLocation ? matchingLocation.productCode : '';
-        if (productId.length > 0) {
+        const productId = matchingLocation
+          ? matchingLocation.productCode
+          : gondola.prd_cd;
+        if (productId && productId.length > 0) {
           // Check if productId is already present / productId がすでに存在するかどうかを確認する
           const isProductIdPresent = productData.productIds.some(
             (product) => product.productId === productId,
@@ -220,7 +169,6 @@ export class FloormapService {
           if (!isProductIdPresent) {
             productData.productIds.push({
               productId,
-              gondolaCount: 0,
               gondolas: [],
             });
           }
@@ -252,13 +200,7 @@ export class FloormapService {
           const productId = matchingLocation.productCode;
 
           const gondolaData = {
-            fill: JSON.parse(gondola.data).fill,
-            'fill-opacity': JSON.parse(gondola.data)['fill-opacity'],
-            height: JSON.parse(gondola.data).height,
             id: JSON.parse(gondola.data).id,
-            width: JSON.parse(gondola.data).width,
-            x: JSON.parse(gondola.data).x,
-            y: JSON.parse(gondola.data).y,
             sections: matchingSections,
           };
           const existingProduct = productData.productIds.find(
@@ -272,12 +214,10 @@ export class FloormapService {
             );
             if (!isObjectAlreadyExists) {
               existingProduct.gondolas.push(gondolaData);
-              existingProduct.gondolaCount = existingProduct.gondolas.length;
             }
           } else {
             productData.productIds.push({
               productId,
-              gondolaCount: 1,
               gondolas: [gondolaData],
             });
           }
@@ -288,6 +228,176 @@ export class FloormapService {
     this.logger.debug('end combine data from legacy DB and Mule API');
     // Return an array of 'CombinedData' objects. / 「CombinedData」オブジェクトの配列を返します。
     return Object.values(combinedData);
+  }
+
+  /**
+   * Retrieves floor map data from the legacy database based on the provided parameters.
+   * プロバイダされたパラメータに基づいて、レガシーデータベースからフロアマップデータを取得します。
+   *
+   * @param {string[]} productIdArray - An array of product IDs for filtering the floor map data. / フロアマップデータをフィルタリングするための製品 ID の配列
+   * @param {string} storeCode - The store code to identify the specific store for fetching floor map data. / フロアマップデータを取得するための特定の店舗を識別するための店舗コード。
+   * @returns {Promise<SqlData[]>} - A promise that resolves to an array of floor map data. / フロア マップ データの配列に解決される Promise。
+   */
+  private async getMapUrl(
+    productIdArray: string[],
+    storeCode: string,
+  ): Promise<SqlData[]> {
+    this.logger.debug('start sql connection activity');
+    const dbConfig = this.floorMapUtilService.getLegacyDbConfig();
+
+    let data = [];
+    let connection;
+    try {
+      // Create a database connection using the provided configuration / 提供された設定を使用してデータベース接続を作成
+      connection = await mysql.createConnection(dbConfig);
+      // Get the SQL query for retrieving floor map data / フロアマップデータを取得するためのSQLクエリを取得
+      const sql =
+        productIdArray.length === 0
+          ? this.floorMapUtilService.getQueryWithoutProducts('')
+          : this.floorMapUtilService.getQuery('');
+
+      const finalSql: string = sql.replace(
+        /IN \(\?\)/g,
+        `IN ('${productIdArray.join("','")}')`,
+      );
+
+      // Define the parameters for the SQL query / SQLクエリのパラメータを定義
+      const queryParams = [
+        this.COMPANY_CODE,
+        Number(storeCode),
+        this.COMPANY_CODE,
+        Number(storeCode),
+        Number(storeCode),
+      ];
+      // Execute the SQL query with the specified parameters / 指定されたパラメータでSQLクエリを実行
+      const [rows] = await connection.execute(finalSql, queryParams);
+
+      // Convert the result into an array and store it in the 'data' variable / 結果を配列に変換し、'data'変数に格納
+      data = Object.values(JSON.parse(JSON.stringify(rows)));
+      await this.logExplain(productIdArray, storeCode, connection, 'EXPLAIN');
+      this.logger.debug('end sql connection activity');
+      return data;
+    } catch (e) {
+      this.commonService.logException(
+        `import  error. failed to connect legacy DB`,
+        e,
+      );
+      // Create an HTTP exception with appropriate error codes and status / 適切なエラーコードとステータスを持つHTTP例外を生成
+      throw new Error(ErrorMessage[ErrorCode.FlOOR_MAP_CONNECT_LEGACY_DB]);
+    } finally {
+      // Close the database connection, whether an exception occurred or not / 例外が発生しているかどうかに関係なくデータベース接続を閉じる
+      connection.end();
+    }
+  }
+
+  /**
+   * Adds missing products to the given data array based on the specified productIdArray and storeCode.
+   * 指定された productIdArray と storeCode に基づいて、欠落している製品を指定されたデータ配列に追加します。
+   *
+   * @param data - The existing array of product data. / 製品データの既存の配列。
+   * @param productIdArray - An array of product IDs. / 製品 ID の配列。
+   * @param storeCode - The store code associated with the product data. / 商品データに関連付けられた店舗コード。
+   * @returns A Promise resolving to an array of product data, including the added missing products. / 追加された不足している製品を含む、一連の製品データを解決する Promise。
+   */
+  private async addMissingProducts(
+    data: SqlData[],
+    productIdArray: string[],
+    storeCode: string,
+  ): Promise<SqlData[]> {
+    let completeData: SqlData[] = [];
+    completeData = data;
+    // Create a set of existing prd_cd values / 既存の prd_cd 値のセットを作成する
+    const existingPrdCodes = new Set(data.map((item) => item.prd_cd));
+    let counter = 1;
+    // Check and add missing values / 欠損値を確認して追加する
+    const mapData = productIdArray.map(async (productId) => {
+      if (!existingPrdCodes.has(productId)) {
+        let productObject = [];
+        // If it's the first iteration, fetch product data from the legacy database
+        // 最初のイテレーションの場合は、レガシーデータベースから製品データを取得
+        if (counter === 1) {
+          productObject = await this.getMapUrl([], storeCode);
+        }
+        // Create a new object with prd_cd, title, url, and null data
+        // prd_cd、title、url、および null データを持つ新しいオブジェクトを作成
+        const mapArray = productObject.map((product) => ({
+          prd_cd: productId,
+          title: product.title,
+          url: product.url,
+          data: null,
+        }));
+        counter++;
+        return mapArray;
+      }
+      return undefined;
+    });
+
+    // Wait for all promises in the array 'mapData' to resolve and store the results in 'newData'
+    // 配列 'mapData' のすべてのプロミスが解決するのを待ち、その結果を 'newData' に格納
+    let newData = await Promise.all(mapData);
+
+    // Filter out any undefined elements from 'newData'
+    // 'newData' から undefined の要素をフィルタリング
+    newData = newData.filter((element) => element !== undefined);
+    // Concatenate the existing 'data' array with the filtered 'newData' array
+    // 既存の 'data' 配列とフィルターされた 'newData' 配列を連結
+    if (newData && newData[0] && newData[0].length > 0) {
+      completeData = completeData.concat(...newData).flat();
+    }
+    // Sort data array based on the order of values in productIdArray
+    // productIdArray の値の順序に基づいてデータ配列を並べ替えます
+    completeData.sort((a, b) => {
+      const indexA = productIdArray.indexOf(a.prd_cd);
+      const indexB = productIdArray.indexOf(b.prd_cd);
+      return indexA - indexB;
+    });
+
+    return completeData;
+  }
+
+  /**
+   * Logs floor map data sql query details from the legacy database based on the provided parameters.
+   * 指定されたパラメータに基づいて、レガシー データベースからのフロア マップ データ SQL クエリの詳細をログに記録します。
+   *
+   * @param {string[]} productIdArray - An array of product IDs for filtering the floor map data. / フロアマップデータをフィルタリングするための製品 ID の配列
+   * @param {string} storeCode - The store code to identify the specific store for fetching floor map data. / フロアマップデータを取得するための特定の店舗を識別するための店舗コード。
+   * @param {string[]} connection - SQL connection to establish the connection between host and database for fetching the floor map data. / フロアマップデータを取得するためにホストとデータベース間の接続を確立するための SQL 接続。
+   * @param {string} query - Query element that used to concatenate with existing query structure / 既存のクエリ構造と連結するために使用されていたクエリ要素
+   */
+  private async logExplain(
+    productIdArray: string[],
+    storeCode: string,
+    connection: mysql.Connection,
+    query: string,
+  ) {
+    const sql =
+      productIdArray.length === 0
+        ? this.floorMapUtilService.getQueryWithoutProducts(query)
+        : this.floorMapUtilService.getQuery(query);
+
+    const finalSql: string = sql.replace(
+      /IN \(\?\)/g,
+      `IN ('${productIdArray.join("','")}')`,
+    );
+
+    // Define the parameters for the SQL query / SQLクエリのパラメータを定義
+    const queryParams = [
+      this.COMPANY_CODE,
+      Number(storeCode),
+      this.COMPANY_CODE,
+      Number(storeCode),
+      Number(storeCode),
+    ];
+    // Execute the SQL query with the specified parameters / 指定されたパラメータでSQLクエリを実行
+    const [rows] = await connection.execute(finalSql, queryParams);
+
+    // Convert the result into an array and store it in the 'data' variable / 結果を配列に変換し、'data'変数に格納
+    const log = Object.values(JSON.parse(JSON.stringify(rows)));
+
+    console.log(
+      'sql logs >>>',
+      log,
+    ); /* DONT REMOVE THIS LOG / このログは削除しないでください */
   }
 
   /**

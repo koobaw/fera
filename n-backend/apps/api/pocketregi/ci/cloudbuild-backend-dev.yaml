@@ -33,9 +33,23 @@ steps:
         --allow-unauthenticated \
         --set-env-vars=CRYPTO_KEY=$$CRYPTO_KEY \
         --set-env-vars=CRYPTO_IV=$$CRYPTO_IV \
-    secretEnv: ['CRYPTO_KEY', 'CRYPTO_IV']
+        --set-env-vars=MULE_POCKET_REGI_CLIENT_ID=$$MULE_POCKET_REGI_CLIENT_ID \
+        --set-env-vars=MULE_POCKET_REGI_CLIENT_SECRET=$$MULE_POCKET_REGI_CLIENT_SECRET \
+        --set-env-vars=POCKET_REGI_RETURN_CLIENT_ID=$$POCKET_REGI_RETURN_CLIENT_ID \
+        --set-env-vars=POCKET_REGI_RETURN_CLIENT_SECRET=$$POCKET_REGI_RETURN_CLIENT_SECRET
+    secretEnv:
+      [
+        'CRYPTO_KEY',
+        'CRYPTO_IV',
+        'MULE_POCKET_REGI_CLIENT_ID',
+        'MULE_POCKET_REGI_CLIENT_SECRET',
+        'POCKET_REGI_RETURN_CLIENT_ID',
+        'POCKET_REGI_RETURN_CLIENT_SECRET'
+      ]
 images:
   - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA'
+options:
+  logging: CLOUD_LOGGING_ONLY
 substitutions:
   _LOCATION: 'asia-northeast1'
   _SERVICE_NAME: 'pocketregi'
@@ -48,3 +62,11 @@ availableSecrets:
       env: 'CRYPTO_KEY'
     - versionName: projects/$PROJECT_ID/secrets/crypto_iv/versions/latest
       env: 'CRYPTO_IV'
+    - versionName: projects/$PROJECT_ID/secrets/mule_pocket_regi_client_id/versions/latest
+      env: 'MULE_POCKET_REGI_CLIENT_ID'
+    - versionName: projects/$PROJECT_ID/secrets/mule_pocket_regi_client_secret/versions/latest
+      env: 'MULE_POCKET_REGI_CLIENT_SECRET'
+    - versionName: projects/$PROJECT_ID/secrets/pocket_regi_return_client_id/versions/latest
+      env: 'POCKET_REGI_RETURN_CLIENT_ID'
+    - versionName: projects/$PROJECT_ID/secrets/pocket_regi_return_client_secret/versions/latest
+      env: 'POCKET_REGI_RETURN_CLIENT_SECRET'

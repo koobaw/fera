@@ -28,13 +28,13 @@ import {
   storeInfo,
   userInfo,
   checkNonDeliveryData,
-  bffCreditCardData,
   cartInUse,
   updateProductItems,
   shippingAddress,
 } from './BFF_data/data';
 import { StatusCode } from './constants/status-code';
 import {
+  GetEcTemplateResponse,
   InvalidWebBackOrderFlagValue,
   ProductItem,
 } from './interfaces/orderInterfaces.interface';
@@ -207,7 +207,7 @@ describe('OrderService', () => {
     it('should return store acquisition api information', () => {
       const result = service.getStore(['760']);
       const resultObj = {
-        data: bffStoreData,
+        data: [bffStoreData],
         status: 1,
       };
       expect(result).toEqual(resultObj);
@@ -856,6 +856,7 @@ describe('OrderService', () => {
         status: StatusCode.FAILURE,
 
         cartId: null,
+        cartInUse: null,
       };
       const result = await service.createCartsToDb(null, null, {
         originalUrl: 'abc',
@@ -978,25 +979,6 @@ describe('OrderService', () => {
         checkNonDeliveryData.deliveryInfo,
       );
       expect(result.status).toBe(0);
-    });
-  });
-
-  describe('getCreditCards common service', () => {
-    it('should return CreditCards acquisition api data', () => {
-      const result = service.getCreditCards('123');
-      const resultObj = {
-        status: 1,
-        registeredCreditCardList: bffCreditCardData,
-      };
-      expect(result).toEqual(resultObj);
-    });
-    it('should throw an error if memberId is null', () => {
-      const result = service.getCreditCards(null);
-      const errorObj = {
-        status: 0,
-        registeredCreditCardList: null,
-      };
-      expect(result).toEqual(errorObj);
     });
   });
 
@@ -1278,7 +1260,7 @@ describe('OrderService', () => {
   describe('should be able to get EC template master record', () => {
     it(`If we pass template Ids as 2 and 3 then we get corresponding Ec template records for both id's`, async () => {
       const templateIds: any = ['2', '3'];
-      const result: any = service.getEcTemplate(templateIds);
+      const result: GetEcTemplateResponse = service.getEcTemplate(templateIds);
       expect(result.status).toBe(StatusCode.SUCCESS);
       expect(result.informations.map((res) => res.ecTemplateId)[0]).toEqual(
         '2',
@@ -1293,14 +1275,14 @@ describe('OrderService', () => {
 
     it(`If we pass template Ids as 2 and 100 then it will returns an error because template id = 100 not exist to get template master record`, async () => {
       const templateIds: any = ['2', '100'];
-      const result: any = service.getEcTemplate(templateIds);
+      const result: GetEcTemplateResponse = service.getEcTemplate(templateIds);
       expect(result.status).toBe(StatusCode.FAILURE);
       expect(result.informations).toEqual(null);
     });
 
     it(`If we pass empty template Ids then it will returns an error because template id is null not able to get template master record`, async () => {
       const templateIds: any = [];
-      const result: any = service.getEcTemplate(templateIds);
+      const result: GetEcTemplateResponse = service.getEcTemplate(templateIds);
       expect(result.status).toBe(StatusCode.FAILURE);
       expect(result.informations).toEqual(null);
     });

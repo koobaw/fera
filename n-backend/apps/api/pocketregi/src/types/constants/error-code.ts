@@ -32,6 +32,18 @@ export enum ErrorCode {
 
   MULE_API_BAD_REQUEST = 'APIError.7002',
 
+  ORDER_ID_NOT_FOUND = 'RETURN_STATUS_21001',
+
+  FETCH_ORDER_DOCUMENT_FAIL = 'RETURN_STATUS_21002',
+
+  SET_RETURN_DATE_FAILED = 'RETURN_STATUS_21003',
+
+  BAD_REQUEST_INVALID_ORDER_ID = 'RETURN_STATUS_21004',
+
+  BAD_REQUEST_PARAMETERS = 'RETURN_STATUS_21005',
+
+  UNAUTHORIZED_ACCESS = 'RETURN_STATUS_21006',
+
   // Register MemberId API / MemberId API の登録
   INVALID_TOKEN_ID = 'APIError.7001',
 
@@ -85,6 +97,18 @@ export const ErrorMessage = {
   [ErrorCode.GMO_ERROR]: 'Gmo system error',
 
   [ErrorCode.MULE_API_BAD_REQUEST]: 'Bad request',
+
+  [ErrorCode.ORDER_ID_NOT_FOUND]: 'Order ID not found',
+
+  [ErrorCode.FETCH_ORDER_DOCUMENT_FAIL]: 'Failed to fetch the Order Document',
+
+  [ErrorCode.SET_RETURN_DATE_FAILED]: 'Failed to set return date to firestore',
+
+  [ErrorCode.BAD_REQUEST_INVALID_ORDER_ID]: 'Bad Request Invalid Order Id',
+
+  [ErrorCode.BAD_REQUEST_PARAMETERS]: 'Bad Request Parameters',
+
+  [ErrorCode.UNAUTHORIZED_ACCESS]: 'Unauthorized Access',
 
   // Register MemberId API / MemberId API の登録
   [ErrorCode.INVALID_TOKEN_ID]: 'Invalid user token',

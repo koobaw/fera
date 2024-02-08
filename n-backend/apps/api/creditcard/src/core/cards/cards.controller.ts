@@ -43,6 +43,8 @@ export class CardsController {
   @HttpCode(201)
   async registerCreditCard(@Req() request: Request & { claims?: Claims }) {
     // Get credit token from request body / リクエストボディからクレジットトークンを取得する
+
+    const bearerToken = request.headers.authorization;
     const { token, brand } = request.body;
 
     const userClaims: Claims = request.claims;
@@ -51,6 +53,7 @@ export class CardsController {
     const registCreditCard: RegisterCardRequest = {
       claims: userClaims,
       token,
+      bearerToken,
     };
     const operatorName = this.commonService.createFirestoreSystemName(
       request.originalUrl,
@@ -61,6 +64,7 @@ export class CardsController {
         registCreditCard,
         brand,
         operatorName,
+        bearerToken,
       );
     return result;
   }

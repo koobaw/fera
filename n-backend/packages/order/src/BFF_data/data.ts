@@ -1761,17 +1761,6 @@ const checkNonDeliveryData = {
     address1: 'テスト',
   },
 };
-
-const bffCreditCardData = [
-  {
-    cardSequentialNumber: '123',
-    cardNumber: '***********184',
-    expirationDate: '12/23',
-    isDeleted: true,
-    isDefault: true,
-  },
-];
-
 const cartInUse = 'users/GyyDoynLuce4qWcm9cj4/carts/SIwU1ZX6nIxTL7x3AYRW';
 const updateProductItems = [
   {
@@ -1821,7 +1810,6 @@ export {
   userInfo,
   getCartData,
   checkNonDeliveryData,
-  bffCreditCardData,
   cartInUse,
   updateProductItems,
   shippingAddress,

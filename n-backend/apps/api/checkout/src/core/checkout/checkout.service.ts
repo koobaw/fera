@@ -2,15 +2,12 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { LoggingService } from '@cainz-next-gen/logging';
 import { GlobalErrorCode } from '@cainz-next-gen/exception';
 import { CommonService } from '@cainz-next-gen/common';
-import {
-  mockCheckoutBeginResponse,
-  MockcheckoutId,
-  MockPayments,
-} from '../../../test/mock';
+import { checkoutBeginResponseData, MockcheckoutId } from '../../../test/mock';
 import {
   ErrorCode,
   OrderCreationErrorMessage,
   CheckoutErrorMessage,
+  PaymentMethod,
 } from '../../types/constants/error-code';
 import {
   CheckoutCompleteInterface,
@@ -20,7 +17,7 @@ import {
 } from './Interface/checkout-complete.interface';
 import { CheckoutCompleteDto } from './dto/checkoutComplete.dto';
 import { checkoutBeginResponse, productItem } from './data_json/data';
-import { CheckoutChangeDto } from './dto/patch.cart-change-item-body.dto';
+import { CheckoutChangeDto } from './dto/patch.checkout-change-item-body.dto';
 import { CheckoutBeginDto } from './dto/checkoutbegin.dto';
 
 import { CheckoutComplete2Dto } from './dto/checkoutComplete2.dto';
@@ -66,11 +63,8 @@ export class CheckoutService {
     this.logger.info('start method checkoutComplete');
 
     if (checkoutId === MockcheckoutId) {
-      const paymentChoosen = MockPayments.data.paymentMethodInfoList
-        .map((res) => res.paymentMethodId)
-        .toString()
-        .trim();
-
+      const paymentChosen =
+        CheckOutDto?.paymentMethodInfo?.selectedPaymentMethodId;
       // check order information and create the orderId to confirm order
       const order = {
         orderId: '4772713525',
@@ -81,10 +75,13 @@ export class CheckoutService {
       if (order.orderId != null) {
         this.logger.info(`Order created successfully with id ${order.orderId}`);
         // order created successfully now go for payment
-        if (paymentChoosen === '8' || paymentChoosen === '7') {
-          this.logger.info(`payment choosen is ${paymentChoosen}`);
+        if (
+          paymentChosen === PaymentMethod.AMAZON_PAY ||
+          paymentChosen === PaymentMethod.D_PAYMENT
+        ) {
+          this.logger.info(`payment chosen is ${paymentChosen}`);
 
-          const amazonPayobj: AmazonInterface = {
+          const amazonPayObj: AmazonInterface = {
             receptionId: this.generateRandomNumber(13),
             orderId: order.orderId,
             accessId: this.generateRandomString(28),
@@ -95,35 +92,33 @@ export class CheckoutService {
           };
 
           // assuming that GMOPaymentProcess is success if payment Id not equal to null
-          if (amazonPayobj.receptionId != null) {
+          if (amazonPayObj.receptionId != null) {
             this.logger.info(
-              `receptionId generated is ${amazonPayobj.receptionId}`,
+              `receptionId generated is ${amazonPayObj.receptionId}`,
             );
-            return amazonPayobj;
+            return amazonPayObj;
           }
           this.logger.info(
             'error occurred while processing the payment try again',
           );
           return {
             error: 'Failed to finish the payment for order please try again!!',
-            data: { ...mockCheckoutBeginResponse },
+            data: { ...checkoutBeginResponseData },
           };
         }
-        if (paymentChoosen === '1') {
-          this.logger.info(`payment choosen is ${paymentChoosen}`);
-          let { creditCardTokenList } = CheckOutDto;
-          creditCardTokenList = [
-            {
-              creditCardToken:
-                '2a031a7d7ecb674c866148970bc2febf72e5e1773b60bc5a08a0a9e5ecc6e9fd',
-            },
-          ];
-          return this.paymentResponse();
+        if (paymentChosen === PaymentMethod.CREDIT_CARD) {
+          this.logger.info(`payment chosen is ${paymentChosen}`);
+          const { paymentMethodInfo } = CheckOutDto;
+          paymentMethodInfo.creditCardToken =
+            '2a031a7d7ecb674c866148970bc2febf72e5e1773b60bc5a08a0a9e5ecc6e9fd,1c676b78ba6a9c11c7c26331dd05303c10c378cde4ba96d1925cf50692302a93';
+          return this.paymentResponse(CheckOutDto);
         }
-        if (paymentChoosen === '3' || paymentChoosen === '6') {
-          this.logger.info(`payment choosen is ${paymentChoosen}`);
-          let { httpHeader } = CheckOutDto;
-          const headerdata = {
+        if (
+          paymentChosen === PaymentMethod.GMO_DEFERRED_PAYMENT ||
+          paymentChosen === PaymentMethod.GMO_BILL_PAYMENT
+        ) {
+          this.logger.info(`payment choosen is ${paymentChosen}`);
+          const headerData = {
             accept:
               'text/html, application/xhtml+xml, application/xml;q=0.9, image/webp, / ;q=0.8',
             acceptCharset: 'utf-8, iso-8859-1;q=0.5',
@@ -144,12 +139,13 @@ export class CheckoutService {
             endUserIp: '999.999.99.999',
             imei: '99 999999 999999 9',
           };
-          httpHeader = headerdata;
-          return this.paymentResponse();
+          let { httpHeader } = CheckOutDto;
+          httpHeader = headerData;
+          return this.paymentResponse(CheckOutDto);
         }
         // Other payments like convenience store,Cash on delivery,Full amount points,Store payment(2,0,4,5)
-        this.logger.info(`payment choosen is ${paymentChoosen}`);
-        return this.paymentResponse();
+        this.logger.info(`payment chosen is ${paymentChosen}`);
+        return this.paymentResponse(CheckOutDto);
       }
       // order not created
       this.logger.info(
@@ -199,21 +195,19 @@ export class CheckoutService {
     return res;
   }
 
-  public paymentResponse(): CompleteInfoInterface {
-    const paymentIdChoosen = MockPayments.data.paymentMethodInfoList
-      .map((res) => res.paymentMethodId)
-      .toString()
-      .trim();
-    this.logger.info(`payment choosen is ${paymentIdChoosen}`);
+  public paymentResponse(CheckOutDto): CompleteInfoInterface {
+    const paymentChosen =
+      CheckOutDto?.paymentMethodInfo?.selectedPaymentMethodId;
+    this.logger.info(`payment choosen is ${paymentChosen}`);
 
-    if (paymentIdChoosen === '2') {
+    if (paymentChosen === PaymentMethod.CONVENIENCE_STORE) {
       const conveniencePayment: OtherPaymentDataInterface = [
         {
           orderId: '4772713526',
           receptionId: this.generateRandomNumber(13),
           shortOrderId: this.generateRandomNumber(8),
           receivingMethod: '1',
-          paymentMethodId: paymentIdChoosen,
+          paymentMethodId: paymentChosen,
           convenienceCode: '00007',
           purchaseAmount: 3233,
           payBy: '2023-10-30T16:50:24.367Z',
@@ -223,7 +217,6 @@ export class CheckoutService {
           clientField1: 'Free item 1',
           clientField2: 'Free item 2',
           clientField3: 'Free item 3',
-          customerEmail: 'xxxxxxx@test.co.jp',
           isMember: true,
         },
       ];
@@ -231,8 +224,6 @@ export class CheckoutService {
         this.logger.info(
           `receptionId for selected order is ${conveniencePayment[0].receptionId}`,
         );
-        // const g=[];
-        // g.push({...conveniencePayment})
         return {
           orderCompleteInfo: conveniencePayment,
         };
@@ -242,7 +233,7 @@ export class CheckoutService {
       );
       return {
         error: 'Failed to finish the payment for order please try again!!',
-        data: { ...mockCheckoutBeginResponse },
+        data: { ...checkoutBeginResponseData },
       };
     }
     const otherPaymentsObj: OtherPaymentDataInterface = [
@@ -251,9 +242,8 @@ export class CheckoutService {
         receptionId: this.generateRandomNumber(13),
         shortOrderId: this.generateRandomNumber(8),
         receivingMethod: '1',
-        paymentMethodId: paymentIdChoosen,
+        paymentMethodId: paymentChosen,
         convenienceCode: '10001',
-        customerEmail: 'xxxxxxx@test.co.jp',
         isMember: true,
       },
     ];
@@ -272,7 +262,7 @@ export class CheckoutService {
     );
     return {
       error: 'Failed to finish the payment for order please try again!!',
-      data: { ...mockCheckoutBeginResponse },
+      data: { ...checkoutBeginResponseData },
     };
   }
 
@@ -317,11 +307,12 @@ export class CheckoutService {
   }
 
   async checkoutChange(
+    userId: string,
     checkoutId: string,
     checkoutChangeDto: CheckoutChangeDto,
   ) {
     this.logger.info('start method checkout change');
-    if (checkoutChangeDto.userId) {
+    if (userId) {
       this.mergeCheckoutChange(
         { ...checkoutBeginResponse },
         { ...checkoutChangeDto },

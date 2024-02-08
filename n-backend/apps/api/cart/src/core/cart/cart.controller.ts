@@ -54,13 +54,12 @@ export class CartController {
     };
   }
 
-  @Delete(':userId/items/:itemId')
+  @Delete('items/:itemId')
   @UseGuards(AuthGuard)
   @HttpCode(200)
-  async deleteCartItem(
-    @Param('userId') userId: string,
-    @Param('itemId') itemId: string,
-  ) {
+  async deleteCartItem(@Req() req, @Param('itemId') itemId: string) {
+    const claims = req.claims as Claims;
+    const { userId } = claims;
     const cartDeleteResponse = await this.cartService.deleteCartItem(
       userId,
       itemId,

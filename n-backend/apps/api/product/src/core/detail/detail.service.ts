@@ -292,6 +292,9 @@ export class DetailService {
       variation,
       faceProductId: lawData?.faceProductId ?? null,
       serviceContents: lawData?.serviceContents ?? null,
+      variations: [],
+      variationProducts: [],
+      relationProducts: [],
     };
 
     return row;

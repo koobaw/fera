@@ -3,7 +3,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { LoggingService } from '@cainz-next-gen/logging';
 import { CommonService } from '@cainz-next-gen/common';
 import { OrderService, ProductItem, StatusCode } from '@cainz-next-gen/order';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
 import { CartCommonService } from './cart-common.service';
 import {
   getCartData,
@@ -12,6 +11,8 @@ import {
   products,
   updateCartChangeData,
   selectedItems,
+  cartData,
+  overwriteContent,
 } from '../../data_json/data';
 import { GlobalsModule } from '../../globals.module';
 import { CartService } from '../cart/cart.service';
@@ -20,20 +21,9 @@ import { OrderSpecification } from '../interfaces/cart-productItem.interface';
 describe('CartCommonService', () => {
   let service: CartCommonService;
   let orderService: OrderService;
-  let firestoreBatchService: FirestoreBatchService;
-  let httpService: any;
-  let env: any;
   const logger: LoggingService = new LoggingService();
   const commonService: CommonService = new CommonService(logger);
   beforeEach(async () => {
-    const OrderServiceData: OrderService = new OrderService(
-      logger,
-      commonService,
-      firestoreBatchService,
-      httpService,
-      env,
-    );
-    const getStoreResult = await OrderServiceData.getStore(['760']);
     const module: TestingModule = await Test.createTestingModule({
       imports: [GlobalsModule],
       providers: [
@@ -66,7 +56,6 @@ describe('CartCommonService', () => {
             generateNewId: jest.fn().mockResolvedValue({
               autoId: 'APDuozUXNjj6umKKMWzJ',
             }),
-            getStore: jest.fn(() => getStoreResult),
           },
         },
       ],
@@ -961,6 +950,13 @@ describe('CartCommonService', () => {
           );
           expect(needsItemCreationResult.status).toBe(StatusCode.SUCCESS);
           expect(needsItemCreationResult.needsItemCreation).toBe(false);
+          expect(
+            needsItemCreationResult.productItem.checkoutId,
+          ).toBeUndefined();
+          expect(
+            needsItemCreationResult.productItem.checkoutStatus,
+          ).toBeUndefined();
+
           expect(needsItemCreationResult.canBeAddedToCart).toBe(true);
         });
       });
@@ -1049,145 +1045,41 @@ describe('CartCommonService', () => {
     });
   });
 
-  describe('should be able to check Selectable PickUpLocations for store', () => {
-    let storeInfoData;
-    beforeEach(() => {
-      storeInfoData = getCartData.storeInfo;
-    });
-    it('If any store master flag is false in store Info then set supportPickupInnerLocker,supportPickupPlace,supportPickupPlaceParking to false', async () => {
-      const isMember = true;
-      const isStorePaymentSelected = true;
-      storeInfoData.detail.supportPickupInnerLocker = false;
-      storeInfoData.detail.supportPickupPlace = true;
-      storeInfoData.detail.supportPickupPlaceParking = true;
-      const result: any = service.getSelectablePickUpLocation(
-        storeInfoData,
-        isMember,
-        isStorePaymentSelected,
-      );
-      expect(result.status).toBe(StatusCode.SUCCESS);
-      expect(result.supportPickupInnerLocker).toEqual(false);
-      expect(result.supportPickupPlace).toEqual(false);
-      expect(result.supportPickupPlaceParking).toEqual(false);
-    });
-    it('If isStorePaymentSelected is true and isMember is true then all pickupLocations be true', async () => {
-      const isMember = true;
-      const isStorePaymentSelected = true;
-      storeInfoData.detail.supportPickupInnerLocker = true;
-      storeInfoData.detail.supportPickupPlace = true;
-      storeInfoData.detail.supportPickupPlaceParking = true;
-      const result: any = service.getSelectablePickUpLocation(
-        storeInfoData,
-        isMember,
-        isStorePaymentSelected,
-      );
-      expect(result.status).toBe(StatusCode.SUCCESS);
-      expect(result.supportPickupInnerLocker).toEqual(true);
-      expect(result.supportPickupPlace).toEqual(true);
-      expect(result.supportPickupPlaceParking).toEqual(true);
-    });
-    it('If isStorePaymentSelected is true and isMember is false then supportPickupInnerLocker be true,supportPickupPlace be false,supportPickupPlaceParking be false', async () => {
-      const isMember = false;
-      const isStorePaymentSelected = true;
-      storeInfoData.detail.supportPickupInnerLocker = true;
-      storeInfoData.detail.supportPickupPlace = true;
-      storeInfoData.detail.supportPickupPlaceParking = true;
-      const result: any = service.getSelectablePickUpLocation(
-        storeInfoData,
-        isMember,
-        isStorePaymentSelected,
-      );
-      expect(result.status).toBe(StatusCode.SUCCESS);
-      expect(result.supportPickupInnerLocker).toEqual(true);
-      expect(result.supportPickupPlace).toEqual(false);
-      expect(result.supportPickupPlaceParking).toEqual(false);
-    });
-    it('If isStorePaymentSelected is false and isMember is true then supportPickupInnerLocker be true,supportPickupPlace be false,supportPickupPlaceParking be false', async () => {
-      const isMember = true;
-      const isStorePaymentSelected = false;
-      storeInfoData.detail.supportPickupInnerLocker = true;
-      storeInfoData.detail.supportPickupPlace = true;
-      storeInfoData.detail.supportPickupPlaceParking = true;
-      const result: any = service.getSelectablePickUpLocation(
-        storeInfoData,
-        isMember,
-        isStorePaymentSelected,
-      );
-      expect(result.status).toBe(StatusCode.SUCCESS);
-      expect(result.supportPickupInnerLocker).toEqual(true);
-      expect(result.supportPickupPlace).toEqual(false);
-      expect(result.supportPickupPlaceParking).toEqual(false);
-    });
-    it('If isStorePaymentSelected is false and isMember is false then supportPickupInnerLocker be true,supportPickupPlace be false,supportPickupPlaceParking be false', async () => {
-      const isMember = false;
-      const isStorePaymentSelected = false;
-      storeInfoData.detail.supportPickupInnerLocker = true;
-      storeInfoData.detail.supportPickupPlace = true;
-      storeInfoData.detail.supportPickupPlaceParking = true;
-      const result: any = service.getSelectablePickUpLocation(
-        storeInfoData,
-        isMember,
-        isStorePaymentSelected,
-      );
-      expect(result.status).toBe(StatusCode.SUCCESS);
-      expect(result.supportPickupInnerLocker).toEqual(true);
-      expect(result.supportPickupPlace).toEqual(false);
-      expect(result.supportPickupPlaceParking).toEqual(false);
-    });
-    it('If isMember is null then status should be 0', async () => {
-      const isMember = null;
-      const isStorePaymentSelected = false;
-      const result: any = service.getSelectablePickUpLocation(
-        storeInfoData,
-        isMember,
-        isStorePaymentSelected,
-      );
-      expect(result.status).toBe(StatusCode.FAILURE);
-    });
-    it('If isStorePaymentSelected is null then status should be 0', async () => {
-      const isMember = true;
-      const isStorePaymentSelected = null;
-      const result: any = service.getSelectablePickUpLocation(
-        storeInfoData,
-        isMember,
-        isStorePaymentSelected,
-      );
-      expect(result.status).toBe(StatusCode.FAILURE);
-    });
-  });
-
-  describe('checkoutCanBeStarted common process', () => {
-    it('should return status as 1 when all the inputs are valid', async () => {
-      const result = await service.checkoutCanBeStarted(
-        getCartData.productItems,
-        selectedItems,
+  describe('overwriteCartContents', () => {
+    it('should return status as 1 when valid cartData and OverwriteContent objects are passed', async () => {
+      const result = await service.overwriteCartContents(
+        cartData,
+        overwriteContent,
       );
       expect(result.status).toBe(1);
     });
-    it('should return status as 0 when cartData is empty or null', async () => {
-      const result = await service.checkoutCanBeStarted([], selectedItems);
-      expect(result.status).toBe(0);
+    it('should return status as 1 when OverwriteContent.productItems is empty', async () => {
+      const result = await service.overwriteCartContents(cartData, {
+        ...overwriteContent,
+        productItems: [],
+      });
+      expect(result.status).toBe(1);
     });
-    it('should return status as 0 when selectedItems is empty or null', async () => {
-      const result = await service.checkoutCanBeStarted(
-        getCartData.productItems,
-        [],
+    it('should return status as 0 when cartData is null', async () => {
+      const result = await service.overwriteCartContents(
+        null,
+        overwriteContent,
       );
       expect(result.status).toBe(0);
     });
-    it('should return status as 0 when any string in selectedItems is empty or null', async () => {
-      const result = await service.checkoutCanBeStarted(
-        getCartData.productItems,
-        [...selectedItems, ''],
+    it('should return status as 0 when cartData.productItems is null', async () => {
+      const result = await service.overwriteCartContents(
+        { ...cartData, productItems: null },
+        overwriteContent,
       );
       expect(result.status).toBe(0);
     });
-    it('should return status as 0 when any object in cartData is empty or null', async () => {
-      const result = await service.checkoutCanBeStarted(
-        [...getCartData.productItems, null],
-        selectedItems,
-      );
-      expect(result.status).toBe(0);
+  });
+
+  describe('deleteItemFromProductItems common process', () => {
+    it('should be defined', () => {
+      expect(service).toBeDefined();
+      expect(service.deleteItemFromProductItems).toBeDefined();
     });
   });
 });

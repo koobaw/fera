@@ -12,7 +12,7 @@ import { CommonService } from '@cainz-next-gen/common';
 import { Claims } from '@cainz-next-gen/types';
 import { SalesforceApiService } from '@cainz-next-gen/salesforce-api';
 import { AuthGuard } from '@cainz-next-gen/guard';
-import { CryptoUtilsService } from '../../utils/crypto.service';
+import { ConfigService } from '@nestjs/config';
 import { LoginService } from './login.service';
 import { TokenData } from './interface/login.interface';
 
@@ -20,7 +20,7 @@ import { TokenData } from './interface/login.interface';
 export class LoginController {
   constructor(
     private readonly loginService: LoginService,
-    private readonly crypto: CryptoUtilsService,
+    private readonly env: ConfigService,
     private readonly commonService: CommonService,
     private readonly salesforceApiService: SalesforceApiService,
   ) {}
@@ -43,9 +43,15 @@ export class LoginController {
         tokenData.accessToken,
       );
 
-    const memberId = await this.loginService.getUserInfo(salesforceUserId);
+    const userInfo = await this.loginService.getUserInfo(salesforceUserId);
 
-    const encryptedMemberId = this.crypto.encryptAES256(memberId);
+    const key = this.env.get<string>('CRYPTO_KEY');
+    const iv = this.env.get<string>('CRYPTO_IV');
+    const encryptedMemberId = this.commonService.encryptAES256(
+      userInfo.cardNoContact,
+      key,
+      iv,
+    );
     await this.loginService.saveToFirebaseAuthClaims(
       userId,
       encryptedMemberId,
@@ -60,12 +66,18 @@ export class LoginController {
       userId,
       encryptedMemberId,
       operatorName,
+      userInfo,
     );
 
     return {
       code: HttpStatus.CREATED,
       message: 'ok',
-      data: { memberId },
+      data: {
+        memberId: userInfo.cardNoContact,
+        address1: userInfo.address1,
+        address2: userInfo.address2,
+        address3: userInfo.address3,
+      },
     };
   }
 }

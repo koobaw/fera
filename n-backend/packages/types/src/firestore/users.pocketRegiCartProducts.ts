@@ -10,13 +10,16 @@ export interface PocketRegiCartProduct extends Auditable {
   totalAmount: number;
   totalQuantity: number;
   checkInAt: string;
+  storeCode: string;
+  cartLockUntil: string;
+  productUpdatedAt: string;
 }
 export interface CartProducts {
   code128DiscountDetails?: Code128DiscountDetails[];
   subtotalAmount: number;
-  mixMatchCode?: string;
-  setItemCode?: string;
-  subItems?: SubItem[];
+  mixMatchCode: string;
+  setItemCode: string;
+  subItems: SubItem[];
   imageUrls?: string[];
   productName?: string;
   productId?: string;

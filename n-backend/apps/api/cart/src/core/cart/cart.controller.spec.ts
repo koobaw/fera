@@ -90,7 +90,10 @@ describe('CartController', () => {
       jest
         .spyOn(service, 'deleteCartItem')
         .mockImplementation(async () => mockGetCartData);
-      const result = await controller.deleteCartItem('123', '87092821394372');
+      const result = await controller.deleteCartItem(
+        { claims: { userId: '12444' } },
+        '87092821394372',
+      );
       expect(result.code).toEqual(HttpStatus.OK);
     });
 
@@ -107,7 +110,10 @@ describe('CartController', () => {
         .spyOn(service, 'deleteCartItem')
         .mockImplementation(async () => Promise.reject(httpException));
       try {
-        await controller.deleteCartItem('123', '87092821394372');
+        await controller.deleteCartItem(
+          { claims: { userId: '12444' } },
+          '87092821394372',
+        );
       } catch (error: any) {
         expect(error).toBeInstanceOf(HttpException);
         expect((error as HttpException).getStatus()).toBe(
@@ -131,7 +137,10 @@ describe('CartController', () => {
         .spyOn(service, 'deleteCartItem')
         .mockImplementation(async () => Promise.reject(httpException));
       try {
-        await controller.deleteCartItem('123', '4549509524317aa');
+        await controller.deleteCartItem(
+          { claims: { userId: '12444' } },
+          '4549509524317aa',
+        );
       } catch (error: any) {
         expect(error).toBeInstanceOf(HttpException);
         expect((error as HttpException).getStatus()).toBe(

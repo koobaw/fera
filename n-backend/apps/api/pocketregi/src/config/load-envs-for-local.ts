@@ -13,6 +13,12 @@ export async function loadEnvsForLocal() {
   );
   process.env.CRYPTO_KEY = await getSecretValue('crypto_key');
   process.env.CRYPTO_IV = await getSecretValue('crypto_iv');
+  process.env.POCKET_REGI_RETURN_CLIENT_ID = await getSecretValue(
+    'pocket_regi_return_client_id',
+  );
+  process.env.POCKET_REGI_RETURN_CLIENT_SECRET = await getSecretValue(
+    'pocket_regi_return_client_secret',
+  );
 
   // ローカルテスト時にfirebase-adminのgetAuth()を利用している場合、service_account.jsonを設定する必要があります。
   // eslint-disable-next-line turbo/no-undeclared-env-vars

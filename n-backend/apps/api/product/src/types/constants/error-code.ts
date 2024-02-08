@@ -16,9 +16,13 @@ export enum ErrorCode {
   // Search API
   SEARCH_GET_GOOGLE_API = 'SEARCH_1000',
   SEARCH_CATEGORY_NOT_FOUND = 'SEARCH_1001',
+  SEARCH_VISITOR_ID_NOT_FOUND = 'SEARCH_1002',
   // Recommend API
   RECOMMEND_GET_GOOGLE_API = 'RECOMMEND_1000',
   RECOMMEND_CATEGORY_NOT_FOUND = 'RECOMMEND_1001',
+  RECOMMEND_VISITOR_ID_NOT_FOUND = 'RECOMMEND_1002',
+  // BonusPoint API
+  BONUS_POINT_NG_PAC_API = 'BONUS_POINT_1000',
   // Parameter Validation
   PARAM_BAD_PARAMETER_SAVE = 'PARAM_1000',
 }
@@ -41,9 +45,13 @@ export const ErrorMessage = {
   // Search API
   [ErrorCode.SEARCH_GET_GOOGLE_API]: 'google retail search api error',
   [ErrorCode.SEARCH_CATEGORY_NOT_FOUND]: 'category not found',
+  [ErrorCode.SEARCH_VISITOR_ID_NOT_FOUND]: 'visitor id not found',
   // Recommend API
   [ErrorCode.RECOMMEND_GET_GOOGLE_API]: 'google retail recommend api error',
   [ErrorCode.RECOMMEND_CATEGORY_NOT_FOUND]: 'category not found',
+  [ErrorCode.RECOMMEND_VISITOR_ID_NOT_FOUND]: 'visitor id not found',
+  // BonusPoint API
+  [ErrorCode.BONUS_POINT_NG_PAC_API]: 'pac item api error',
   // Parameter Validation
   [ErrorCode.PARAM_BAD_PARAMETER_SAVE]: 'save value must be true or false',
 };

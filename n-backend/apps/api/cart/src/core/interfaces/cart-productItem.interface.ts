@@ -3,6 +3,7 @@ import {
   Delivery,
   Errors,
   Notifications,
+  ShippingAddress,
 } from '@cainz-next-gen/order/src/interfaces/orderInterfaces.interface';
 import { Auditable, ProductDetail } from '@cainz-next-gen/types';
 
@@ -131,100 +132,28 @@ export interface CreateProductItem {
   productItem: ProductItem;
 }
 
-// selectable pickup
-export type PickUpLocationResponse =
-  | PickUpLocationSuccessResponse
-  | PickUpLocationFailResponse;
-interface Landscape {
-  latitude: number;
-  longitude: number;
+export interface CartData {
+  createdAt: {
+    _seconds: number;
+    _nanoseconds: number;
+  };
+  productItems: Array<ProductItem>;
+  shippingAddress: ShippingAddress;
+  userId: string;
+  storeCode: string;
+  updatedAt: {
+    _seconds: number;
+    _nanoseconds: number;
+  };
 }
 
-interface FloorGuide {
-  floorGuideOrder: number;
-  floorGuideName: string;
-  floorGuideUrl: string;
+export interface OverwriteContent {
+  productItems: Array<ProductItem>;
+  storeCode: string;
+  shippingAddress: ShippingAddress;
 }
 
-interface DetailItem {
-  code: string;
-  landscape: Landscape;
-  floorGuideList: FloorGuide[];
-  prefectureName: string;
-  prefectureCode: string;
-  openingDate: string;
-  closingDate: string;
-  supportPickup: boolean;
-  supportCredit: boolean;
-  supportPickupInnerLocker: boolean;
-  supportPickupPlace: boolean;
-  supportPickupPlaceParking: boolean;
-  supportBackOrder: boolean;
-  supportGeomagnetism: boolean;
-  geomagnetismMapId?: string;
-  supportPocketRegi: boolean;
-  supportCuttingService: boolean;
-  supportDIYReserve: boolean;
-  supportDogRun: boolean;
-  supportToolRental: boolean;
-  showVisitingNumber: number;
-  digitalFlyerURL: string;
-  materialHallExistence: boolean;
-  cultureClassExistence: boolean;
-  cycleParkExistence: boolean;
-  DIYSTYLEFloorExistence: boolean;
-  dogParkExistence: boolean;
-  exteriorPlazaExistence: boolean;
-  foodAreaExistence: boolean;
-  gardeningHallExistence: boolean;
-  greenAdvisorExistence: boolean;
-  petsOneExistence: boolean;
-  reformCenterExistence: boolean;
-  workshopExistence: boolean;
-  storePickupExistence: boolean;
-  supermarketExistence: boolean;
-}
-
-interface TelNumberItem {
-  contactName: string;
-  telNumber: string;
-}
-
-interface Announcement {
-  code: string;
-  title: string;
-  body: string;
-}
-
-export interface StoreInfoResponse {
-  code: string;
-  name: string;
-  webUrl: string;
-  address: string;
-  postCode: string;
-  telNumberList: TelNumberItem[];
-  businessTime: string;
-  businessTimeNote?: string;
-  regularHoliday: string;
-  regularHolidayNote?: string;
-  webOpenStoreFlag: boolean;
-  detail: DetailItem;
-  announcements: Announcement[];
-}
-
-export interface PickUpLocationSuccessResponse {
+export interface OverwriteContents {
   status: number;
-  supportPickupInnerLocker: boolean;
-  supportPickupPlace: boolean;
-  supportPickupPlaceParking: boolean;
-}
-
-interface PickUpLocationFailResponse {
-  status: number;
-}
-
-export interface CheckOutCanBeStarted {
-  status: number;
-  isValid: boolean;
-  checkoutItems: Array<ProductItem>;
+  cartData: CartData;
 }

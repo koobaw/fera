@@ -1,5 +1,9 @@
 {
-  "moduleFileExtensions": ["js", "json", "ts"],
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
   "rootDir": ".",
   "testRegex": ".*\\.spec\\.ts$",
   "transform": {
@@ -8,7 +12,13 @@
   "collectCoverageFrom": ["**/*.ts"],
   "coverageDirectory": "./coverage",
   "testEnvironment": "node",
-  "roots": ["<rootDir>"],
-  "modulePaths": ["<rootDir>"],
-  "moduleDirectories": ["node_modules"]
+  "roots": [
+    "<rootDir>"
+  ],
+  "modulePaths": [
+    "<rootDir>"
+  ],
+  "moduleDirectories": [
+    "node_modules"
+  ]
 }

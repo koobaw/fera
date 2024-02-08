@@ -9,12 +9,11 @@ import { LoggingService } from '@cainz-next-gen/logging';
 import { LoginController } from './login.controller';
 import { LoginService } from './login.service';
 import { GlobalsModule } from '../../globals.module';
-import { CryptoUtilsService } from '../../utils/crypto.service';
+import { MuleMembershipReadResponseSuccess } from './interface/login.interface';
 
 describe('LoginController', () => {
   let controller: LoginController;
   let loginService: LoginService;
-  let cryptoUtilsService: CryptoUtilsService;
   let commonService: CommonService;
   let salesforceApiService: SalesforceApiService;
 
@@ -41,7 +40,6 @@ describe('LoginController', () => {
     }).compile();
 
     controller = module.get<LoginController>(LoginController);
-    cryptoUtilsService = module.get<CryptoUtilsService>(CryptoUtilsService);
     commonService = module.get<CommonService>(CommonService);
     salesforceApiService =
       module.get<SalesforceApiService>(SalesforceApiService);
@@ -56,6 +54,7 @@ describe('LoginController', () => {
     jest
       .spyOn(commonService, 'getClaims')
       .mockReturnValue({ userId: 'dummyUserId' });
+    jest.spyOn(commonService, 'encryptAES256').mockReturnValue('dummyUserId');
 
     jest.spyOn(salesforceApiService, 'getUserToken').mockResolvedValue({
       accessToken: 'dummyAccessToken',
@@ -66,11 +65,13 @@ describe('LoginController', () => {
       .spyOn(salesforceApiService, 'getSalesforceUserId')
       .mockResolvedValue('dummySalesforceUserId');
 
-    jest.spyOn(loginService, 'getUserInfo').mockResolvedValue('dummyMemberId');
-
-    jest
-      .spyOn(cryptoUtilsService, 'encryptAES256')
-      .mockReturnValue('dummyEncryptedMemberId');
+    jest.spyOn(loginService, 'getUserInfo').mockResolvedValue({
+      cardNoContact: 'dummyMemberId',
+      address1: 'dummyAddress1',
+      address2: 'dummyAddress2',
+      address3: 'dummyAddress3',
+      membershipLevel: '4',
+    } as MuleMembershipReadResponseSuccess);
 
     jest.spyOn(loginService, 'saveToFirebaseAuthClaims').mockResolvedValue();
 
@@ -84,7 +85,12 @@ describe('LoginController', () => {
       controller.login(<never>{ claims: { userId: 'dummyUserId' } }, <never>{}),
     ).resolves.toEqual({
       code: 201,
-      data: { memberId: 'dummyMemberId' },
+      data: {
+        memberId: 'dummyMemberId',
+        address1: 'dummyAddress1',
+        address2: 'dummyAddress2',
+        address3: 'dummyAddress3',
+      },
       message: 'ok',
     });
   });

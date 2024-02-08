@@ -1,0 +1,10 @@
+@productIds = 2200643800069,4549509128441
+@storeCodes = 859,0888
+@membershipRank = 1
+
+GET {{base}}/{{version}}/products/bonus-points
+?productIds={{productIds}}
+&storeCodes={{storeCodes}}
+&membershipRank={{membershipRank}}
+cainzapp-api-key:{{$dotenv api-key}}
+# Authorization: Bearer {{$dotenv bearer}}

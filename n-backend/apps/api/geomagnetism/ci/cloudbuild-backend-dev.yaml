@@ -50,6 +50,8 @@ steps:
       ]
 images:
   - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA'
+options:
+  logging: CLOUD_LOGGING_ONLY
 substitutions:
   _LOCATION: 'asia-northeast1'
   _SERVICE_NAME: 'geomagnetism'

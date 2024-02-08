@@ -13,8 +13,6 @@ import { AppModule } from './app.module';
 import { loadEnvsForLocal } from './config/load-secrets-for-local';
 
 async function bootstrap() {
-  // firebsaeを初期化する
-  initializeApp();
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true, // ログを変更する前に吐かれるログ群を保持して、ログ変更時に出力する設定
   });
@@ -33,6 +31,8 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter(logger, app.get(CommonService)));
 
   const env = app.get(ConfigService).get<string>('APP_ENV');
+
+  app.enableCors();
 
   switch (env) {
     case 'local':
@@ -56,6 +56,8 @@ async function bootstrap() {
         await app.listen(port);
       }
   }
+  // firebsaeを初期化する
+  initializeApp();
   logger.log(`App listening on ::${port}`);
 }
 

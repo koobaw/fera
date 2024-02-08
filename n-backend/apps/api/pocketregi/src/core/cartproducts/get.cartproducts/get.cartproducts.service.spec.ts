@@ -99,17 +99,17 @@ describe('CartProductsService', () => {
             {
               code128DiscountDetails: [
                 {
-                  discountMethod: '03',
+                  discountMethod: 'percent',
                   discount: 50,
                   appliedCount: 1,
                 },
                 {
-                  discountMethod: '02',
+                  discountMethod: 'yen',
                   discount: 30,
                   appliedCount: 1,
                 },
                 {
-                  discountMethod: '02',
+                  discountMethod: 'yen',
                   discount: 50,
                   appliedCount: 2,
                 },
@@ -190,17 +190,17 @@ describe('CartProductsService', () => {
               // Sales type 0 with Discount barcode product
               code128DiscountDetails: [
                 {
-                  discountMethod: '03',
+                  discountMethod: 'percent',
                   discount: 50,
                   appliedCount: 1,
                 },
                 {
-                  discountMethod: '02',
+                  discountMethod: 'yen',
                   discount: 30,
                   appliedCount: 1,
                 },
                 {
-                  discountMethod: '02',
+                  discountMethod: 'yen',
                   discount: 50,
                   appliedCount: 2,
                 },
@@ -237,17 +237,17 @@ describe('CartProductsService', () => {
           {
             code128DiscountDetails: [
               {
-                discountMethod: '03',
+                discountMethod: 'percent',
                 discount: 50,
                 appliedCount: 1,
               },
               {
-                discountMethod: '02',
+                discountMethod: 'yen',
                 discount: 30,
                 appliedCount: 1,
               },
               {
-                discountMethod: '02',
+                discountMethod: 'yen',
                 discount: 50,
                 appliedCount: 2,
               },
@@ -262,6 +262,9 @@ describe('CartProductsService', () => {
             taxRate: 10,
             subtotalAmount: 850,
             unitPrice: 280,
+            subItems: [],
+            mixMatchCode: null,
+            setItemCode: null,
           },
         ];
         jest
@@ -286,17 +289,17 @@ describe('CartProductsService', () => {
           .mockReturnValue({
             code128DiscountDetails: [
               {
-                discountMethod: '03',
+                discountMethod: 'percent',
                 discount: 50,
                 appliedCount: 1,
               },
               {
-                discountMethod: '02',
+                discountMethod: 'yen',
                 discount: 30,
                 appliedCount: 1,
               },
               {
-                discountMethod: '02',
+                discountMethod: 'yen',
                 discount: 50,
                 appliedCount: 2,
               },
@@ -317,17 +320,17 @@ describe('CartProductsService', () => {
             // Sales type 1 with no discount
             code128DiscountDetails: [
               {
-                discountMethod: '03',
+                discountMethod: 'percent',
                 discount: 50,
                 appliedCount: 1,
               },
               {
-                discountMethod: '02',
+                discountMethod: 'yen',
                 discount: 30,
                 appliedCount: 1,
               },
               {
-                discountMethod: '02',
+                discountMethod: 'yen',
                 discount: 50,
                 appliedCount: 2,
               },
@@ -403,6 +406,9 @@ describe('CartProductsService', () => {
             taxRate: 10,
             subtotalAmount: 280,
             unitPrice: 280,
+            subItems: [],
+            mixMatchCode: null,
+            setItemCode: null,
           },
         ];
         jest
@@ -472,7 +478,7 @@ describe('CartProductsService', () => {
               subItems: {
                 code128DiscountDetails: [
                   {
-                    discountMethod: '03',
+                    discountMethod: 'percent',
                     discount: 50,
                     appliedCount: 1,
                   },
@@ -504,6 +510,19 @@ describe('CartProductsService', () => {
               unitPrice: 100,
             },
             {
+              setItemCode: '0001',
+              subtotalAmount: 580,
+              salesType: 3,
+              subItems: [
+                {
+                  productCode: '4547894154992',
+                  quantity: 6,
+                  unitPrice: 100,
+                  salesAmount: 580,
+                },
+              ],
+            },
+            {
               mixMatchCode: '0001',
               subtotalAmount: 580,
               salesType: 2,
@@ -521,13 +540,14 @@ describe('CartProductsService', () => {
 
         const mockResult: CartProducts[] = [
           {
-            mixMatchCode: '0001',
+            mixMatchCode: null,
             subtotalAmount: 630,
+            setItemCode: '0001',
             subItems: [
               {
                 code128DiscountDetails: [
                   {
-                    discountMethod: '03',
+                    discountMethod: 'percent',
                     discount: 50,
                     appliedCount: 1,
                   },
@@ -540,7 +560,33 @@ describe('CartProductsService', () => {
                 isAlcoholic: false,
                 quantity: 7,
                 taxRate: 10,
-                salePrice: 630,
+                salePrice: 580,
+                unitPrice: 100,
+              },
+            ],
+          },
+          {
+            mixMatchCode: '0001',
+            subtotalAmount: 580,
+            setItemCode: null,
+            subItems: [
+              {
+                code128DiscountDetails: [
+                  {
+                    discountMethod: 'percent',
+                    discount: 50,
+                    appliedCount: 1,
+                  },
+                ],
+                imageUrls: [
+                  'https://imgix.cainz.com/4547894154990/product/4547894154990_01.jpg',
+                ],
+                productName: 'ピクルス',
+                productId: '4547894154992',
+                isAlcoholic: false,
+                quantity: 7,
+                taxRate: 10,
+                salePrice: 580,
                 unitPrice: 100,
               },
             ],
@@ -568,7 +614,7 @@ describe('CartProductsService', () => {
           .mockReturnValue({
             code128DiscountDetails: [
               {
-                discountMethod: '03',
+                discountMethod: 'percent',
                 discount: 50,
                 appliedCount: 1,
               },
@@ -590,7 +636,7 @@ describe('CartProductsService', () => {
           .mockReturnValue({
             code128DiscountDetails: [
               {
-                discountMethod: '03',
+                discountMethod: 'percent',
                 discount: 50,
                 appliedCount: 1,
               },
@@ -625,17 +671,17 @@ describe('CartProductsService', () => {
               // Sales type 0 with Discount barcode product
               code128DiscountDetails: [
                 {
-                  discountMethod: '03',
+                  discountMethod: 'percent',
                   discount: 50,
                   appliedCount: 1,
                 },
                 {
-                  discountMethod: '02',
+                  discountMethod: 'yen',
                   discount: 30,
                   appliedCount: 1,
                 },
                 {
-                  discountMethod: '02',
+                  discountMethod: 'yen',
                   discount: 50,
                   appliedCount: 2,
                 },
@@ -704,21 +750,21 @@ describe('CartProductsService', () => {
 
     describe('saveToFirestore', () => {
       const encryptedMemberId = 'ascadadasd';
-      const cartProd = [
+      const cartProd: CartProducts[] = [
         {
           code128DiscountDetails: [
             {
-              discountMethod: '03',
+              discountMethod: 'percent',
               discount: 50,
               appliedCount: 1,
             },
             {
-              discountMethod: '02',
+              discountMethod: 'yen',
               discount: 30,
               appliedCount: 1,
             },
             {
-              discountMethod: '02',
+              discountMethod: 'yen',
               discount: 50,
               appliedCount: 2,
             },
@@ -733,6 +779,9 @@ describe('CartProductsService', () => {
           taxRate: 10,
           subtotalAmount: 850,
           unitPrice: 280,
+          subItems: [],
+          mixMatchCode: null,
+          setItemCode: null,
         },
       ];
       const operatorName = 'some operator name';
@@ -809,6 +858,9 @@ describe('CartProductsService', () => {
       });
     });
     describe('getResponse', () => {
+      it('should be define getResponse', () => {
+        expect(cartProductService.getResponse).toBeDefined();
+      });
       it('should return the formatted response for the api', () => {
         const dataSavedToFireStore = {
           products: [
@@ -826,11 +878,8 @@ describe('CartProductsService', () => {
             totalAmount: dataSavedToFireStore.totalAmount,
           },
         };
-        jest
-          .spyOn(cartProductService, 'getResponse')
-          .mockReturnValue(mockresult);
 
-        expect(cartProductService.getResponse(dataSavedToFireStore)).toBe(
+        expect(cartProductService.getResponse(dataSavedToFireStore)).toEqual(
           mockresult,
         );
       });
@@ -840,16 +889,20 @@ describe('CartProductsService', () => {
         const mockfetchMembershipRank = {
           rank: '1',
         };
-
+        const mockFindCollection = {
+          doc: jest.fn(() => ({
+            get: jest.fn(() => ({
+              data: jest.fn().mockReturnValue({ rank: '1' }),
+              exists: false,
+              ref: jest.fn(() => ({
+                path: 'demo/path',
+              })),
+            })),
+          })),
+        };
         jest
           .spyOn(mockFirestoreBatchService, 'findCollection')
-          .mockImplementation(() => {
-            jest.fn().mockImplementation(() => ({
-              get: jest.fn().mockImplementation(() => ({
-                data: jest.fn().mockReturnValue(mockfetchMembershipRank),
-              })),
-            }));
-          });
+          .mockReturnValue(mockFindCollection);
 
         try {
           await expect(

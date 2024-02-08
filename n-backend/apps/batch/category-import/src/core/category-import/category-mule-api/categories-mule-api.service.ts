@@ -25,8 +25,8 @@ export class CategoriesMuleApiService {
     this.logger.debug('start fetchCategories');
 
     const headers = {
-      client_id: this.env.get<string>('MULE_CATEGORY_API_CLIENT_ID'),
-      client_secret: this.env.get<string>('MULE_CATEGORY_API_CLIENT_SECRET'),
+      client_id: this.env.get<string>('MULE_API_CLIENT_ID'),
+      client_secret: this.env.get<string>('MULE_API_CLIENT_SECRET'),
     };
 
     const url = `${this.env.get<string>(

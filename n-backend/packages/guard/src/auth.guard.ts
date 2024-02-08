@@ -81,8 +81,8 @@ export class AuthGuard implements CanActivate {
       this.commonService.logException('Failed to verify idToken', e);
       throw new HttpException(
         {
-          errorCode: ErrorCode.INVALID_MOBILE_USER,
-          message: ErrorMessage[ErrorCode.INVALID_MOBILE_USER],
+          errorCode: ErrorCode.INVALID_MEMBER_USER,
+          message: ErrorMessage[ErrorCode.INVALID_MEMBER_USER],
         },
         HttpStatus.UNAUTHORIZED,
       );

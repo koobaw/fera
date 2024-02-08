@@ -9,6 +9,7 @@ import { CommonService } from '@cainz-next-gen/common';
 import { LoginService } from './login.service';
 import { GlobalsModule } from '../../globals.module';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
+import { MuleMembershipReadResponseSuccess } from './interface/login.interface';
 
 describe('LoginService', () => {
   let loginService: LoginService;
@@ -66,14 +67,23 @@ describe('LoginService', () => {
   });
 
   describe('getUserInfo', () => {
-    it('should return memberId', async () => {
+    it('should return userInfo', async () => {
       const salesforceUserId = 'dummySalesforceUserId';
       const memberId = 'dummyMemberId';
-      jest
-        .spyOn(mockedHttpService, 'get')
-        .mockReturnValue(of({ data: { cardNoContact: memberId } }));
-      await expect(loginService.getUserInfo(salesforceUserId)).resolves.toBe(
-        memberId,
+      const userInfo = {
+        cardNoContact: memberId,
+        address1: 'dummyAddress1',
+        address2: 'dummyAddress2',
+        address3: 'dummyAddress3',
+        membershipLevel: '4',
+      };
+      jest.spyOn(mockedHttpService, 'get').mockReturnValue(
+        of({
+          data: userInfo,
+        }),
+      );
+      await expect(loginService.getUserInfo(salesforceUserId)).resolves.toEqual(
+        userInfo,
       );
     });
     it('should throw LOGIN_NG_SALESFORCE_USER_ID error when mule api returns error', async () => {
@@ -137,8 +147,15 @@ describe('LoginService', () => {
       const spyCopyAndDeleteOriginalCollection = jest
         .spyOn(loginService, <never>'copyAndDeleteOriginalCollection')
         .mockImplementation();
+      const userInfo = {
+        cardNoContact: 'dummyMemberId',
+        address1: 'dummyAddress1',
+        address2: 'dummyAddress2',
+        address3: 'dummyAddress3',
+        membershipLevel: '4',
+      } as MuleMembershipReadResponseSuccess;
 
-      await loginService.transferToMember(null, null, null);
+      await loginService.transferToMember(null, null, null, userInfo);
       expect(spyInitialUserFromAnonymousUser).not.toBeCalled();
       expect(spyInitialUser).not.toBeCalled();
       expect(spyInitialMyStore).not.toBeCalled();
@@ -161,9 +178,16 @@ describe('LoginService', () => {
               .mockImplementation(() => ({ doc: jest.fn() })),
           })),
         }));
+      const userInfo = {
+        cardNoContact: 'dummyMemberId',
+        address1: 'dummyAddress1',
+        address2: 'dummyAddress2',
+        address3: 'dummyAddress3',
+        membershipLevel: '4',
+      } as MuleMembershipReadResponseSuccess;
 
       const spyInitialUser = jest.spyOn(loginService, <never>'initialUser');
-      await loginService.transferToMember(null, null, null);
+      await loginService.transferToMember(null, null, null, userInfo);
 
       expect(spyInitialUser).toBeCalledTimes(1);
       expect(mockFirestoreBatchService.batchSet).toBeCalledTimes(2);
@@ -251,7 +275,14 @@ describe('LoginService', () => {
       const spyBatchSet = jest
         .spyOn(mockFirestoreBatchService, 'batchSet')
         .mockImplementation();
-      await loginService.transferToMember(null, null, null);
+      const userInfo = {
+        cardNoContact: 'dummyMemberId',
+        address1: 'dummyAddress1',
+        address2: 'dummyAddress2',
+        address3: 'dummyAddress3',
+        membershipLevel: '4',
+      } as MuleMembershipReadResponseSuccess;
+      await loginService.transferToMember(null, null, null, userInfo);
       expect(spyInitialUserFromAnonymousUser).toBeCalledTimes(1);
       expect(spyCopyAndDeleteOriginalCollection).toBeCalledTimes(6);
       expect(spyBatchSet).toBeCalledTimes(6);

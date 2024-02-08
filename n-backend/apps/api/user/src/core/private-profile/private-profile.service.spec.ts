@@ -1,10 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { GlobalsModule } from '../../globals.module';
-import {
-  MuleMembershipRecord,
-  PrivateProfile,
-} from './interface/private-profile.interface';
+import { MuleMembershipRecord } from './interface/private-profile.interface';
 import { PrivateProfileService } from './private-profile.service';
 
 describe('PrivateProfileService', () => {
@@ -19,95 +16,64 @@ describe('PrivateProfileService', () => {
     service = module.get<PrivateProfileService>(PrivateProfileService);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-
-  it('should be defined these methods', () => {
-    expect(service.getPrivateProfile).toBeDefined();
-  });
-
-  it('should transform to response type', async () => {
-    const dummyResponse: MuleMembershipRecord = {
-      createdById: '',
-      createdDate: '',
-      isCustomerPortal: '',
-      isPersonAccount: '',
-      lastModifiedById: '',
-      lastModified: '',
-      name: '',
-      ownerId: '',
-      email: '',
-      phoneHome: '495251000',
-      recordTypeId: '',
-      salutation: '',
-      address1: '本庄市',
-      address2: '早稲田の杜一丁目2番1号',
-      address3: 'カインズマンション100号室',
-      agricultureType1: '',
-      architectureJobCategory: '',
-      birthMonth: '',
-      blackCustomerClass: '',
-      blackCustomerReason: '',
-      blackCustomerReviewer: '',
-      blackCustomerSetter: '',
-      bussinessForm: '',
-      cardNoContact: '00000000000002710000018216',
-      clusterInformation: '',
-      cropBrand1: '',
-      cropType1: '',
-      croppingAcreage1: '',
-      ecRestrictionClass: '',
-      ecRestrictionReason: '',
-      ecRestrictionReviewer: '',
-      ecRestrictionSetter: '',
-      excludeGroceriesClusterInformation: '',
-      farmerClass: '',
+  describe('convertProfileFromUMembershipRecord', () => {
+    // define common parameter
+    const membershipRecord = {
+      lastKana: 'テスト',
       firstKana: 'タロウ',
-      lastKana: 'ヤマダ',
+      lastName: 'テスト',
       firstName: '太郎',
-      lastName: '山田',
-      gender: '',
-      otherJobName: '',
-      postalCode: '3670030',
-      prefecture: '埼玉県',
-      propointCardClass: '',
-      spareClusterInformation: '',
-      job: '',
-      agricultureType2: '',
-      cropBrand2: '',
-      cropType2: '',
-      croppingAcreage2: '',
-      memberRegistStatus: '',
-      dmStatus: false,
-      snsLastName: '',
-      snsFirstName: '',
-      mailMagazineFlag: '',
-      cardType: '',
-      memberStatus: '',
-      ecbeingUserNo: '',
-      membershipLevel: '',
-    };
-
-    // WARNING: Override method
-    Object.defineProperty(service, 'getMuleMembershipRecord', {
-      value: jest.fn(() => dummyResponse),
+      phoneHome: '09099999999',
+      postalCode: '100-0005',
+      prefecture: '東京都',
+      address1: '千代田区',
+      address2: '丸の内1丁目',
+      address3: '東京駅',
+      cardNoContact: 'dummyId',
+      createdDate: '2023-10-24T02:00:00.000Z',
+    } as unknown as MuleMembershipRecord;
+    it('should return correct response with undefined targets', () => {
+      // define parameter
+      const targets = undefined;
+      const expectedResponse = {
+        lastNameKana: 'テスト',
+        firstNameKana: 'タロウ',
+        lastName: 'テスト',
+        firstName: '太郎',
+        phoneNumber: '09099999999',
+        postalCode: '100-0005',
+        prefecture: '東京都',
+        address1: '千代田区',
+        address2: '丸の内1丁目',
+        address3: '東京駅',
+        memberId: 'dummyId',
+        createdDate: '2023-10-24T02:00:00.000Z',
+      };
+      // check method
+      expect(
+        service.convertProfileFromUMembershipRecord(membershipRecord, targets),
+      ).toEqual(expectedResponse);
     });
-
-    const result: PrivateProfile = {
-      lastNameKana: 'ヤマダ',
-      firstNameKana: 'タロウ',
-      lastName: '山田',
-      firstName: '太郎',
-      phoneNumber: '495251000',
-      postalCode: '3670030',
-      prefecture: '埼玉県',
-      address1: '本庄市',
-      address2: '早稲田の杜一丁目2番1号',
-      address3: 'カインズマンション100号室',
-      memberId: '00000000000002710000018216',
-    };
-
-    expect(await service.getPrivateProfile('dummyId')).toEqual(result);
+    it('should return correct response with miss targets', () => {
+      // define parameter
+      const targets = ['miss'];
+      const expectedResponse = {};
+      // check method
+      expect(
+        service.convertProfileFromUMembershipRecord(membershipRecord, targets),
+      ).toEqual(expectedResponse);
+    });
+    it('should return correct response with targets', () => {
+      // define parameter
+      const targets = ['memberId', 'createdDate'];
+      const expectedResponse = {
+        memberId: 'dummyId',
+        createdDate: '2023-10-24T02:00:00.000Z',
+      };
+      // check method
+      expect(
+        service.convertProfileFromUMembershipRecord(membershipRecord, targets),
+      ).toEqual(expectedResponse);
+    });
   });
 });

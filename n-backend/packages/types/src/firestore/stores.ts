@@ -17,3 +17,8 @@ export interface Store extends Auditable {
   regularHoliday: string; // 定休日
   regularHolidayNote: string | null; // 定休日注記
 }
+
+export type OmitTimestampStore = Omit<
+  Store,
+  'createdAt' | 'createdBy' | 'updatedAt' | 'updatedBy'
+>;

@@ -71,14 +71,14 @@ describe('CartService', () => {
   describe('delete cart', () => {
     it('should throw an exception when wrong itemId is passed', async () => {
       try {
-        await service.deleteCartItem('123456', '123');
+        await service.deleteCartItem('12345', '123');
       } catch (error: any) {
         expect(error).toBeInstanceOf(HttpException);
         expect((error as HttpException).getStatus()).toBe(
           HttpStatus.BAD_REQUEST,
         );
         expect(error.getResponse().message).toBe(
-          ErrorMessage[GlobalErrorCode.BAD_PARAMETER],
+          'ProductItem is not present for itemId Id 123',
         );
       }
     });

@@ -10,20 +10,19 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { MemberAuthGuard } from '@cainz-next-gen/guard';
 import { PrivateProfileService } from './private-profile.service';
 
 @Controller('member/private-profile')
 export class PrivateProfileController {
   constructor(
-    private readonly privateProfile: PrivateProfileService,
-    private readonly salesforceApi: SalesforceApiService,
+    private readonly privateProfileService: PrivateProfileService,
+    private readonly salesforceApiService: SalesforceApiService,
     private readonly commonService: CommonService,
   ) {}
 
   @Get('/')
-  @UseGuards(AuthGuard)
+  @UseGuards(MemberAuthGuard)
   async getPrivateProfile(
     @Req() req: Request & { claims?: Claims },
     @Query('select') select?: string,
@@ -31,38 +30,48 @@ export class PrivateProfileController {
     const targets = select == null ? [] : select.split(',');
     const userClaims: Claims = req.claims;
 
+    // get user id from saleseforce
     let salesforceUserId: string;
     try {
-      salesforceUserId = await this.salesforceApi.getSalesforceUserId(
+      salesforceUserId = await this.salesforceApiService.getSalesforceUserId(
         userClaims.accessToken,
       );
     } catch (_error) {
       // NOTE: can't judge http error or access token expired, so refresh token and retry if failed
-      userClaims.accessToken = await this.salesforceApi.refreshAccessToken(
-        userClaims.refreshToken,
-      );
+      userClaims.accessToken =
+        await this.salesforceApiService.refreshAccessToken(
+          userClaims.refreshToken,
+        );
       await this.commonService.saveToFirebaseAuthClaims(
         userClaims.userId,
         userClaims.encryptedMemberId,
         userClaims.accessToken,
         userClaims.refreshToken,
       );
-      salesforceUserId = await this.salesforceApi.getSalesforceUserId(
+      salesforceUserId = await this.salesforceApiService.getSalesforceUserId(
         userClaims.accessToken,
       );
     }
 
-    const privateProfile = await this.privateProfile.getPrivateProfile(
-      salesforceUserId,
+    // get user data and insert latest user data to firestore
+    const membershipRecord =
+      await this.privateProfileService.getMuleMembershipRecord(
+        salesforceUserId,
+      );
+    const privateProfile =
+      this.privateProfileService.convertProfileFromUMembershipRecord(
+        membershipRecord,
+        targets,
+      );
+    const operatorName = this.commonService.createFirestoreSystemName(
+      req.originalUrl,
+      req.method,
     );
-
-    if (targets.length !== 0) {
-      Object.keys(privateProfile)
-        .filter((key) => !targets.includes(key))
-        .forEach((target) => {
-          delete privateProfile[target];
-        });
-    }
+    await this.privateProfileService.updateUserSchema(
+      membershipRecord.membershipLevel,
+      userClaims.encryptedMemberId,
+      operatorName,
+    );
 
     return {
       code: HttpStatus.OK,

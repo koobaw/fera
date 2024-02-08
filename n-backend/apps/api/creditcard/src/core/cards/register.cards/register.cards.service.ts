@@ -38,12 +38,14 @@ export class RegisterCardService {
    * registCreditCard には userClaims とクレジット カード トークンが含まれます
    * @param brand brand name / ブランド名
    * @param operatorName createdby/updatedby operatorName / 作成者/更新者: オペレーター名
+   * @param bearerToken authorization token from frontend / フロントエンドからの認可トークン
    * @returns { Promise<CreditCardResponse> }
    */
   public async registerCreditCard(
     registerCreditCard: RegisterCardRequest,
     brand: string,
     operatorName: string,
+    bearerToken: string,
   ): Promise<CreditCardResponse> {
     const url = await this.creditUtilService.getMuleUrls();
     const { encryptedMemberId } = registerCreditCard.claims;
@@ -83,19 +85,57 @@ export class RegisterCardService {
           }),
         ),
     );
-
     await this.saveCardToFirestore(
       data.cardSequentialNumber,
       brand,
       operatorName,
       encryptedMemberId,
     );
+    // Get credit card details & update Firestore
+    await this.getCardDetails(bearerToken);
     this.logging.info(`Register Credit Card successful`);
     const result = {
       message: 'OK',
       code: HttpStatus.CREATED,
     } as CreditCardResponse;
     return result;
+  }
+
+  /**
+   * Get credit card details & update Firestore  / クレジット カードの詳細を取得して Firestore を更新する
+   * @param { string } bearerToken authorization token from frontend / フロントエンドからの認可トークン
+   */
+  public async getCardDetails(bearerToken: string) {
+    const creditCardBaseUrl = `${this.env.get<string>(
+      'CREDIT_CARDS_BASE_URL',
+    )}`;
+    const creditCard = `${this.env.get<string>('GET_CREDIT_CARDS')}`;
+    const cardUrl = creditCardBaseUrl + creditCard;
+    const creditCardData = await firstValueFrom(
+      this.httpService
+        .get(cardUrl, {
+          headers: {
+            Authorization: bearerToken,
+          },
+        })
+        .pipe(
+          catchError((error: HttpException) => {
+            this.commonService.logException(
+              'Unable to call credit card list API',
+              error,
+            );
+            this.commonService.createHttpException(
+              ErrorCode.CREDIT_CARD_API_SERVER_ERROR,
+              ErrorMessage[ErrorCode.CREDIT_CARD_API_SERVER_ERROR],
+              HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+          }),
+        ),
+    );
+    if (!creditCardData) {
+      this.logging.info('Credit card list API call failed');
+    }
+    this.logging.info('Credit card list API call successful');
   }
 
   /**

@@ -11,8 +11,8 @@
       "@cainz-next-gen/exception": ["./packages/exception/src"],
       "@cainz-next-gen/salesforce-api": ["./packages/salesforce-api/src"],
       "@cainz-next-gen/guard": ["./packages/guard/src"],
-      "@cainz-next-gen/interceptor": ["./packages/interceptor/src"]
-    }
+      "@cainz-next-gen/interceptor": ["./packages/interceptor/src"],
+    },
   },
   "exclude": ["node_modules", "dist"]
 }

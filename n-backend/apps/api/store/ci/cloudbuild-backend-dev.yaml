@@ -14,7 +14,11 @@ steps:
         '.',
       ]
   - name: gcr.io/cloud-builders/docker
-    args: ['push', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA']
+    args:
+      [
+        'push',
+        'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA',
+      ]
   # NOTE:`bash -c`を利用しない配列で書くパターンだと、Secret経由の環境変数を埋め込めなかった
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
     entrypoint: 'bash'
@@ -43,6 +47,8 @@ steps:
       ]
 images:
   - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA'
+options:
+  logging: CLOUD_LOGGING_ONLY
 substitutions:
   _LOCATION: 'asia-northeast1'
   _SERVICE_NAME: 'store'

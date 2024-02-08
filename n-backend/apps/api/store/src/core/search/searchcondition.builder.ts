@@ -3,6 +3,7 @@ import {
   SearchStrategy,
   StoreIncludingDetail,
 } from './interfaces/search.interface';
+import { PubliclyAccessibleSearch } from './strategy/publiclyAccessibleSearch.strategy';
 import { KeywordSearch } from './strategy/keywordSearch.strategy';
 import { LocationSort } from './strategy/locationSort.strategy';
 import { PrefectureCodeSearch } from './strategy/prefectureCodeSearch.strategy';
@@ -13,6 +14,7 @@ export class SearchConditionBuilder {
 
   addCondition(searchStoreDto: SearchStoreDto): SearchConditionBuilder {
     this.strategies.push(
+      new PubliclyAccessibleSearch(),
       new KeywordSearch(searchStoreDto.keywords),
       new PrefectureCodeSearch(searchStoreDto.prefectureCode),
     );

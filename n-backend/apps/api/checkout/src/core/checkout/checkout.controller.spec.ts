@@ -78,7 +78,10 @@ describe('CheckoutController', () => {
       jest
         .spyOn(service, 'checkoutBegin')
         .mockImplementation(async () => mockCheckoutBeginResponse);
-      const result = await controller.checkoutBegin(mockCheckoutBeginDto);
+      const result = await controller.checkoutBegin(
+        { claims: { userId: '12345' } },
+        mockCheckoutBeginDto,
+      );
       expect(result.code).toEqual(HttpStatus.OK);
       expect(service.checkoutBegin).toBeCalled();
     });
@@ -87,7 +90,10 @@ describe('CheckoutController', () => {
         .spyOn(service, 'checkoutBegin')
         .mockImplementation(async () => Promise.reject(userIdValidationError));
       try {
-        await controller.checkoutBegin({ ...mockCheckoutBeginDto, userId: '' });
+        await controller.checkoutBegin(
+          { claims: { userId: '12345' } },
+          mockCheckoutBeginDto,
+        );
       } catch (error: any) {
         expect(error).toBeInstanceOf(HttpException);
         expect((error as HttpException).getStatus()).toBe(
@@ -111,7 +117,10 @@ describe('CheckoutController', () => {
         .spyOn(service, 'checkoutBegin')
         .mockImplementation(async () => Promise.reject(errorData));
       try {
-        await controller.checkoutBegin(mockCheckoutBeginDto);
+        await controller.checkoutBegin(
+          { claims: { userId: '12345' } },
+          mockCheckoutBeginDto,
+        );
       } catch (error: any) {
         expect(error).toBeInstanceOf(HttpException);
         expect((error as HttpException).getStatus()).toBe(
@@ -133,6 +142,7 @@ describe('CheckoutController', () => {
         .spyOn(service, 'checkoutChange')
         .mockImplementation(async () => mockCheckoutBeginResponse);
       const result = await controller.checkoutChange(
+        { claims: { userId: '12444' } },
         MockcheckoutId,
         mockCheckOutChangeData,
       );
@@ -144,8 +154,9 @@ describe('CheckoutController', () => {
         .mockImplementation(async () => Promise.reject(userIdValidationError));
       try {
         await controller.checkoutChange(
+          { claims: { userId: null } },
           MockcheckoutId,
-          mockCheckoutChangeWithoutUserIdData,
+          mockCheckOutChangeData,
         );
       } catch (error: any) {
         expect(error).toBeInstanceOf(HttpException);
@@ -157,33 +168,6 @@ describe('CheckoutController', () => {
         );
       }
     });
-    it('should throw an exception when service fails', async () => {
-      const errorData: HttpException = new HttpException(
-        {
-          code: GlobalErrorCode.INTERNAL_SERVER_ERROR,
-          message: GlobalErrorCode[GlobalErrorCode.INTERNAL_SERVER_ERROR],
-          errorCode: GlobalErrorCode.INTERNAL_SERVER_ERROR,
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-      jest
-        .spyOn(service, 'checkoutChange')
-        .mockImplementation(async () => Promise.reject(errorData));
-      try {
-        await controller.checkoutBegin(mockCheckoutBeginDto);
-      } catch (error: any) {
-        expect(error).toBeInstanceOf(HttpException);
-        expect((error as HttpException).getStatus()).toBe(
-          HttpStatus.INTERNAL_SERVER_ERROR,
-        );
-        expect(error.getResponse().message).toBe(
-          GlobalErrorCode[GlobalErrorCode.INTERNAL_SERVER_ERROR],
-        );
-        expect(error.getResponse().errorCode).toBe(
-          GlobalErrorCode.INTERNAL_SERVER_ERROR,
-        );
-      }
-    });
   });
 
   describe('Checkout Complete', () => {
@@ -192,6 +176,7 @@ describe('CheckoutController', () => {
         .spyOn(service, 'checkoutComplete')
         .mockImplementation(async () => MockcheckoutCompleteServiceData);
       const output: any = await controller.checkoutComplete(
+        { claims: { userId: '12345' } },
         MockcheckoutId,
         MockcheckoutCompleteBodyData,
       );
@@ -207,6 +192,7 @@ describe('CheckoutController', () => {
         .spyOn(service, 'checkoutComplete')
         .mockImplementation(async () => MockcheckoutCompleteServiceStoreData);
       const output: any = await controller.checkoutComplete(
+        { claims: { userId: '12345' } },
         MockcheckoutId,
         MockcheckoutCompleteBodyData,
       );
@@ -223,6 +209,7 @@ describe('CheckoutController', () => {
           async () => MockcheckoutCompleteServiceOtherPaymentsData,
         );
       const output: any = await controller.checkoutComplete(
+        { claims: { userId: '12345' } },
         MockcheckoutId,
         MockcheckoutCompleteBodyData,
       );
@@ -246,6 +233,7 @@ describe('CheckoutController', () => {
         .mockImplementation(async () => Promise.reject(errorData));
       try {
         await controller.checkoutComplete(
+          { claims: { userId: '12345' } },
           MockcheckoutId,
           MockcheckoutCompleteBodyData,
         );
@@ -274,6 +262,7 @@ describe('CheckoutController', () => {
         .mockImplementation(async () => Promise.reject(errorData));
       try {
         await controller.checkoutComplete(
+          { claims: { userId: '12345' } },
           MockcheckoutId,
           MockcheckoutCompleteBodyData,
         );

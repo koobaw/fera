@@ -21,6 +21,12 @@ const mockCheckoutBeginResponse = {
     customerDepartmentName: '情報システム部',
     customerPhone: '0120999999',
     customerEmail: 'Taro@test.co.jp',
+    isMember: true,
+    billPayment: true,
+    memberRegistrationDate: '2023-11-17T18:00:00.000Z',
+    isSameAsShippingInfo: false,
+    typeOfAmazonPayAddress: 1,
+    errors: []
   },
   storeInfo: {
     storeCode: '0760',
@@ -32,29 +38,188 @@ const mockCheckoutBeginResponse = {
     supportPickupPlace: true,
     supportPickupPlaceParking: true,
     selectedReceiptLocation: '3',
-    supportCredit: true,
     mapUrl: 'https://map.test.com/map/999',
     estimatedPickupableDateTime: '本日 11/16(木) 最短13:00以降受取可',
   },
-  addressBookList: [
+  shippingInfo: {
+    shippingLastName: 'お届け先',
+    shippingFirstName: '太郎',
+    shippingLastNameKana: 'オトドケサキ',
+    shippingFirstNameKana: 'タロウ',
+    shippingZipCode: '0790000',
+    shippingPrefecture: '北海道',
+    shippingCity: '赤平市',
+    shippingAddress1: '赤平１１１丁目',
+    shippingAddress2: '赤平マンション１号室',
+    shippingCompanyName: '株式会社　北海道',
+    shippingDepartmentName: '情報システム部',
+    shippingPhone: '12599999999',
+    selectedAddressBookId: '2',
+    desiredDeliveryDateList: [
+      {
+        availableDeliveryDate: '2023-11-17T18:00:00.000Z',
+        isSelected: false,
+      },
+      {
+        availableDeliveryDate: '2023-11-18T18:00:00.000Z',
+        isSelected: true,
+      },
+    ],
+    desiredDeliveryTimeZoneList: [
+      {
+        availableDeliveryTimeZoneId: '0',
+        availableDeliveryTimeZoneName: '希望なし',
+        isSelected: true,
+      },
+    ],
+    unattendedDeliveryFlag: false,
+    isGift: false,
+    isAmazonPayAddress: true,
+    errors: []
+  },
+  paymentMethodInfoList: [
     {
-      addressBookId: '1',
-      lastName: '配送先',
-      firstName: '太郎',
-      lastNameKana: 'ハイソウサキ',
-      firstNameKana: 'タロウ',
-      zipCode: '5300000',
-      prefecture: '大阪府',
-      city: '大阪市北区',
-      address1: '梅田一丁目',
-      address2: '梅田ビル９９階',
-      companyName: 'テスト株式会社',
-      departmentName: 'テスト部',
-      phone: '069999999',
-      isPreferredAddress: true,
+      paymentMethodId: '1',
+      paymentMethodName: 'クレジットカード',
+      paymentMethodDetail: 'ギフトカード',
+      registeredCreditCardList: [
+        {
+          cardSequentialNumber: 0,
+          cardNumber: '999999****9999',
+          expirationDate: '12/24',
+          isDeleted: false,
+          isDefault: true,
+          isSelected: false,
+        },
+        {
+          cardSequentialNumber: 1,
+          cardNumber: '999999****8888',
+          expirationDate: '01/26',
+          isDeleted: false,
+          isDefault: false,
+          isSelected: true,
+        },
+      ],
+      convenienceCodeList: [
+        {
+          convenienceCode: '00007',
+          convenienceName: 'セブンイレブン',
+          isSelected: false,
+        },
+      ],
+      paymentCharge: 330,
+      maxPurchaseAmount: 55000,
+      isExceedMaximumAmount: true,
+      minPurchaseAmount: 1,
+      isBelowMinimumAmount: false,
+      isSaveCard: true,
+      numberOfTokensRequired: 2,
       isSelected: true,
+      errorCode: "checkouts-payment-error-001",
+      message: "The maximum amount has been exceeded."
     },
   ],
+  pointInfo: {
+    availablePoints: 1000,
+    redeemedPoints: 123,
+  },
+  storeReceiveProducts: [
+    {
+      productItems: [],
+    },
+  ],
+  shippingProducts: [
+    {
+      productItems: [],
+    },
+  ],
+  paymentAmountInfoArray: [
+    {
+      settlementType: '2',
+      receivingMethod: '1',
+      paymentMethodId: '1',
+      totalProductAmount: 15000,
+      basicShippingCost: 500,
+      regionalShippingCost: 1700,
+      totalIndividualShippingCost: 1500,
+      paymentCharge: 330,
+      redeemedPoints: 100,
+      estimatedGrantedPoints: 68,
+      estimatedGrantedCampaignPoints: 500,
+      totalAmount: 18930,
+      taxClassificationInfoArray: [
+        {
+          taxClassification: '1',
+          taxClassificationName: '10% (通常税率)',
+          taxableAmount: 19030,
+          tax: 1730,
+        },
+        {
+          taxClassification: '2',
+          taxClassificationName: '8% (軽減税率)',
+          taxableAmount: 1080,
+          tax: 80,
+        },
+      ],
+    },
+  ],
+  checkoutId: '74234354598',
+  isAmazonPayOneTimePayment: true,
+  amazonPayButtonConfig: {
+    sandbox: false,
+    merchantId: "123456789",
+    ledgerCurrency: "JPY",
+    checkoutLanguage: "ja_JP",
+    productType:"PayAndShip",
+    placement:"Cart",
+    buttonColor: "LightGray",
+    estimatedOrderAmount: {
+      amount: 2500,
+      currencyCode: "JPY"
+    },
+    createCheckoutSessionConfig: {
+      payloadJSON: "0123456789",
+      signature: "123456789",
+      publicKeyId: "123456789",
+      algorithm: "AMZN-PAY-RSASSA-PSS-V2"
+    }
+  },
+  errors: []
+};
+const checkoutBeginResponseData = {
+  customerInfo: {
+    customerLastName: '埼玉',
+    customerFirstName: '太郎',
+    customerLastNameKana: 'サイタマ',
+    customerFirstNameKana: 'タロウ',
+    customerZipCode: '3671234',
+    customerPrefecture: '埼玉県',
+    customerCity: '本庄市',
+    customerAddress1: '早稲田の杜一丁目９９番９９９号',
+    customerAddress2: 'カインズビル',
+    customerCompanyName: '株式会社　ECリプレイス',
+    customerDepartmentName: '情報システム部',
+    customerPhone: '0120999999',
+    customerEmail: 'Taro@test.co.jp',
+    isMember: false,
+    billPayment: true,
+    memberRegistrationDate: '2023-11-17T18:00:00.000Z',
+    isSameAsShippingInfo: true,
+    typeOfAmazonPayAddress: 1,
+  },
+  storeInfo: {
+    storeCode: '0760',
+    storeName: 'カインズ伊勢崎',
+    storeHours: '09:00 ～ 20:00',
+    zipCode: '3720999',
+    address: '群馬県伊勢崎市宮子町９９９９',
+    supportPickupInnerLocker: true,
+    supportPickupPlace: true,
+    supportPickupPlaceParking: true,
+    selectedReceiptLocation: '3',
+    mapUrl: 'https://map.test.com/map/999',
+    estimatedPickupableDateTime: '本日 11/16(木) 最短13:00以降受取可',
+  },
   shippingInfo: {
     shippingLastName: 'お届け先',
     shippingFirstName: '太郎',
@@ -86,8 +251,9 @@ const mockCheckoutBeginResponse = {
         isSelected: true,
       },
     ],
-    isDeliveryBox: false,
+    unattendedDeliveryFlag: false,
     isGift: false,
+    isAmazonPayAddress: false,
   },
   paymentMethodInfoList: [
     {
@@ -100,6 +266,7 @@ const mockCheckoutBeginResponse = {
           cardNumber: '999999****9999',
           expirationDate: '12/24',
           isDeleted: false,
+          isDefault: false,
           isSelected: false,
         },
         {
@@ -107,6 +274,7 @@ const mockCheckoutBeginResponse = {
           cardNumber: '999999****8888',
           expirationDate: '01/26',
           isDeleted: false,
+          isDefault: false,
           isSelected: true,
         },
       ],
@@ -119,7 +287,9 @@ const mockCheckoutBeginResponse = {
       ],
       paymentCharge: 330,
       maxPurchaseAmount: 55000,
-      isStorePaymentSelected: false,
+      isExceedMaximumAmount: false,
+      minPurchaseAmount: 1,
+      isBelowMinimumAmount: false,
       isSaveCard: true,
       numberOfTokensRequired: 2,
       isSelected: true,
@@ -596,7 +766,6 @@ const MockcheckoutCompleteServiceData: any = {
 };
 
 const MockcheckoutCompleteBodyData: any = {
-  userId: 'a3a2d619-e97c-4c68-8d29-2db0231250f6',
   customerInfo: {
     customerLastName: '埼玉',
     customerFirstName: '太郎',
@@ -611,30 +780,45 @@ const MockcheckoutCompleteBodyData: any = {
     customerDepartmentName: 'Information System Department',
     customerPhone: '04811100000',
     customerEmail: 'bftest@bftest.com',
+    isSameAsShippingInfo: false,
   },
   shippingInfo: {
-    isSameAsPurchaser: false,
     selectedAddressBookId: '1',
-    shippingLastName: '埼玉',
-    shippingFirstName: '太郎',
-    shippingLastNameKana: 'サイタマ',
-    shippingFirstNameKana: 'タロウ',
-    shippingPostalCode: '3670030',
-    shippingPrefecture: '埼玉県',
-    shippingCity: '埼玉県',
-    shippingAddress1: '本庄市早稲田の杜',
-    shippingAddress2: 'Akahira Mansion Room 1',
-    shippingCompanyName: 'Hokkaido Co., Ltd.',
-    shippingDepartmentName: 'Information System Department',
-    shippingPhone: '04811100000',
-    desiredDeliveryDate: '2023/12/20(Wed)',
+    guestInputInfo: {
+      shippingLastName: '埼玉',
+      shippingFirstName: '太郎',
+      shippingLastNameKana: 'サイタマ',
+      shippingFirstNameKana: 'タロウ',
+      shippingPostalCode: '3670030',
+      shippingPrefecture: '埼玉県',
+      shippingCity: '埼玉県',
+      shippingAddress1: '本庄市早稲田の杜',
+      shippingAddress2: 'Akahira Mansion Room 1',
+      shippingCompanyName: 'Hokkaido Co., Ltd.',
+      shippingDepartmentName: 'Information System Department',
+      shippingPhone: '04811100000',
+    },
+    desiredDeliveryDate: '2023-12-01T09:00:00+09:00',
     desiredDeliveryTimeZoneId: null,
-    isDeliveryBox: false,
+    unattendedDeliveryFlag: false,
     isGift: true,
   },
+  storeInfo: {
+    selectedStoreCode: '760',
+    selectedReceiptLocation: 1,
+  },
+  paymentMethodInfo: {
+    isStorePaymentSelected: false,
+    selectedPaymentMethodId: '2',
+    cardSequentialNumber: 1,
+    isSaveCard: true,
+    selectedConvenienceCode: '00007',
+    creditCardToken:
+      '2a031a7d7ecb674c866148970bc2febf72e5e1773b60bc5a08a0a9e5ecc6e9fd,1c676b78ba6a9c11c7c26331dd05303c10c378cde4ba96d1925cf50692302a93',
+  },
+  redeemedPoints: 120,
   affiliateTrackingId: '123ABCdefg456HIJklm789NOPqrs789TUV',
   affiliateVisitDateTime: '2023-10-23T13:32:06Z',
-  creditCardTokenList: null,
   httpHeader: null,
 };
 const MockcheckoutCompleteServiceOtherPaymentsData: any = {
@@ -646,7 +830,6 @@ const MockcheckoutCompleteServiceOtherPaymentsData: any = {
       receivingMethod: '1',
       paymentMethodId: '3',
       convenienceCode: '10001',
-      customerEmail: 'xxxxxxx@test.co.jp',
       isMember: true,
     },
   ],
@@ -669,73 +852,11 @@ const MockcheckoutCompleteServiceStoreData: any = {
       clientField1: 'Free item 1',
       clientField2: 'Free item 2',
       clientField3: 'Free item 3',
-      customerEmail: 'xxxxxxx@test.co.jp',
       isMember: true,
     },
   ],
 };
 
-const MockPayments: any = {
-  data: {
-    paymentMethodInfoList: [
-      {
-        paymentMethodId: '8',
-        paymentMethodName: 'Deferred payment',
-        paymentMethodDetail: 'gift card',
-        registeredCreditCardList: [
-          {
-            cardSequentialNumber: 0,
-            cardNumber: '999999****9999',
-            expirationDate: '12/24',
-            isDeleted: false,
-            isSelected: false,
-          },
-        ],
-        paymentCharge: 100,
-        maxPurchaseAmount: 10000,
-        isStorePaymentSelected: false,
-        isSaveCard: false,
-        numberOfTokensRequired: 5,
-        errorCode: null,
-        message: '',
-      },
-    ],
-  },
-};
-const MockOtherPayments: any = {
-  data: {
-    paymentMethodInfoList: [
-      {
-        paymentMethodId: '3',
-        paymentMethodName: 'GMO deferred payment',
-        paymentMethodDetail: '',
-        registeredCreditCardList: [
-          {
-            cardSequentialNumber: '',
-            cardNumber: '',
-            expirationDate: '',
-            isDeleted: false,
-            isSelected: true,
-          },
-        ],
-        convenienceCodeList: [
-          {
-            convenienceCode: '00007',
-            convenienceName: 'セブンイレブン',
-            isSelected: false,
-          },
-        ],
-        paymentCharge: 100,
-        maxPurchaseAmount: 10000,
-        isStorePaymentSelected: false,
-        isSaveCard: false,
-        numberOfTokensRequired: 5,
-        errorCode: null,
-        message: '',
-      },
-    ],
-  },
-};
 const mockInternalServerError = new HttpException(
   {
     errorCode: ErrorCode.CART_FIRE_STORE_ERROR,
@@ -782,7 +903,6 @@ const mockInternalServerErrorCheckout = new HttpException(
 );
 const mockcheckoutId = '009b67fd-1c20-4f8d-94b1-d636ee8eaad1';
 const mockCheckOutChangeData: any = {
-  userId: '07P1He8a0Ze4OlTCpWf3D3M469P1',
   customerInfo: {
     customerZipCode: '3670068',
     customerPrefecture: '埼玉県',
@@ -801,15 +921,147 @@ const mockCheckoutChangeWithoutUserIdData: any = {
   selectedStoreCode: '0986',
   redeemedPoints: 2,
 };
+
+const mockMemberData: any = {
+  lastName: 'ゴビンダラジ',
+  firstName: 'レンガラジ',
+  lastNameKana: 'さん',
+  firstNameKana: 'さん',
+  postCode: '108-8282',
+  prefectures: '東京都',
+  city: '東京都',
+  address1: '東京都千代田区丸の内3-3-1',
+  address2: '東京都千代田区丸の内3-3-1',
+  CompanyName: 'カインズ',
+  DepartmentName: 'Retail',
+  phoneNumber: '3232323333',
+  Email: 'cainzTesting@gmail.com',
+  billPayment: true,
+  memberRegistrationDate: new Date().toDateString(),
+};
+
+const customerInfoEnteredByGuest: any = {
+  customerLastName: 'ゴビンダラジ',
+  customerFirstName: 'レンガラジ',
+  customerLastNameKana: 'さん',
+  customerFirstNameKana: 'さん',
+  customerZipCode: '108-8282',
+  customerPrefecture: '東京都',
+  customerCity: '東京都',
+  customerAddress1: '東京都千代田区丸の内3-3-1',
+  customerAddress2: '東京都千代田区丸の内3-3-1',
+  customerCompanyName: 'カインズ',
+  customerDepartmentName: 'Retail',
+  customerPhone: '3232323333',
+  customerEmail: 'cainzTesting@gmail.com',
+  billPayment: false,
+};
+const amazonInfoMockData: any = {
+  billing: {
+    editedValues: {
+      amazonLastName: 'ゴビンダラジ',
+      amazonFirstName: 'レンガラジ',
+      customerLastNameKana: 'さん',
+      customerFirstNameKana: 'さん',
+      amazonPostalCode: '108-8282',
+      amazonStateOrRegion: '東京都',
+      amazonCity: '東京都',
+      amazonAddress1: '東京都千代田区丸の内3-3-1',
+      amazonAddress2: '東京都千代田区丸の内3-3-1',
+      amazonPhoneNumber: '3232323333',
+      amazonMailAddress: 'cainzTesting@gmail.com',
+    },
+  },
+  shipping: {
+    editedValues: {
+      amazonLastName: 'ゴビンダラジ',
+      amazonFirstName: 'レンガラジ',
+      customerLastNameKana: 'さん',
+      customerFirstNameKana: 'さん',
+      amazonPostalCode: '108-8282',
+      amazonStateOrRegion: '東京都',
+      amazonCity: '東京都',
+      amazonAddress1: '東京都千代田区丸の内3-3-1',
+      amazonAddress2: '東京都千代田区丸の内3-3-1',
+      amazonPhoneNumber: '3232323333',
+      amazonMailAddress: 'cainzTesting@gmail.com',
+    },
+  },
+};
+
+const shippingInfoGuestInputInfo: any = {
+  shippingLastName: 'ゴビンダラジ',
+  shippingFirstName: 'レンガラジ',
+  shippingLastNameKana: 'さん',
+  shippingFirstNameKana: 'さん',
+  shippingZipCode: '108-8282',
+  shippingPrefecture: '東京都',
+  shippingCity: '東京都',
+  shippingAddress1: '東京都千代田区丸の内3-3-1',
+  shippingAddress2: '東京都千代田区丸の内3-3-1',
+  shippingCompanyName: 'カインズ',
+  shippingDepartmentName: 'Retail',
+  shippingPhone: '3232323333',
+  isDeliveryBox: false,
+  isGift: false,
+};
+
+const addressBookMockData = [
+  {
+    id: '1',
+    name: 'address name',
+    accountId: '123',
+    isFavorite: true,
+    title: '自宅',
+    firstName: '太郎',
+    lastName: '山田',
+    firstNameKana: 'タロウ',
+    lastNameKana: 'ヤマダ',
+    zipCode: '3670030',
+    prefecture: '埼玉県',
+    address1: '本庄市早稲田の杜',
+    address2: '一丁目2番1号',
+    address3: 'カインズマンション100号室',
+    phone: '09099999999',
+    phone2: '08099999999',
+    email: 'test@example.com',
+    companyName: 'テスト会社',
+    departmentName: 'テスト部',
+    memo: 'サンプルメモ',
+  },
+  {
+    id: '2',
+    name: 'address name2',
+    accountId: '234',
+    isFavorite: false,
+    title: 'オフィス',
+    firstName: '花子',
+    lastName: '佐藤',
+    firstNameKana: 'ハナコ',
+    lastNameKana: 'サトウ',
+    zipCode: '1010021',
+    prefecture: '東京都',
+    address1: '千代田区外神田',
+    address2: '四丁目5番2号',
+    address3: 'カインズビル500号室',
+    phone: '03088888888',
+    phone2: '04088888888',
+    email: 'hanako@example.com',
+    companyName: 'テスト企業',
+    departmentName: 'デザイン部',
+    memo: 'メモ内容',
+  },
+];
+
 export {
   mockInternalServerError,
-  MockPayments,
   MockcheckoutId,
   MockcheckoutCompleteServiceData,
   MockcheckoutCompleteBodyData,
   MockcheckoutCompleteServiceStoreData,
   MockcheckoutCompleteServiceOtherPaymentsData,
   mockCheckoutBeginResponse,
+  checkoutBeginResponseData,
   mockCheckoutBeginDto,
   userIdValidationError,
   mockCheckoutComplete2Response,
@@ -820,4 +1072,9 @@ export {
   mockCheckOutChangeData,
   mockcheckoutId,
   mockCheckoutChangeWithoutUserIdData,
+  mockMemberData,
+  amazonInfoMockData,
+  customerInfoEnteredByGuest,
+  addressBookMockData,
+  shippingInfoGuestInputInfo,
 };

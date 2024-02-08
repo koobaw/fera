@@ -262,6 +262,8 @@ export class OrderServiceTestController {
           calculateCartAmountDtoProductItemData.subtotalProductAmount;
         dummyProductItem.subtotalIndividualShippingCost =
           calculateCartAmountDtoProductItemData.subtotalIndividualShippingCost;
+        dummyProductItem.isCheckoutTarget =
+          calculateCartAmountDtoProductItemData.isCheckoutTarget;
         setProductItems.push(dummyProductItem);
       }
       this.logger.info(
@@ -526,20 +528,6 @@ export class OrderServiceTestController {
     };
   }
 
-  @Post('/checkoutCanBeStarted')
-  @UseGuards(AuthGuard)
-  async checkoutCanBeStarted(@Body() checkoutCanBeStartedBody: any) {
-    const result = await this.cartCommonService.checkoutCanBeStarted(
-      checkoutCanBeStartedBody.cartData,
-      checkoutCanBeStartedBody.selectedItems,
-    );
-    return {
-      code: HttpStatus.OK,
-      message: 'ok',
-      result,
-    };
-  }
-
   @Post('get-receipt-method-pattern')
   @UseGuards(AuthGuard)
   @HttpCode(200)
@@ -596,36 +584,19 @@ export class OrderServiceTestController {
     };
   }
 
-  @Post('/getCreditCards')
+  @Post('/overwriteContent')
   @UseGuards(AuthGuard)
-  getCreditCards(@Body() getParams: any) {
-    const result = this.orderService.getCreditCards(getParams.memberId);
+  @HttpCode(200)
+  async overWriteContent(@Body() body: any) {
+    const result = await this.cartCommonService.overwriteCartContents(
+      body.cartData,
+      body.overwriteContent,
+    );
     return {
       code: HttpStatus.OK,
       message: 'ok',
       result,
     };
-  }
-
-  @Post('/getSelectablePickUpLocation')
-  @UseGuards(AuthGuard)
-  @HttpCode(200)
-  async getPickUpLocation(@Body() pickUpLocationParams: any) {
-    try {
-      const result = this.cartCommonService.getSelectablePickUpLocation(
-        pickUpLocationParams.storeInfo,
-        pickUpLocationParams.isMember,
-        pickUpLocationParams.isStorePaymentSelected,
-      );
-      return {
-        code: HttpStatus.OK,
-        message: 'ok',
-        result,
-      };
-    } catch (error) {
-      this.commonService.logException('method getPickUpLocation error', error);
-      return { status: 0, error: [] };
-    }
   }
 
   @Post('/getEcTemplate')
@@ -648,5 +619,21 @@ export class OrderServiceTestController {
       );
       return { status: 0, informations: null };
     }
+  }
+
+  @Post('/deleteItemFromProductItems')
+  @UseGuards(AuthGuard)
+  async deleteItemFromProductItems(
+    @Body() deleteItemFromProductItemsParams: any,
+  ) {
+    const result = await this.cartCommonService.deleteItemFromProductItems(
+      deleteItemFromProductItemsParams.productItems,
+      deleteItemFromProductItemsParams.itemId,
+    );
+    return {
+      code: HttpStatus.OK,
+      message: 'ok',
+      result,
+    };
   }
 }

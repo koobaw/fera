@@ -82,26 +82,26 @@ describe('Cart (e2e)', () => {
   describe(' delete cart', () => {
     it('should be able to delete product item from cart', async () => {
       const response = await request(app.getHttpServer())
-        .delete(`/123/items/87092821394372`)
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY });
+        .delete(`/items/87092821394372`)
+        .set(commonHeaders);
       expect(response.statusCode).toBe(HttpStatus.OK);
     }, 10000);
     it('should throw a not found exception on wrong end point', async () => {
       const response = await request(app.getHttpServer())
-        .delete(`/carts/123/items/87092821394372`)
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY });
+        .delete(`/carts/items/87092821394372`)
+        .set(commonHeaders);
       expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);
     }, 10000);
     it('should throw a authorization error while sending request without api key', async () => {
       const response = await request(app.getHttpServer()).delete(
-        `/123/items/87092821394372`,
+        `/items/87092821394372`,
       );
       expect(response.statusCode).toBe(HttpStatus.UNAUTHORIZED);
     }, 10000);
     it('should throw a bad parameter exception on passing wrong itemID', async () => {
       const response = await request(app.getHttpServer())
-        .delete(`/123/items/4549509524318aa`)
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY });
+        .delete(`/items/4549509524318aa`)
+        .set(commonHeaders);
       expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
     }, 10000);
   });
@@ -140,6 +140,7 @@ describe('Cart (e2e)', () => {
 
   describe(' merge Carts', () => {
     it('should be able to get products from cart', async () => {
+      const toUserId = '07P1He8a0Ze4OlTCpWf3F3M469H1';
       const response = await request(app.getHttpServer())
         .post(`/merge`)
         .set(commonHeaders)
@@ -153,6 +154,7 @@ describe('Cart (e2e)', () => {
       expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);
     }, 10000);
     it('should throw a authorization error while sending request without api key', async () => {
+      const toUserId = '07P1He8a0Ze4OlTCpWf3F3M469H1';
       const response = await request(app.getHttpServer())
         .post(`/merge`)
         .send({ fromUserId: '07P1He8a0Ze4OlTCpWf3D3M469P2' });

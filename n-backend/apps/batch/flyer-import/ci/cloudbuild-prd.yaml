@@ -32,7 +32,7 @@ steps:
       - '-c'
       - |
         gcloud run jobs deploy $_SERVICE_NAME \
-        --service-account flyer-import-service@cainz-cainzapp-prd.iam.gserviceaccount.com \
+        --service-account ${_SERVICE_NAME}-service@${PROJECT_ID}.iam.gserviceaccount.com \
         --image asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA \
         --region ${_LOCATION} \
         --memory 2Gi \
@@ -62,6 +62,8 @@ steps:
       ]
 images:
   - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA'
+options:
+  logging: CLOUD_LOGGING_ONLY
 substitutions:
   _SERVICE_NAME: 'flyer-import'
   _DOCKER_FILE: 'apps/batch/flyer-import/Dockerfile'

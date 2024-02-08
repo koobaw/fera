@@ -23,6 +23,8 @@ steps:
         '--project=${PROJECT_ID}',
         '--region=${_LOCATION}',
       ]
+options:
+  logging: CLOUD_LOGGING_ONLY
 substitutions:
   _NODE_VERSION: '18.16.0'
   _SCOPE: 'geomagnetism'

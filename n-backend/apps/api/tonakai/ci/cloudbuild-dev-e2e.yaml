@@ -9,6 +9,8 @@ steps:
       - 'PROJECT_ID=$PROJECT_ID'
       - 'E2E_TEST_BASE_URL=https://dev-cainzapp-bff.cainz.com/v1/tonakai'
     secretEnv: ['CAINZAPP_API_KEY']
+options:
+  logging: CLOUD_LOGGING_ONLY
 substitutions:
   _NODE_VERSION: '18.16.0'
   _SCOPE: 'tonakai'

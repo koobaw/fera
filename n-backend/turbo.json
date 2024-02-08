@@ -18,8 +18,6 @@
     "MULE_YAP_API_CLIENT_SECRET",
     "MULE_POCKET_REGI_CLIENT_ID",
     "MULE_POCKET_REGI_CLIENT_SECRET",
-    "MULE_CATEGORY_API_CLIENT_ID",
-    "MULE_CATEGORY_API_CLIENT_SECRET",
     "CRYPTO_KEY",
     "CRYPTO_IV",
     "E2E_TEST_BASE_URL",
@@ -36,7 +34,10 @@
     "GEO_GRP_ID",
     "GEO_X_API_KEY",
     "GEO_HMAC_SECRET_KEY",
-    "UNDELIVERABLE_CHECK_API"
+    "UNDELIVERABLE_CHECK_API",
+    "POCKET_REGI_RETURN_CLIENT_ID",
+    "POCKET_REGI_RETURN_CLIENT_SECRET",
+    "PAC_API_KEY"
   ],
   "pipeline": {
     "build": {
@@ -49,10 +50,6 @@
       "cache": false
     },
     "format:check": {
-      "outputs": [],
-      "cache": false
-    },
-    "lint:check": {
       "outputs": [],
       "cache": false
     },

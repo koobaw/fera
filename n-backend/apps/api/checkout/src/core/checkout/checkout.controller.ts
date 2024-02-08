@@ -8,14 +8,16 @@ import {
   Patch,
   UseGuards,
   HttpCode,
+  Req,
 } from '@nestjs/common';
 import { AuthGuard } from '@cainz-next-gen/guard';
+import { Claims } from '@cainz-next-gen/types';
 import { CheckoutService } from './checkout.service';
 import { CheckoutCompleteDto } from './dto/checkoutComplete.dto';
 import { CheckoutBeginDto } from './dto/checkoutbegin.dto';
 import { CheckoutComplete2Dto } from './dto/checkoutComplete2.dto';
 import { CustomValidationPipe } from '../../pipes/customValidationPipe.pipe';
-import { CheckoutChangeDto } from './dto/patch.cart-change-item-body.dto';
+import { CheckoutChangeDto } from './dto/patch.checkout-change-item-body.dto';
 
 @Controller()
 export class CheckoutController {
@@ -24,7 +26,9 @@ export class CheckoutController {
   @Post()
   @UseGuards(AuthGuard)
   @HttpCode(200)
-  async checkoutBegin(@Body() checkoutBeginDto: CheckoutBeginDto) {
+  async checkoutBegin(@Req() req, @Body() checkoutBeginDto: CheckoutBeginDto) {
+    const claims = req.claims as Claims;
+    const { userId } = claims;
     const result = await this.checkoutService.checkoutBegin(checkoutBeginDto);
     return {
       code: HttpStatus.OK,
@@ -37,10 +41,14 @@ export class CheckoutController {
   @UseGuards(AuthGuard)
   @HttpCode(200)
   async checkoutChange(
+    @Req() req,
     @Param('checkoutId') checkoutId: string,
     @Body() checkoutChangedto: CheckoutChangeDto,
   ) {
+    const claims = req.claims as Claims;
+    const { userId } = claims;
     const result = await this.checkoutService.checkoutChange(
+      userId,
       checkoutId,
       checkoutChangedto,
     );
@@ -55,9 +63,12 @@ export class CheckoutController {
   @UseGuards(AuthGuard)
   @HttpCode(200)
   async checkoutComplete(
+    @Req() req,
     @Param('checkoutId') checkoutId: string,
     @Body() checkoutCompleteDto: CheckoutCompleteDto,
   ) {
+    const claims = req.claims as Claims;
+    // const { userId } = claims; present not using userId, we use it in future based on requirement
     const checkoutCompleteData = await this.checkoutService.checkoutComplete(
       checkoutId,
       checkoutCompleteDto,

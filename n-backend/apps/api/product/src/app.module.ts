@@ -9,6 +9,7 @@ import { UnionModule } from './core/union/union.module';
 import { CategoriesModule } from './core/categories/categories.module';
 import { SearchModule } from './core/searches/searches.module';
 import { RecommendModule } from './core/recommends/recommends.module';
+import { BonusPointsModule } from './core/bonus-points/bonus-points.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { RecommendModule } from './core/recommends/recommends.module';
     PricesModule,
     GlobalsModule,
     DetailModule,
+    BonusPointsModule,
   ],
 })
 export class AppModule implements NestModule {

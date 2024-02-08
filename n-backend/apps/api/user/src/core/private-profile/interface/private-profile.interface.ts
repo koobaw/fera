@@ -10,6 +10,7 @@ export interface PrivateProfile {
   address2?: string;
   address3?: string;
   memberId?: string;
+  createdDate?: string;
 }
 
 export interface MuleMembershipRecord {

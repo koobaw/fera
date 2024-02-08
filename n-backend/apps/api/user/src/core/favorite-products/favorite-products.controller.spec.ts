@@ -10,7 +10,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { DocumentReference, DocumentSnapshot } from '@google-cloud/firestore';
 import { LoggingService } from '@cainz-next-gen/logging';
 import { CommonService } from '@cainz-next-gen/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { MemberAuthGuard } from '@cainz-next-gen/guard';
 import { MockAuthGuard } from '@cainz-next-gen/test';
 import { GlobalsModule } from '../../globals.module';
 import { FavoriteProductsController } from './favorite-products.controller';
@@ -66,7 +66,7 @@ describe('FavoriteProductsController', () => {
         },
       ],
     })
-      .overrideGuard(AuthGuard)
+      .overrideGuard(MemberAuthGuard)
       .useClass(MockAuthGuard)
       .compile();
 
@@ -152,50 +152,6 @@ describe('FavoriteProductsController', () => {
       );
 
       expect(result.code).toEqual(HttpStatus.OK);
-    });
-
-    it('should throw unauthorized error', async () => {
-      jest
-        .spyOn(registerFavoriteProductsService as any, 'getTargetFavoriteDoc')
-        .mockImplementation(async () => ({
-          id: 'dummyId',
-        }));
-
-      jest
-        .spyOn(registerFavoriteProductsService, 'saveToFirestore')
-        .mockImplementation();
-
-      jest
-        .spyOn(
-          registerFavoriteProductsService,
-          'createFavoriteProductTaskToRegister',
-        )
-        .mockImplementation();
-
-      const mockedClaims = {
-        claims: {
-          userId: 'dummyUserId',
-          encryptedMemberId: '',
-          accessToken: 'dummyAccessToken',
-          refreshToken: 'dummyRefreshToken',
-        },
-      };
-
-      const registerFavoriteProductsParamDto: RegisterFavoriteProductsParamDto =
-        {
-          productId: 'productId',
-          mylistId: 'mylistId',
-        };
-
-      const correlationId = 'correlationId';
-
-      await expect(
-        controller.registerFavoriteProducts(
-          <never>mockedClaims,
-          registerFavoriteProductsParamDto,
-          correlationId,
-        ),
-      ).rejects.toThrow(HttpException);
     });
   });
 

@@ -50,7 +50,7 @@ const mockCart = [
 const encryptedMemberId = 'pk6fe0d9ead469eb5eb617d5119e108cb';
 const bearerToken =
   'bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImFkNWM1ZTlmNTdjOWI2NDYzYzg1ODQ1YTA4OTlhOWQ0MTI5MmM4YzMiLCJ0eXAiOiJKV1QifQ.eyJhY2Nlc3NUb2tlbiI6IjAwRE8wMDAwMDA1NENBRCFBUnNBUUY4X09qZ3NtdjVHWWhGVlBoZVVRbmx5d05YcVR0Ykd1V1R3eVNmVld1NEU3Y1NETmxNdFkxbEhXZmxtTm0xb3hCQ2JaVm4uNFpaazhRYWdvRFl0bFZ1QkhUcUMiLCJyZWZyZXNoVG9rZW4iOiI1QWVwODYxMTBLQ2pVRFZWaDBpbmJQVEN6ejNXODlHVUhVRHRCd2lETUtpdnlBRWpVbFcuakxVY2FLeDNEX3FhS3ZZaG9OWHNLcHRoRkpsVHFxTmZJbHUiLCJlbmNyeXB0ZWRNZW1iZXJJZCI6Ik5ZOFJOVkRzRWFOUUxrUnRIMUx2dkFTWmpWS0ptNG1uNzlLOCtRTUszUVU9IiwicHJvdmlkZXJfaWQiOiJhbm9ueW1vdXMiLCJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vY2FpbnotY2FpbnphcHAtYmFja2VuZC1kZXYiLCJhdWQiOiJjYWluei1jYWluemFwcC1iYWNrZW5kLWRldiIsImF1dGhfdGltZSI6MTY5NTk4NzY2MiwidXNlcl9pZCI6IjFPdFFYemNabWZoOWV5SklxYUdEMk9jajdwSjIiLCJzdWIiOiIxT3RRWHpjWm1maDlleUpJcWFHRDJPY2o3cEoyIiwiaWF0IjoxNjk1OTg3NzA3LCJleHAiOjE2OTU5OTEzMDcsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnt9LCJzaWduX2luX3Byb3ZpZGVyIjoiYW5vbnltb3VzIn19.vyd1vOQAjxhYP8AMUio1rQkbRCT_yZWNJ-odH5ouDiHlVfCeGx2TkVp6gT1wo71b5KyV9KlN8Q2OTEaEUOGsDyNUADBPEJlcKXiFLc_IG0d_mVCC7hPBrea1-RUlO0fyhqOXjL4yw1z8pVO4d222AFilhG985mS4qZA0y97SHKU_jx437w2n6Bs1nrQ_3znubqn9yt25rVUFbKuBnxBz_AGkbTnpYrPiZzycQsQ5MApQ81vAAXArNPkU3DdDV_QxadVyVrhRxajLOIkkE5ew_0ocXzrb3R1x-TRWsu9zA_aUfwGZebdCZAPiAVc9M7a2UtMZVKQ4Yy0rrbp9kAT4AQ';
-
+// GetProductDetailService test cases
 describe('GetProductDetailService', () => {
   let service: AddProductDetailService;
   let mockedHttpService: jest.MockedObjectDeep<HttpService>;
@@ -120,7 +120,6 @@ describe('GetProductDetailService', () => {
         data: [
           {
             priceIncludingTax: 698,
-            salePriceIncludingTax: 528,
           },
         ],
       };
@@ -141,10 +140,14 @@ describe('GetProductDetailService', () => {
         taxRate: 1,
         productId: '45478954991',
         priceIncludingTax: 698,
-        salePriceIncludingTax: 528,
         productName: 'Test',
         quantity: 1,
-        code128DiscountDetails: null,
+        code128DiscountDetails: [],
+        subItems: [],
+        mixMatchCode: null,
+        setItemCode: null,
+        subtotalAmount: null,
+        unitPrice: null,
       };
       const mockResp = {
         data: {
@@ -152,11 +155,15 @@ describe('GetProductDetailService', () => {
           productName: 'Test',
           quantity: 1,
           priceIncludingTax: 698,
-          salePriceIncludingTax: 528,
           isAlcoholic: false,
           taxRate: 1,
           imageUrls: ['test 1', 'test 2'],
-          code128DiscountDetails: null,
+          code128DiscountDetails: [],
+          subItems: [],
+          mixMatchCode: null,
+          setItemCode: null,
+          subtotalAmount: null,
+          unitPrice: null,
         },
         code: HttpStatus.CREATED,
         message: 'OK',
@@ -196,7 +203,6 @@ describe('GetProductDetailService', () => {
         data: [
           {
             priceIncludingTax: 698,
-            salePriceIncludingTax: 528,
           },
         ],
       };
@@ -208,6 +214,11 @@ describe('GetProductDetailService', () => {
             departmentCode: '074',
             consumptionTaxRate: 1,
             imageUrls: ['test 1', 'test 2'],
+            subItems: [],
+            mixMatchCode: null,
+            setItemCode: null,
+            subtotalAmount: null,
+            unitPrice: null,
           },
         ],
       };
@@ -217,16 +228,20 @@ describe('GetProductDetailService', () => {
         taxRate: 1,
         productId: '45478954991',
         priceIncludingTax: 698,
-        salePriceIncludingTax: 528,
         productName: 'Test',
         quantity: 1,
         code128DiscountDetails: [
           {
-            discountMethod: '03',
+            discountMethod: 'percent',
             discount: 30,
             appliedCount: 1,
           },
         ],
+        subItems: [],
+        mixMatchCode: null,
+        setItemCode: null,
+        subtotalAmount: null,
+        unitPrice: null,
       };
       const mockResp = {
         data: {
@@ -234,17 +249,21 @@ describe('GetProductDetailService', () => {
           productName: 'Test',
           quantity: 1,
           priceIncludingTax: 698,
-          salePriceIncludingTax: 528,
           isAlcoholic: false,
           taxRate: 1,
           imageUrls: ['test 1', 'test 2'],
           code128DiscountDetails: [
             {
-              discountMethod: '03',
+              discountMethod: 'percent',
               discount: 30,
               appliedCount: 1,
             },
           ],
+          subItems: [],
+          mixMatchCode: null,
+          setItemCode: null,
+          subtotalAmount: null,
+          unitPrice: null,
         },
         code: HttpStatus.CREATED,
         message: 'OK',
@@ -295,6 +314,7 @@ describe('GetProductDetailService', () => {
             departmentCode: '074',
             consumptionTaxRate: 1,
             imageUrls: ['test 1', 'test 2'],
+            subItems: [],
           },
         ],
       };
@@ -304,10 +324,14 @@ describe('GetProductDetailService', () => {
         taxRate: 1,
         productId: '45478954991',
         priceIncludingTax: 698,
-        salePriceIncludingTax: null,
         productName: 'Test',
         quantity: 1,
-        code128DiscountDetails: null,
+        code128DiscountDetails: [],
+        subItems: [],
+        mixMatchCode: null,
+        setItemCode: null,
+        subtotalAmount: null,
+        unitPrice: null,
       };
       const mockResp = {
         data: {
@@ -315,11 +339,15 @@ describe('GetProductDetailService', () => {
           productName: 'Test',
           quantity: 1,
           priceIncludingTax: 698,
-          salePriceIncludingTax: null,
           isAlcoholic: false,
           taxRate: 1,
           imageUrls: ['test 1', 'test 2'],
-          code128DiscountDetails: null,
+          code128DiscountDetails: [],
+          subItems: [],
+          mixMatchCode: null,
+          setItemCode: null,
+          subtotalAmount: null,
+          unitPrice: null,
         },
         code: HttpStatus.CREATED,
         message: 'OK',
@@ -359,7 +387,6 @@ describe('GetProductDetailService', () => {
         data: [
           {
             priceIncludingTax: 698,
-            salePriceIncludingTax: 528,
           },
         ],
       };
@@ -462,7 +489,6 @@ describe('GetProductDetailService', () => {
           {
             productId: '45478954991',
             priceIncludingTax: 698,
-            salePriceIncludingTax: 528,
             storeCode: '777',
             membershipRank: '4',
           },
@@ -558,7 +584,6 @@ describe('GetProductDetailService', () => {
         taxRate: 1,
         productId: '54991',
         priceIncludingTax: 698,
-        salePriceIncludingTax: 528,
         productName: 'Test',
         quantity: 1,
         code128DiscountDetails: null,
@@ -593,7 +618,6 @@ describe('GetProductDetailService', () => {
         taxRate: 1,
         productId: '54991',
         priceIncludingTax: 698,
-        salePriceIncludingTax: 528,
         productName: 'Test',
         quantity: 2,
         code128DiscountDetails: null,
@@ -606,7 +630,6 @@ describe('GetProductDetailService', () => {
 
           productId: '54991',
           priceIncludingTax: 698,
-          salePriceIncludingTax: 528,
           productName: 'Test',
           quantity: 1,
         },
@@ -641,7 +664,6 @@ describe('GetProductDetailService', () => {
         taxRate: 1,
         productId: '54991',
         priceIncludingTax: 698,
-        salePriceIncludingTax: 528,
         productName: 'Test',
         quantity: 2,
         code128DiscountDetails: null,
@@ -654,7 +676,6 @@ describe('GetProductDetailService', () => {
 
           productId: '54993',
           priceIncludingTax: 698,
-          salePriceIncludingTax: 528,
           productName: 'Test',
           quantity: 1,
         },
@@ -741,7 +762,6 @@ describe('GetProductDetailService', () => {
         quantity: 1,
         taxRate: 8,
         priceIncludingTax: 698,
-        salePriceIncludingTax: null,
         isAlcoholic: false,
         code128DiscountDetails: null,
       };
@@ -815,7 +835,6 @@ describe('GetProductDetailService', () => {
         quantity: 1,
         taxRate: 8,
         priceIncludingTax: 698,
-        salePriceIncludingTax: null,
         isAlcoholic: false,
         code128DiscountDetails: null,
       };
@@ -849,7 +868,6 @@ describe('GetProductDetailService', () => {
         taxRate: 1,
         productId: '54991',
         priceIncludingTax: 698,
-        salePriceIncludingTax: 528,
         productName: 'Test',
         quantity: 1,
         code128DiscountDetails: null,

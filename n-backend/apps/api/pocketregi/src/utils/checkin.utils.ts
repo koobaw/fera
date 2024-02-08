@@ -5,8 +5,6 @@ import { USERS_COLLECTION_NAME } from '@cainz-next-gen/types';
 
 @Injectable()
 export class PocketRegiCheckinCommonService {
-  private readonly USERS_COLLECTION_NAME = USERS_COLLECTION_NAME;
-
   constructor(
     private readonly firestoreBatchService: FirestoreBatchService,
     private readonly commonService: CommonService,
@@ -29,26 +27,6 @@ export class PocketRegiCheckinCommonService {
 
     const isValidQrCode = pattern.test(qrCodeStr);
     return isValidQrCode;
-  }
-
-  /**
-   * valdate date, only accepted format is : September 26, 2023 at 5:08:00 PM UTC+5:30 / 日付を検証します。受け入れられる形式は次のとおりです: September 26, 2023 at 5:08:00 PM UTC+5:30
-   * @param dateStr string value / 文字列値
-   * @returns true/false boolean
-   */
-  public validateAllowedCheckInDate(dateStr: string) {
-    if (
-      !dateStr ||
-      dateStr.trim().length === 0 ||
-      typeof dateStr !== 'string'
-    ) {
-      return false;
-    }
-    const pattern =
-      /^(\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])T([01]\d|2[0-3]):([0-5]\d):([0-5]\d)\.\d{3}Z$/;
-
-    const isValidDate = pattern.test(dateStr);
-    return isValidDate;
   }
 
   /**
@@ -135,7 +113,7 @@ export class PocketRegiCheckinCommonService {
   public async checkUserFromCollection(encryptedMemberId: string) {
     try {
       const { doc } = await this.getDocumentFromCollection(
-        this.USERS_COLLECTION_NAME,
+        USERS_COLLECTION_NAME,
         encryptedMemberId,
       );
       if (!doc) {

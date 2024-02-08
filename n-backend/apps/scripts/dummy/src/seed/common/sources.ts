@@ -1,13 +1,4 @@
-export const storeCodes = [
-  '813', // 本庄早稲田店
-  '816', // 浦和美園店
-  '859', // 朝霞店
-  '906', // ハンズ新宿店
-  '296', // 青梅インター店
-  '767', // ＦＣ大曲店
-  '794', // ＦＣサンプラザ糸満店
-  '741', // ＦＣ津山店
-];
+import * as admin from 'firebase-admin';
 
 export const campaignIds = [
   '0016543',
@@ -81,21 +72,6 @@ export const productIds = [
   '4549509735809',
 ];
 
-export const campaignTitles = [
-  'LION オーラルケア点検キャンペーン',
-  'P&G 全員必ずポイントがもらえる キャンペーン',
-  '【d払い】毎週おトクなd曜日 毎週金土曜日はdポイントが最大4%',
-  'アサヒビール×カインズ アームチェアが当たるキャンペーン',
-  'カインズアクアキャンペーン',
-  'キリンビール おソトも・おウチも応援キャンペーン',
-  'サーモス×カインズ 500ポイントもらえる!! 夏のポイントバックキャンペーン',
-  'デルモンテ×カインズ トマトを育てて絵を描こう！コンテスト',
-  'ピュアクリスタル 飲まなかったら返金キャンペーン',
-  '伊藤園お～いお茶 もれなく800ポイントもらえるキャンペーン',
-  '春の園芸メーカー合同キャンペーン',
-  '花王×小林製薬×白元アース 最大5,000ポイント貰えるキャンペーン',
-];
-
 export const articleTitles = [
   '自宅に窓際カフェススペースを作って、いつでもおしゃれに撮影できるようにしてみた',
   '日本初の水生植物専門店「杜若園芸」に聞いたメダカの飼育におすすめの水草は？',
@@ -107,4 +83,238 @@ export const articleTitles = [
   '【ミジンコの増やし方】メダカの餌にするならミジンコの質が重要！ 東北大学・占部城太郎教授に聞く培養方法',
   '【迷わず選べる】プロ厳選の除草剤おすすめ5選｜種類や使い方を徹底解説',
   '車中泊マットにカインズの高反発ロングクッションflattyがぴったり説',
+];
+
+export const campaigns = [
+  {
+    title:
+      'アサヒビール×カインズ 外でも「生ジョッキ缶」を楽しもう！キャンペーン【応募締切：2/6(月) 23:59】',
+    startDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-12-08T00:00:00.000+09:00'),
+    ),
+    endDate: admin.firestore.Timestamp.fromDate(
+      new Date('2023-02-06T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleStartDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-12-07T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleEndDate: admin.firestore.Timestamp.fromDate(
+      new Date('2023-01-30T00:00:00.000+09:00'),
+    ),
+    campaignUrl:
+      'https://www.cainz.com/contents/household-supplies/cp-77ash05.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_os_20221208-cp-asahi_:10379',
+    thumbnailUrl:
+      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FMlbicy0OyakaFTmYZfZt%2Fimage.jpg?alt=media&token=5742da67-47ea-425f-967f-54496a86d6ea',
+  },
+  {
+    title: '抽選で総計2,100名様にポイントや賞品が当たる！',
+    startDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-07-04T00:00:00.000+09:00'),
+    ),
+    endDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-08-29T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleStartDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-07-04T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleEndDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-08-29T00:00:00.000+09:00'),
+    ),
+    campaignUrl:
+      'https://www.cainz.com/contents/household-supplies/cp-ashkrn02.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p1_os_20220704-cp-asahikirin_:10323',
+    thumbnailUrl:
+      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FhhhpbJ31D6wdOlRPTN8W%2Fimage.jpg?alt=media&token=aa621eee-a14e-476e-a18c-263773d73c04',
+  },
+  {
+    title: '【6/30ご購入分まで】600ポイントプレゼント！',
+    startDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-05-16T00:00:00.000+09:00'),
+    ),
+    endDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-07-07T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleStartDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-05-16T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleEndDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-07-07T00:00:00.000+09:00'),
+    ),
+    campaignUrl:
+      'https://www.cainz.com/contents/household-supplies/cp-64ito02.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_os_20220516-itouen_:10303',
+    thumbnailUrl:
+      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2Fx91mwAJrXekJd5EjwnIJ%2Fimage.jpg?alt=media&token=2be96a94-259d-423a-bef9-2f158b6c0541',
+  },
+  {
+    title:
+      'スプリングバレー豊潤＜496＞を飲んであなたのDIYを楽しもうキャンペーン【応募締切：11/14(日) 23：59】',
+    startDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-09-27T00:00:00.000+09:00'),
+    ),
+    endDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-11-14T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleStartDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-09-27T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleEndDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-11-07T00:00:00.000+09:00'),
+    ),
+    campaignUrl:
+      'https://www.cainz.com/contents/household-supplies/cp-77krn01.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_cp-kirinbeer210927_:10225',
+    thumbnailUrl:
+      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FtlyWGCSw0Gq6xkAEzkzc%2Fimage.jpg?alt=media&token=d498e6da-adac-4dc1-b04c-1ad2f92e39a4',
+  },
+  {
+    title:
+      '【最大36,000ポイント】発売36周年キャンペーン開催中！【応募締切：5/15(日) 23：59】',
+    startDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-03-02T00:00:00.000+09:00'),
+    ),
+    endDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-05-15T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleStartDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-03-02T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleEndDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-05-08T00:00:00.000+09:00'),
+    ),
+    campaignUrl:
+      'https://www.cainz.com/contents/household-supplies/cp-77ash04.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p1_os_20220302-superdrycp_:10274',
+    thumbnailUrl:
+      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FDPpLX9JVfJzpOne722Zw%2Fimage.jpg?alt=media&token=71380d0b-22b0-4409-bc6a-cc625683b940',
+  },
+  {
+    title: 'カインズアプリで給油がお得に！',
+    startDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-07-02T00:00:00.000+09:00'),
+    ),
+    endDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-09-30T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleStartDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-07-02T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleEndDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-09-30T00:00:00.000+09:00'),
+    ),
+    campaignUrl: '',
+    thumbnailUrl:
+      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FBq9pS5xqstkDkyI63ehQ%2Fimage.jpg?alt=media&token=48728173-46da-40f6-9d0c-436dd65c0977',
+  },
+  {
+    title: 'アサヒスーパードライ4ケースご購入で必ずもらえる！',
+    startDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-08-14T00:00:00.000+09:00'),
+    ),
+    endDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-10-03T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleStartDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-08-09T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleEndDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-09-26T00:00:00.000+09:00'),
+    ),
+    campaignUrl:
+      'https://www.cainz.com/contents/household-supplies/cp-77ash01.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p1_cp-asahi210814_:10199',
+    thumbnailUrl:
+      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FIjeFYT1DJrdWqOJtsACN%2Fimage.jpg?alt=media&token=8ef00b1d-8b14-4780-aca6-d0a12660c5bc',
+  },
+  {
+    title: '【まもなく終了！】買えば買うほどとくとくキャンペーン！',
+    startDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-03-01T00:00:00.000+09:00'),
+    ),
+    endDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-03-07T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleStartDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-01-25T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleEndDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-03-07T00:00:00.000+09:00'),
+    ),
+    campaignUrl:
+      'https://www.cainz.com/shop/e/e77spcp10/?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_cp-sapporo-tokutoku210301',
+    thumbnailUrl:
+      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2Fl09tcXwGdHLPuoGeLLLK%2Fimage.jpg?alt=media&token=7fe5242f-9fb3-4da8-a7f5-3d903c8cc2c0',
+  },
+  {
+    title:
+      '【1,000ポイント】ポイントバックキャンペーン！【応募締切：10/18(火) 23：59】',
+    startDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-09-15T00:00:00.000+09:00'),
+    ),
+    endDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-10-18T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleStartDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-09-14T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleEndDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-10-18T00:00:00.000+09:00'),
+    ),
+    campaignUrl:
+      'https://www.cainz.com/contents/household-supplies/cp-itoash01.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_os_20220914-cp-itoen-asahi_:10350',
+    thumbnailUrl:
+      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FDLq0pZ0dCjwM1WAYxkwU%2Fimage.jpg?alt=media&token=e46e84c6-0fcf-4ee4-a4d8-11efb265878d',
+  },
+  {
+    title: '【ロゴキャップが当たる】カインズ限定キャンペーン',
+    startDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-04-07T00:00:00.000+09:00'),
+    ),
+    endDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-06-21T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleStartDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-04-07T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleEndDate: admin.firestore.Timestamp.fromDate(
+      new Date('2021-06-21T00:00:00.000+09:00'),
+    ),
+    campaignUrl:
+      'https://www.cainz.com/shop/e/e77nscp00/?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_cp-nisshuhan-logocap210407_:10060',
+    thumbnailUrl:
+      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2F6GPD75AbK5FHZxNoCG4L%2Fimage.jpg?alt=media&token=33e9f644-1a8f-4a49-879a-5783bf4ab065',
+  },
+  {
+    title: '【浦和美園店限定】ARスタンプラリーに参加して景品をゲットしよう！',
+    startDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-12-01T00:00:00.000+09:00'),
+    ),
+    endDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-12-25T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleStartDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-12-01T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleEndDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-12-25T00:00:00.000+09:00'),
+    ),
+    campaignUrl: '',
+    thumbnailUrl:
+      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2Fph14VvAgQjSQsdKUUuQP%2Fimage.jpg?alt=media&token=102bf589-6411-4f98-9d96-65012a8334b6',
+  },
+  {
+    title:
+      'サッポロビール×カインズ 星をつかみとろう！キャンペーン【応募締切：2/20(月) 23:59】',
+    startDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-12-08T00:00:00.000+09:00'),
+    ),
+    endDate: admin.firestore.Timestamp.fromDate(
+      new Date('2023-02-20T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleStartDate: admin.firestore.Timestamp.fromDate(
+      new Date('2022-12-07T00:00:00.000+09:00'),
+    ),
+    publiclyAccessibleEndDate: admin.firestore.Timestamp.fromDate(
+      new Date('2023-02-13T00:00:00.000+09:00'),
+    ),
+    campaignUrl:
+      'https://www.cainz.com/contents/household-supplies/cp-77spr04.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_os_20221208-cp-sapporo_:10380',
+    thumbnailUrl:
+      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FUX8yYR4OM0VbTakgmyr5%2Fimage.jpg?alt=media&token=2a558b6d-5cda-4a0c-bda2-f6dd9011544d',
+  },
 ];

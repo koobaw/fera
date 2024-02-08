@@ -18,7 +18,6 @@ const mockFirestoreBatchService = {
 
 const mockCheckinUtils = {
   validateAllowedQrCodeData: jest.fn(),
-  validateAllowedCheckInDate: jest.fn(),
   getShopcodeFromQrData: jest.fn(),
   getFirestoreDocRef: jest.fn(),
   getFirestoreSubDocRef: jest.fn(),
@@ -42,6 +41,7 @@ describe('CheckinService', () => {
           useFactory: () => ({
             logException: jest.fn(),
             createMd5: jest.fn(),
+            createFirestoreSystemName: jest.fn(),
           }),
         },
         {
@@ -107,9 +107,7 @@ describe('CheckinService', () => {
       jest
         .spyOn(checkInUtils, 'validateAllowedQrCodeData')
         .mockReturnValue(true);
-      jest
-        .spyOn(checkInUtils, 'validateAllowedCheckInDate')
-        .mockReturnValue(true);
+
       jest
         .spyOn(checkInUtils, 'checkUserFromCollection')
         .mockResolvedValue(true);
@@ -120,24 +118,22 @@ describe('CheckinService', () => {
         .mockResolvedValue(undefined);
 
       const qrCodeData = 'sampleQrCodeData';
-      const checkInTime = 'October 06, 2023 at 10:00:00 AM UTC+5:30';
       const encryptedMemberId = 'sampleMemberId';
-
+      const operatorName = 'some operator name';
+      const shopcode = '123';
       const result = await checkinService.pocketRegiCheckIn(
         qrCodeData,
-        checkInTime,
         encryptedMemberId,
+        operatorName,
       );
 
       // Assertions for the successful check-in
-      expect(result.data.storeName).toBe('abc');
-      expect(result.data.storeCode).toBe('123');
-      expect(result.data.storeAddress).toBe('storeAddress');
-
+      expect(result.code).toBe(HttpStatus.CREATED);
+      expect(result.message).toBe('OK');
       expect(saveToFirestoreMock).toHaveBeenCalledWith(
         encryptedMemberId,
-        checkInTime,
-        '123',
+        shopcode,
+        operatorName,
       );
 
       // Restore the original implementation of httpService.get
@@ -174,15 +170,15 @@ describe('CheckinService', () => {
         .mockResolvedValue(undefined);
 
       const qrCodeData = 'sampleQRCodeData';
-      const checkInTime = '2023-11-15T02:00:10.000Z';
       const encryptedMemberId = 'sampleUserId';
+      const operatorName = 'some operator name';
 
       try {
         // Call the function being tested
         await checkinService.pocketRegiCheckIn(
           qrCodeData,
-          checkInTime,
           encryptedMemberId,
+          operatorName,
         );
       } catch (e: any) {
         // Assert that the exception is thrown correctly
@@ -200,22 +196,19 @@ describe('CheckinService', () => {
 
     it('it should throw error for invalid qr code', async () => {
       const qrCodeData = '';
-      const checkInTime = '2023-11-15T02:00:10.000Z';
       const encryptedMemberId = 'sampleUserId';
+      const operatorName = 'some operator name';
 
       jest
         .spyOn(checkInUtils, 'validateAllowedQrCodeData')
         .mockReturnValue(false);
-      jest
-        .spyOn(checkInUtils, 'validateAllowedCheckInDate')
-        .mockReturnValue(true);
 
       try {
         // Call the function being tested
         await checkinService.pocketRegiCheckIn(
           qrCodeData,
-          checkInTime,
           encryptedMemberId,
+          operatorName,
         );
       } catch (e: any) {
         // Assert that the exception is thrown correctly
@@ -231,50 +224,15 @@ describe('CheckinService', () => {
       jest.restoreAllMocks();
     });
 
-    it('it should throw error for invalid check in time', async () => {
-      const qrCodeData = 'dummyShopCode';
-      const checkInTime = '';
-      const encryptedMemberId = 'sampleUserId';
-
-      jest
-        .spyOn(checkInUtils, 'validateAllowedQrCodeData')
-        .mockReturnValue(true);
-      jest
-        .spyOn(checkInUtils, 'validateAllowedCheckInDate')
-        .mockReturnValue(false);
-
-      try {
-        // Call the function being tested
-        await checkinService.pocketRegiCheckIn(
-          qrCodeData,
-          checkInTime,
-          encryptedMemberId,
-        );
-      } catch (e: any) {
-        // Assert that the exception is thrown correctly
-        expect(e).toBeInstanceOf(HttpException);
-        expect(e.getResponse()).toEqual({
-          errorCode: ErrorCode.INVALID_CHECKIN_TIME,
-          message: ErrorMessage[ErrorCode.INVALID_CHECKIN_TIME],
-        });
-        expect(e.getStatus()).toBe(HttpStatus.BAD_REQUEST);
-      }
-
-      // Restore the original implementation of httpService.get
-      jest.restoreAllMocks();
-    });
-
     it('it should throw error for invalid user', async () => {
       const qrCodeData = 'dummyShopCode';
-      const checkInTime = '2023-11-15T02:00:10.000Z';
       const encryptedMemberId = '';
+      const operatorName = 'some operator name';
 
       jest
         .spyOn(checkInUtils, 'validateAllowedQrCodeData')
         .mockReturnValue(true);
-      jest
-        .spyOn(checkInUtils, 'validateAllowedCheckInDate')
-        .mockReturnValue(true);
+
       jest
         .spyOn(checkInUtils, 'checkUserFromCollection')
         .mockResolvedValue(false);
@@ -283,8 +241,8 @@ describe('CheckinService', () => {
         // Call the function being tested
         await checkinService.pocketRegiCheckIn(
           qrCodeData,
-          checkInTime,
           encryptedMemberId,
+          operatorName,
         );
       } catch (e: any) {
         // Assert that the exception is thrown correctly
@@ -302,8 +260,8 @@ describe('CheckinService', () => {
 
     it('it should throw error for invalid shop code', async () => {
       const qrCodeData = 'dummyShopCode';
-      const checkInTime = '2023-11-15T02:00:10.000Z';
       const encryptedMemberId = 'someMemberId';
+      const operatorName = 'some operator name';
 
       const mockErroShopDoc = {
         errorCode: ErrorCode.INVALID_SHOP_CODE,
@@ -313,9 +271,7 @@ describe('CheckinService', () => {
       jest
         .spyOn(checkInUtils, 'validateAllowedQrCodeData')
         .mockReturnValue(true);
-      jest
-        .spyOn(checkInUtils, 'validateAllowedCheckInDate')
-        .mockReturnValue(true);
+
       jest
         .spyOn(checkInUtils, 'checkUserFromCollection')
         .mockResolvedValue(true);
@@ -327,8 +283,8 @@ describe('CheckinService', () => {
         // Call the function being tested
         await checkinService.pocketRegiCheckIn(
           qrCodeData,
-          checkInTime,
           encryptedMemberId,
+          operatorName,
         );
       } catch (e: any) {
         // Assert that the exception is thrown correctly
@@ -491,10 +447,10 @@ describe('CheckinService', () => {
         .mockReturnValue('encryptedSubDocId');
 
       const docId = 'sampleDocId';
-      const checkInTime = '2023-11-15T02:00:10.000Z';
-      const shopcode = 'sampleShopCode';
+      const storeCode = '345';
+      const operatorName = 'some operator name';
 
-      await checkinService.saveToFirestore(docId, checkInTime, shopcode);
+      await checkinService.saveToFirestore(docId, storeCode, operatorName);
       expect(mockFirestoreBatchService.batchCommit).toHaveBeenCalledTimes(1);
 
       // Restore the original implementation of httpService.get
@@ -525,12 +481,12 @@ describe('CheckinService', () => {
 
       // Mock the necessary data and dependencies
       const docId = 'sampleDocId';
-      const checkInTime = '2023-11-15T02:00:10.000Z';
-      const shopcode = 'sampleShopCode';
+      const storeCode = '345';
+      const operatorName = 'some operator name';
 
       try {
         // Call the function being tested
-        await checkinService.saveToFirestore(docId, checkInTime, shopcode);
+        await checkinService.saveToFirestore(docId, storeCode, operatorName);
       } catch (e: any) {
         // Assert that the exception is thrown correctly
         expect(e).toBeInstanceOf(HttpException);

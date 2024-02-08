@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CommonService } from '@cainz-next-gen/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { MemberAuthGuard } from '@cainz-next-gen/guard';
 import { INestApplication, ValidationPipe, HttpStatus } from '@nestjs/common';
 import request from 'supertest';
 import { LoggingService } from '@cainz-next-gen/logging';
@@ -12,12 +12,14 @@ import { RegisterAddressesService } from './register.addresses/register.addresse
 import { RegisterAddressesBodyDto } from './dto/register.addresses-body.dto';
 import { UpdateAddressesService } from './update.addresses/update.addresses.service';
 import { AddressesMuleApiService } from './addresses-mule-api/addresses-mule-api.service';
+import { UpdateAddressBodyDto } from './dto/update.address-body.dto';
 
 describe('AddressesController', () => {
   let controller: AddressesController;
   let app: INestApplication;
   let mockFindAddressesService: Partial<FindAddressesService>;
   let registerAddressesService: RegisterAddressesService;
+  let updateAddressesService: UpdateAddressesService;
 
   beforeEach(async () => {
     mockFindAddressesService = {
@@ -59,7 +61,7 @@ describe('AddressesController', () => {
         },
       ],
     })
-      .overrideGuard(AuthGuard)
+      .overrideGuard(MemberAuthGuard)
       .useClass(MockAuthGuard)
       .compile();
 
@@ -70,6 +72,9 @@ describe('AddressesController', () => {
     controller = module.get<AddressesController>(AddressesController);
     registerAddressesService = module.get<RegisterAddressesService>(
       RegisterAddressesService,
+    );
+    updateAddressesService = module.get<UpdateAddressesService>(
+      UpdateAddressesService,
     );
   });
 
@@ -244,6 +249,38 @@ describe('AddressesController', () => {
       expect(response.body).toHaveProperty('message', 'ok');
       expect(response.body).toHaveProperty('data');
       expect(Array.isArray(response.body.data)).toBeTruthy();
+    });
+  });
+
+  describe('updateAddress', () => {
+    it('should response success', async () => {
+      jest.spyOn(updateAddressesService, 'updateAddress').mockImplementation();
+      const updateAddressBodyDto: UpdateAddressBodyDto = {
+        isFavorite: true,
+        title: 'title',
+        firstName: 'firstName',
+        lastName: 'lastName',
+        firstNameKana: 'firstNameKana',
+        lastNameKana: 'lastNameKana',
+        zipCode: '0000000',
+        prefecture: 'prefecture',
+        address1: 'address1',
+        address2: 'address2',
+        address3: 'address3',
+        phone: 'phone',
+        phone2: 'phone2',
+        email: 'email@example.com',
+        companyName: 'companyName',
+        departmentName: 'departmentName',
+        memo: 'memo',
+        isDeleted: false,
+      };
+      await expect(
+        controller.updateAddress(
+          { addressId: 'addressId' },
+          updateAddressBodyDto,
+        ),
+      ).resolves.not.toThrow();
     });
   });
 });

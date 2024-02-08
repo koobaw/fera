@@ -5,14 +5,14 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
+  Put,
   Post,
   Req,
   UseGuards,
   Query,
-  Put,
-  Param,
 } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { MemberAuthGuard } from '@cainz-next-gen/guard';
 import { Claims } from '@cainz-next-gen/types';
 import { CommonService } from '@cainz-next-gen/common';
 import { ConfigService } from '@nestjs/config';
@@ -37,7 +37,7 @@ export class AddressesController {
   ) {}
 
   @Get('/')
-  @UseGuards(AuthGuard)
+  @UseGuards(MemberAuthGuard)
   public async getAddresses(
     @Req() req: Request & { claims?: Claims },
     @Query() queryDto: FindAddressesQueryDto,
@@ -67,7 +67,7 @@ export class AddressesController {
 
   @Post('/')
   @HttpCode(HttpStatus.CREATED)
-  @UseGuards(AuthGuard)
+  @UseGuards(MemberAuthGuard)
   public async registerAddress(
     @Req() req: Request & { claims?: Claims },
     @Body() registerAddressRequestBody: RegisterAddressesBodyDto,
@@ -98,7 +98,7 @@ export class AddressesController {
   }
 
   @Put(':addressId')
-  @UseGuards(AuthGuard)
+  @UseGuards(MemberAuthGuard)
   public async updateAddress(
     @Param() updateAddressParamDto: UpdateAddressParamDto,
     @Body() updateAddressBodyDto: UpdateAddressBodyDto,

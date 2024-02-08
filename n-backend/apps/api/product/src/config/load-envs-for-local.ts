@@ -12,6 +12,7 @@ export async function loadEnvsForLocal() {
   process.env.CC_CLIENT_ID = await getSecretValue('cc_client_id');
   process.env.CC_ACCESS_KEY = await getSecretValue('cc_access_key');
   process.env.CAINZAPP_API_KEY = await getSecretValue('cainzapp_api_key');
+  process.env.PAC_API_KEY = await getSecretValue('pac_api_key');
 
   /**
    * ローカル環境で動作させる場合に必要な環境変数をここで設定

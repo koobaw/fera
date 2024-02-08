@@ -73,9 +73,7 @@ export class GetCardsService {
           }),
         ),
     );
-
     const formatedResponse = this.formatMuleResponse(data);
-
     await this.updateCardsToFirestore(
       formatedResponse,
       operatorName,
@@ -132,15 +130,6 @@ export class GetCardsService {
             else {
               this.logger.warn(
                 `${targetRef.ref.path} : targetcardCollection is not exists.`,
-              );
-              this.commonService.logException(
-                'targetcardCollection is not exists',
-                targetRef.ref.path,
-              );
-              this.commonService.createHttpException(
-                ErrorCode.CARD_COLLECTION_NOT_EXISTS_IN_DB,
-                ErrorMessage[ErrorCode.CARD_COLLECTION_NOT_EXISTS_IN_DB],
-                HttpStatus.INTERNAL_SERVER_ERROR,
               );
             }
           }),

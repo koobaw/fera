@@ -34,7 +34,7 @@ export class SettlementController {
     @Body() settlementRequest: SettlementDto,
   ): Promise<SettlementResponse> {
     const userClaims: Claims = req.claims;
-
+    const bearerToken = req.headers.authorization;
     const operatorName = this.commonService.createFirestoreSystemName(
       req.originalUrl,
       req.method,
@@ -44,6 +44,7 @@ export class SettlementController {
       settlementRequest,
       userClaims,
       operatorName,
+      bearerToken,
     );
 
     return response;

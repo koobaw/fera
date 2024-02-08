@@ -40,7 +40,8 @@ steps:
         --set-env-vars=MULE_CRM_API_CLIENT_SECRET=$$MULE_CRM_API_CLIENT_SECRET \
         --set-env-vars=CRYPTO_KEY=$$CRYPTO_KEY \
         --set-env-vars=CRYPTO_IV=$$CRYPTO_IV \
-        --set-env-vars=CAINZAPP_API_KEY=$$CAINZAPP_API_KEY
+        --set-env-vars=CAINZAPP_API_KEY=$$CAINZAPP_API_KEY \
+        --set-env-vars=PAC_API_KEY=$$PAC_API_KEY
     secretEnv:
       [
         'MULE_API_CLIENT_ID',
@@ -52,9 +53,12 @@ steps:
         'CRYPTO_KEY',
         'CRYPTO_IV',
         'CAINZAPP_API_KEY',
+        'PAC_API_KEY',
       ]
 images:
   - 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/$_CLOUD_BUILD_REPOSITORY/$_SERVICE_NAME:$COMMIT_SHA'
+options:
+  logging: CLOUD_LOGGING_ONLY
 substitutions:
   _LOCATION: 'asia-northeast1'
   _SERVICE_NAME: 'product'
@@ -81,3 +85,5 @@ availableSecrets:
       env: 'CRYPTO_IV'
     - versionName: projects/$PROJECT_ID/secrets/cainzapp_api_key/versions/latest
       env: 'CAINZAPP_API_KEY'
+    - versionName: projects/$PROJECT_ID/secrets/pac_api_key/versions/latest
+      env: 'PAC_API_KEY'

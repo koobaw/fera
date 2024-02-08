@@ -5,13 +5,22 @@ import {
   USERS_COLLECTION_NAME,
   POCKET_REGI_CART_PRODUCTS_COLLECTION_NAME,
   POCKET_REGI_CREDIT_CARDS_COLLECTION_NAME,
+  POCKET_REGI_CART_PRODUCTS_SUB_COLLECTION_NAME,
   STORES_COLLECTION_NAME,
   PocketRegiCreditCard,
+  Store,
 } from '@cainz-next-gen/types';
 import { LoggingService } from '@cainz-next-gen/logging';
 import { AxiosError } from 'axios';
+import { ConfigService } from '@nestjs/config';
 import { ErrorCode, ErrorMessage } from '../types/constants/error-code';
-import { SettlementMuleError } from '../core/settlement/interface/settlement.interface';
+import { FixedPurchaseEventData } from '../types/constants/purchase-event';
+import {
+  PurchaseEvent,
+  SettlementMuleError,
+  SettlementMuleResponse,
+  PurchaseOrder,
+} from '../core/settlement/interface/settlement.interface';
 import { SettlementDto } from '../core/settlement/dto/settlement.dto';
 
 @Injectable()
@@ -30,10 +39,13 @@ export class SettlementUtilsService {
 
   totalPointUse = 0;
 
+  COMPANY_CODE = '24';
+
   constructor(
     private readonly logger: LoggingService,
     private readonly firestoreBatchService: FirestoreBatchService,
     private readonly commonService: CommonService,
+    private readonly env: ConfigService,
   ) {}
 
   /**
@@ -89,7 +101,7 @@ export class SettlementUtilsService {
   public async getDocumentFromSubCollection(
     docRef: any,
     subCollectionName: string,
-    subDocId: any,
+    subDocId: string,
   ) {
     const subDocRef = this.getFirestoreSubDocRef(
       docRef,
@@ -106,25 +118,31 @@ export class SettlementUtilsService {
    * @param shopcode string value / 文字列値
    * @returns either { data, shopcode, data } for success or { status, errorCode } for error / 成功の場合は { data, shopcode, data }、エラーの場合は { status, errorCode }
    */
-  public async getShopDetails(shopcode: string) {
+  public async getShopDetails(shopcode: string): Promise<Store> {
     this.logger.info('getting shop details from firestore in starts');
     const docId = this.commonService.createMd5(shopcode.replace(/^0+/, ''));
-
-    const { doc } = await this.getDocumentFromCollection(
-      this.STORE_COLLECTION_NAME,
-      docId,
-    );
-    if (!doc) {
-      return {
-        errorCode: ErrorCode.MULE_API_RESOURCE_NOT_FOUND,
-        status: HttpStatus.NOT_FOUND,
-      };
+    let shopData: Store;
+    try {
+      const { doc } = await this.getDocumentFromCollection(
+        this.STORE_COLLECTION_NAME,
+        docId,
+      );
+      shopData = doc as Store;
+    } catch (e) {
+      this.commonService.logException(
+        `Get shop detail from firestore is failed`,
+        e,
+      );
+      throw new HttpException(
+        {
+          errorCode: ErrorCode.SHOP_COLLECTION_NOT_EXISTS_IN_DB,
+          message: ErrorMessage[ErrorCode.SHOP_COLLECTION_NOT_EXISTS_IN_DB],
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
     this.logger.info('getting shop details from firestore in ends');
-    return {
-      data: doc,
-      status: HttpStatus.OK,
-    };
+    return shopData;
   }
 
   /**
@@ -198,25 +216,28 @@ export class SettlementUtilsService {
     let nonTaxedTotalPrice: number;
 
     // 付与ポイント数 / Number of points granted
-    let pointGranted: number;
+    let pointGranted = 0;
 
     const items = [];
     products.forEach((product) => {
-      let dataFetch;
       if (product.subItems && product.subItems.length) {
-        dataFetch = product.subItems;
+        product.subItems.forEach((item) => {
+          items.push({
+            productCode: item.productId,
+            quantity: item.quantity,
+            amount: item.salePrice,
+          });
+        });
       } else {
-        dataFetch = product;
+        if (!product.subtotalAmount) {
+          return;
+        }
+        items.push({
+          productCode: product.productId,
+          quantity: product.quantity,
+          amount: product.subtotalAmount,
+        });
       }
-
-      this.totalProductQuantity += dataFetch.quantity;
-
-      const item = {
-        productCode: dataFetch.productId,
-        quantity: dataFetch.quantity,
-        amount: dataFetch.subtotalAmount,
-      };
-      items.push(item);
 
       if (Number(product.taxRate) === 10) {
         totalPriceTax10 += Number(product.subtotalAmount);
@@ -226,6 +247,8 @@ export class SettlementUtilsService {
         totalPriceTax0 += Number(product.subtotalAmount);
       }
     });
+
+    this.totalProductQuantity = items.length;
 
     if (totalPriceTax10 > 0) taxAmount10 = (totalPriceTax10 * 10) / 110;
 
@@ -284,7 +307,7 @@ export class SettlementUtilsService {
       items,
     };
 
-    const payload: { [key: string]: any } = { entry };
+    const payload = { entry };
     return payload;
   }
 
@@ -310,10 +333,7 @@ export class SettlementUtilsService {
    * @param shopcode string value / 文字列値
    * @returns either { data, status } for success or { status, errorCode } for error / 成功の場合は { data, status }、エラーの場合は { status, errorCode }
    */
-  public async getPocketRegiCartProducts(
-    encryptedMemberId: string,
-    shopcode: string,
-  ) {
+  public async getPocketRegiCartProducts(encryptedMemberId: string) {
     const collectionName = this.USERS_COLLECTION_NAME;
     const subCollectionName =
       this.USERS_POKETREGI_CART_PRODUCTS_COLLECTION_NAME;
@@ -322,7 +342,7 @@ export class SettlementUtilsService {
 
       const docId = encryptedMemberId;
       const docRef = this.getFirestoreDocRef(collectionName, docId);
-      const subDocId = this.commonService.createMd5(shopcode);
+      const subDocId = POCKET_REGI_CART_PRODUCTS_SUB_COLLECTION_NAME;
       const { subDoc } = await this.getDocumentFromSubCollection(
         docRef,
         subCollectionName,
@@ -390,5 +410,92 @@ export class SettlementUtilsService {
       messageUI: errorMessage,
       status: statusCode,
     };
+  }
+
+  /**
+   * Set special log event for purchase success or fail / 購入の成功または失敗に対する特別なログイベントを設定する
+   * Ones logs in log events then Log Router Sink service trigger and send to BigQuery / ログイベントにログを記録し、次に Log Router Sink サービスをトリガーして BigQuery に送信します。
+   * @param request creditmuleorder request
+   * @param orderDetail pocketregi order detail
+   * @param response response creditmuleorder success response
+   */
+  public async setPurchaseLog(
+    encryptedMemberId: string,
+    request: SettlementDto,
+    orderDetail: PurchaseOrder,
+    response?: SettlementMuleResponse,
+  ) {
+    this.logger.info('setPurchaseLog function is started');
+    const logData = await this.getPurchaseEventData(
+      encryptedMemberId,
+      request,
+      orderDetail,
+      response,
+    );
+    if (logData) {
+      // please dont remove, We are putting purchase event in log explore as object. / 削除しないでください. 購入イベントをオブジェクトとしてログエクスプローラーに配置します
+      console.log(JSON.stringify(logData));
+    } else {
+      this.commonService.logException(`failed to set PurchaseLog`, null);
+      // Create an HTTP exception with appropriate error codes and status / 適切なエラーコードとステータスを持つHTTP例外を生成
+      this.commonService.createHttpException(
+        ErrorCode.PURCHASE_LOG_EVENT,
+        ErrorMessage[ErrorCode.PURCHASE_LOG_EVENT],
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+    this.logger.info('setPurchaseLog function is ended.');
+  }
+
+  /**
+   *  Get purchase event data / 購入イベントデータの取得
+   * @param request creditmuleorder request
+   * @param orderDetail pocketregiItems
+   * @param response response creditmuleorder success response
+   * @returns Purchase data
+   */
+  private async getPurchaseEventData(
+    encryptedMemberNo: string,
+    request: SettlementDto,
+    orderDetail: PurchaseOrder,
+    response?: SettlementMuleResponse,
+  ) {
+    if (!request || !orderDetail || orderDetail.products.length === 0) {
+      return undefined;
+    }
+    const purchaseEvent = {
+      currency: FixedPurchaseEventData.CURRENCY,
+      customer_type: FixedPurchaseEventData.CUSTOMER_TYPE,
+      encrypted_member_no: encryptedMemberNo,
+      event_date: this.commonService.getDateTimeStringJST(),
+      fullfillment_method: FixedPurchaseEventData.FULFILLMENT_METHOD,
+      products: orderDetail.products,
+      log_type: FixedPurchaseEventData.LOG_TYPE,
+      payment_type: request.paymentMethod,
+      subtotal_consumption_tax_by_reduced_rate:
+        orderDetail.subtotalConsumptionTaxByReducedRate
+          ? orderDetail.subtotalConsumptionTaxByReducedRate
+          : 0,
+      subtotal_consumption_tax_by_standard_rate:
+        orderDetail.subtotalConsumptionTaxByStandardRate
+          ? orderDetail.subtotalConsumptionTaxByStandardRate
+          : 0,
+      subtotal_price_by_reduced_tax_rate:
+        orderDetail.subtotalPriceByReducedTaxRate
+          ? orderDetail.subtotalPriceByReducedTaxRate
+          : 0,
+      subtotal_price_by_standard_tax_rate:
+        orderDetail.subtotalPriceByStandardTaxRate
+          ? orderDetail.subtotalPriceByStandardTaxRate
+          : 0,
+      point_discount: orderDetail.totalPointUsed,
+      shipping: FixedPurchaseEventData.SHIPPING,
+      shop_code: `0000${orderDetail.storeCode}`.slice(-4),
+      shop_name: orderDetail.storeName,
+      transaction_id: request.orderId,
+      value: request.totalAmount,
+      detail_number: response?.shortOrderId ? response.shortOrderId : undefined,
+    } as PurchaseEvent;
+    return purchaseEvent;
   }
 }

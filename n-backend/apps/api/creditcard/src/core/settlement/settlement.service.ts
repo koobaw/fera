@@ -13,11 +13,17 @@ import {
   USERS_COLLECTION_NAME,
   POCKET_REGI_ORDERS_COLLECTION_NAME,
   PocketRegiOrder,
+  Store,
+  POCKET_REGI_CART_PRODUCTS_COLLECTION_NAME,
+  POCKET_REGI_CART_PRODUCTS_SUB_COLLECTION_NAME,
 } from '@cainz-next-gen/types';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import {
+  PurchaseOrder,
   SettlementMuleResponse,
   SettlementResponse,
+  OrderedProduct,
+  SaveProduct,
 } from './interface/settlement.interface';
 
 import { SettlementUtilsService } from '../../utils/settlement.utils';
@@ -51,14 +57,14 @@ export class SettlementService {
     settlementRequest: SettlementDto,
     userClaims: Claims,
     operatorName: string,
+    bearerToken?: string,
   ): Promise<SettlementResponse> {
-    const { storeCode } = settlementRequest;
     const { encryptedMemberId } = userClaims;
     try {
       this.logger.info('credit mule order api starts');
+
       const result = await this.settlementUtils.getPocketRegiCartProducts(
         encryptedMemberId,
-        storeCode,
       );
       if (result.status !== 200) {
         throw new HttpException(
@@ -70,6 +76,7 @@ export class SettlementService {
         );
       }
       const { data } = result;
+
       if (!data.products || data.products.length === 0) {
         throw new HttpException(
           {
@@ -87,6 +94,7 @@ export class SettlementService {
         settlementRequest,
         products,
         operatorName,
+        bearerToken,
       );
       // mule api call end
 
@@ -113,6 +121,7 @@ export class SettlementService {
     settlementRequest: SettlementDto,
     products: { [key: string]: any },
     operatorName: string,
+    bearerToken?: string,
   ) {
     const baseUrl = this.env.get<string>('MULE_CREDIT_BASE_URL');
     const endPoint = this.env.get<string>('MULE_ORDER_SETTLEMENT');
@@ -127,6 +136,21 @@ export class SettlementService {
       products,
     );
 
+    // all ordered products with dept code
+    const productsWithBumon = await this.getOrderedProducts(
+      products,
+      bearerToken,
+    );
+
+    // all ordered products without dept code
+    const productsWithoutBumon: SaveProduct[] = productsWithBumon.map(
+      ({ departmentCode, ...rest }) => rest,
+    );
+
+    // Get shop detail from firestore using storecode.
+    const shopDetail = await this.settlementUtils.getShopDetails(
+      payload.entry.storeCode,
+    );
     const { data } = await firstValueFrom(
       this.httpService
         .post(url, payload, {
@@ -138,19 +162,27 @@ export class SettlementService {
           },
         })
         .pipe(
-          catchError((error: AxiosError) => {
+          catchError(async (error: AxiosError) => {
             this.commonService.logException('Mule API occurred Error', error);
             const { code, messageUI, status } =
               this.settlementUtils.errorHandling(error);
 
+            await this.logPurchaseEvent(
+              encryptedMemberId,
+              payload,
+              productsWithBumon,
+              settlementRequest,
+              shopDetail,
+            );
             // save failed response to firestore
-            this.saveOrderDataToFireStore(
+            await this.saveOrderDataToFireStore(
               operatorName,
               encryptedMemberId,
               memberId,
               settlementRequest.orderId,
               payload,
-              products,
+              productsWithoutBumon,
+              shopDetail,
               '',
               code,
             );
@@ -166,7 +198,16 @@ export class SettlementService {
     );
 
     this.logger.info(`Mule api url: ${url}`);
+
     const successResult = data as SettlementMuleResponse;
+    await this.logPurchaseEvent(
+      encryptedMemberId,
+      payload,
+      productsWithBumon,
+      settlementRequest,
+      shopDetail,
+      successResult,
+    );
     const result: SettlementResponse = {
       code: HttpStatus.CREATED,
       message: 'OK',
@@ -177,13 +218,17 @@ export class SettlementService {
       },
     };
 
-    this.saveOrderDataToFireStore(
+    // Delete pocketRegiProducts collection / pocketRegiProducts コレクションを削除
+    await this.deleteCollection(encryptedMemberId);
+
+    await this.saveOrderDataToFireStore(
       operatorName,
       encryptedMemberId,
       memberId,
       settlementRequest.orderId,
       payload,
-      products,
+      productsWithoutBumon,
+      shopDetail,
       successResult.shortOrderId,
       '',
     );
@@ -207,7 +252,8 @@ export class SettlementService {
     memberId: string,
     orderId: string,
     payload: { [key: string]: any },
-    products: { [key: string]: any },
+    products: SaveProduct[],
+    shopDetail: Store,
     shortOrderId = '',
     paymentErrorCode = '',
   ) {
@@ -227,18 +273,6 @@ export class SettlementService {
         subCollectionName,
         subDocId,
       );
-
-      const shopDocs: { [key: string]: any } =
-        await this.settlementUtils.getShopDetails(payload.entry.storeCode);
-      if (shopDocs.errorCode || shopDocs.status !== 200) {
-        throw new HttpException(
-          {
-            errorCode: shopDocs.errorCode,
-            message: ErrorMessage[shopDocs.errorCode],
-          },
-          shopDocs.status,
-        );
-      }
 
       const creditCardDocs: { [key: string]: any } =
         await this.settlementUtils.getCeditCardDetails(
@@ -266,8 +300,10 @@ export class SettlementService {
         creditCardExpireDate: creditCardDocs.data.expirationDate,
         creditCardMaskNum: creditCardDocs.data.maskedCardNumber,
         creditCardType: creditCardDocs.data.brand,
+        isReturned: false,
+        returnedDate: null,
         storeCode: payload.entry.storeCode,
-        storeName: shopDocs.data.name,
+        storeName: shopDetail.name,
         totalPointUse: payload.entry.totalPointUse,
         subtotalConsumptionTaxByStandardRate:
           payload.entry.subtotalConsumptionTaxByStandardRate,
@@ -291,6 +327,7 @@ export class SettlementService {
         updatedBy: operatorName,
         updatedAt: FieldValue.serverTimestamp(),
       };
+
       await this.firestoreBatchService.batchSet(subDocRef, data, {
         merge: false,
       });
@@ -307,6 +344,211 @@ export class SettlementService {
           errorCode: ErrorCode.MULE_API_SERVER_ERROR,
           message: ErrorMessage[ErrorCode.MULE_API_SERVER_ERROR],
         },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  /**
+   * get all ordered products in single array. / 注文されたすべての商品を単一の配列で取得する
+   * @param products all order products with subItems product
+   * @param bearerToken bearerToken login user
+   * @returns ordered products with dept code
+   */
+  public async getOrderedProducts(
+    products: { [key: string]: any },
+    bearerToken: string,
+  ) {
+    const orderedProducts: OrderedProduct[] = [];
+    if (!products || products.length === 0) return orderedProducts;
+    products.forEach((item) => {
+      if (item.subItems && item.subItems.length !== 0) {
+        item.subItems.forEach((subItem) => {
+          orderedProducts.push({
+            code128DiscountDetails: subItem.code128DiscountDetails,
+            imageUrls: subItem.imageUrls,
+            isAlcoholic: subItem.isAlcoholic,
+            productId: subItem.productId,
+            productName: subItem.productName,
+            price: subItem.salePrice,
+            quantity: subItem.quantity,
+            taxRate: subItem.taxRate,
+          });
+        });
+      } else {
+        if (!item.productId || !item.subtotalAmount) {
+          return;
+        }
+        orderedProducts.push({
+          code128DiscountDetails: item.code128DiscountDetails,
+          imageUrls: item.imageUrls,
+          isAlcoholic: item.isAlcoholic,
+          productId: item.productId,
+          productName: item.productName,
+          price: item.subtotalAmount,
+          quantity: item.quantity,
+          taxRate: item.taxRate,
+        });
+      }
+    });
+    const resOrderedProducts = await this.getProductsWithBumon(
+      orderedProducts,
+      bearerToken,
+    );
+    return resOrderedProducts;
+  }
+
+  /**
+   * get product list with dept code using product detail api / 商品詳細APIを使用して部門コード付きの商品リストを取得する
+   * @param products all order product list
+   * @param bearerToken bearerToken login user
+   * @returns product list with dept code
+   */
+  public async getProductsWithBumon(
+    products: OrderedProduct[],
+    bearerToken: string,
+  ) {
+    let finalProducs: OrderedProduct[] = [];
+    if (products.length === 0) {
+      return finalProducs;
+    }
+    const productCodes = products.map((item) => item.productId);
+    const productCodesString = productCodes.join(',');
+    const url = `${this.env.get<string>(
+      'PRODUCT_BASE_URL',
+    )}${this.env.get<string>('GET_PRODUCT_DETAIL')}/${productCodesString}`;
+
+    this.logger.info('Calling Get product Detail Api');
+    const { data } = await firstValueFrom(
+      this.httpService
+        .get(url, {
+          headers: {
+            Authorization: bearerToken,
+          },
+        })
+        .pipe(
+          catchError((error: AxiosError) => {
+            this.commonService.logException(
+              'product Detail Api occurred',
+              error,
+            );
+            this.commonService.createHttpException(
+              ErrorCode.PRODUCT_DETAIL_API_ERROR,
+              ErrorMessage[ErrorCode.PRODUCT_DETAIL_API_ERROR],
+              HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+          }),
+        ),
+    );
+    if (!data) {
+      this.commonService.logException(
+        `No product detail found for`,
+        productCodesString,
+      );
+      this.commonService.createHttpException(
+        ErrorCode.PRODUCT_DETAIL_API_ERROR,
+        ErrorMessage[ErrorCode.PRODUCT_DETAIL_API_ERROR],
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+    if (data.data.length === 0) {
+      finalProducs = products;
+      return finalProducs;
+    }
+    products.forEach((item) => {
+      const deptCode = data.data.find(
+        (z: { departmentCode: string; productId: string }) =>
+          z.productId === item.productId,
+      )?.departmentCode;
+      finalProducs.push({
+        code128DiscountDetails: item.code128DiscountDetails,
+        imageUrls: item.imageUrls,
+        isAlcoholic: item.isAlcoholic,
+        productId: item.productId,
+        productName: item.productName,
+        price: item.price,
+        quantity: item.quantity,
+        taxRate: item.taxRate,
+        departmentCode: deptCode,
+      });
+    });
+
+    this.logger.info('Product Details successful');
+    return finalProducs;
+  }
+
+  /**
+   * log purchase event when payment success or failed./ 支払いの成功または失敗時に購入イベントをログに記録する
+   * @param encryptedMemberId encryptedMemberId
+   * @param payload payload for mule api
+   * @param products ordered products
+   * @param request request for settlement
+   * @param response mule response
+   */
+  public async logPurchaseEvent(
+    encryptedMemberId: string,
+    payload: { [key: string]: any },
+    products: OrderedProduct[],
+    request: SettlementDto,
+    shopDetail: Store,
+    response?: SettlementMuleResponse,
+  ) {
+    if (!payload || !payload.entry) {
+      return;
+    }
+    const orderDetail = {
+      products,
+      storeCode: payload.entry.storeCode,
+      totalPointUse: payload.entry.totalPointUse,
+      subtotalConsumptionTaxByStandardRate:
+        payload.entry.subtotalConsumptionTaxByStandardRate,
+      subtotalConsumptionTaxByReducedRate:
+        payload.entry.subtotalConsumptionTaxByReducedRate,
+      subtotalPriceByStandardTaxRate:
+        payload.entry.subtotalPriceByStandardTaxRate,
+      subtotalPriceByReducedTaxRate:
+        payload.entry.subtotalPriceByReducedTaxRate,
+      subtotalPriceByTaxExempt: payload.entry.subtotalPriceByTaxExempt,
+      totalAmount: payload.entry.totalAmount,
+      totalGrantedPoints: payload.entry.totalGrantedPoints,
+      paymentMethod: payload.entry.paymentMethod,
+      totalQuantity: payload.entry.totalProductQuantity,
+      storeName: shopDetail.name,
+    } as PurchaseOrder;
+    await this.settlementUtils.setPurchaseLog(
+      encryptedMemberId,
+      request,
+      orderDetail,
+      response,
+    );
+  }
+
+  /**
+   * Deletes the pocketRegiProducts collection once order is completed
+   * 注文が完了すると、pocketRegiProducts コレクションを削除します
+   * @param encryptedMemberId encryptedMemberId of the user /ユーザーの暗号化されたメンバーID
+   */
+  public async deleteCollection(encryptedMemberId: string) {
+    try {
+      this.logger.info('Start of deleting pocketRegiProducts collection');
+
+      const docRef = this.firestoreBatchService
+        .findCollection(USERS_COLLECTION_NAME)
+        .doc(encryptedMemberId)
+        .collection(POCKET_REGI_CART_PRODUCTS_COLLECTION_NAME)
+        .doc(POCKET_REGI_CART_PRODUCTS_SUB_COLLECTION_NAME);
+
+      await this.firestoreBatchService.batchDelete(docRef);
+
+      this.logger.info('End of deleting pocketRegiProducts collection');
+    } catch (e) {
+      this.commonService.logException(
+        `Error Occured while Deleting the collection`,
+        e,
+      );
+      this.commonService.createHttpException(
+        ErrorCode.FAILED_TO_DELETE_COLLECTION,
+        ErrorMessage[ErrorCode.FAILED_TO_DELETE_COLLECTION],
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }

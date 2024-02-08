@@ -32,6 +32,8 @@ async function bootstrap() {
 
   const env = app.get(ConfigService).get<string>('APP_ENV');
 
+  app.enableCors();
+
   switch (env) {
     case 'local':
       await loadEnvsForLocal();

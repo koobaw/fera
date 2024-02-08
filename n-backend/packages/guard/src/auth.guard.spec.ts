@@ -110,7 +110,7 @@ describe('AuthGuard', () => {
     await expect(instance.canActivate(context)).resolves.toBe(true);
   });
 
-  it('should throw INVALID_MOBILE_USER error when token is invalid', async () => {
+  it('should throw INVALID_MEMBER_USER error when token is invalid', async () => {
     // mocked data
     jest
       .spyOn(getAuth(), 'verifyIdToken')
@@ -130,7 +130,7 @@ describe('AuthGuard', () => {
       loggingService,
     );
     await expect(instance.canActivate(context)).rejects.toThrow(
-      ErrorMessage[ErrorCode.INVALID_MOBILE_USER],
+      ErrorMessage[ErrorCode.INVALID_MEMBER_USER],
     );
   });
 
