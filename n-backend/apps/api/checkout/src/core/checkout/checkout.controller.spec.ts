@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpException, HttpStatus, INestApplication } from '@nestjs/common';
-import { GlobalErrorCode } from '@cainz-next-gen/exception';
+import { GlobalErrorCode } from '@fera-next-gen/exception';
 import {
   MockcheckoutCompleteServiceOtherPaymentsData,
   MockcheckoutCompleteServiceData,
@@ -30,7 +30,7 @@ describe('CheckoutController', () => {
   let controller: CheckoutController;
   let service: CheckoutService;
   const apiKey = 'VALID_API_KEY';
-  process.env.CAINZAPP_API_KEY = apiKey;
+  process.env.feraAPP_API_KEY = apiKey;
   let app: INestApplication;
 
   beforeEach(async () => {

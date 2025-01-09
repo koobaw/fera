@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { CommonService } from '@cainz-next-gen/common';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { CommonService } from '@fera-next-gen/common';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import {
   PartialUserFavoriteProduct,
   USERS_COLLECTION_NAME,
   USERS_FAVORITES_COLLECTION_NAME,
   USERS_FAVORITES_PRODUCTS_COLLECTION_NAME,
-} from '@cainz-next-gen/types';
-import { LoggingService } from '@cainz-next-gen/logging';
+} from '@fera-next-gen/types';
+import { LoggingService } from '@fera-next-gen/logging';
 import { firestore } from 'firebase-admin';
 import { FavoriteProductsMuleApiService } from '../favorite-products-mule-api/favorite-products-mule-api.service';
 

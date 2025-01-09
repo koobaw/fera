@@ -1,15 +1,15 @@
 /* eslint-disable no-else-return */
 /* eslint-disable no-dupe-else-if */
 /* eslint-disable no-param-reassign */
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
 import { Injectable } from '@nestjs/common';
 import {
   OrderService,
   StatusCode,
   ProductItem,
   UserInfo,
-} from '@cainz-next-gen/order';
+} from '@fera-next-gen/order';
 import { ConfigService } from '@nestjs/config';
 import assert from 'assert';
 import {
@@ -963,7 +963,7 @@ export class CartCommonService {
   /**
    * @param {itemData} object - object with item details
    * @param {products} array - Array of product objects
-   * @param {isMember} boolean - isMember of cainz or not
+   * @param {isMember} boolean - isMember of fera or not
    * @param {storeCode} string - store code
    * @param {storeInfo} object - object with store information
    * @return {object}

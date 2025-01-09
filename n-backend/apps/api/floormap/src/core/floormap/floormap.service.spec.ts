@@ -2,8 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { HttpService } from '@nestjs/axios';
 import { AxiosError } from 'axios';
 import { ConfigService } from '@nestjs/config';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
 import { of, throwError } from 'rxjs';
 import mysql from 'mysql2/promise';
 import { HttpException, HttpStatus } from '@nestjs/common';
@@ -25,7 +25,7 @@ describe('FloormapService', () => {
     status: 500,
   };
   const dbConfig = {
-    user: 'cainz',
+    user: 'fera',
     database: 'test',
     password: 'test',
     host: 'mysql',

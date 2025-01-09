@@ -1,15 +1,15 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import {
   USERS_COLLECTION_NAME,
   STORES_COLLECTION_NAME,
   STORES_DETAIL_COLLECTION_NAME,
   POCKET_REGI_CART_PRODUCTS_COLLECTION_NAME,
   POCKET_REGI_CART_PRODUCTS_SUB_COLLECTION_NAME,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import { FieldValue } from '@google-cloud/firestore';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 

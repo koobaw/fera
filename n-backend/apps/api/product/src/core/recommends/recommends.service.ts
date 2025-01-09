@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 
 import { FindRecommendQueryDto } from './dto/find.recommend-query.dto';
 import { UnionService } from '../union/union.service';

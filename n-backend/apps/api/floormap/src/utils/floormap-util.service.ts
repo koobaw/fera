@@ -1,5 +1,5 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { ConfigService } from '@nestjs/config';
 import { AxiosError } from 'axios';
 import { ErrorCode, ErrorMessage } from '../types/constants/error-code';

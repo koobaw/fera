@@ -7,8 +7,8 @@ steps:
     args: ['run', 'test:e2e', '--', '--scope', '${_SCOPE}']
     env:
       - 'PROJECT_ID=$PROJECT_ID'
-      - 'E2E_TEST_BASE_URL=https://dev-cainzapp-bff.cainz.com/v1/creditcard'
-    secretEnv: ['CAINZAPP_API_KEY']
+      - 'E2E_TEST_BASE_URL=https://dev-feraapp-bff.fera.com/v1/creditcard'
+    secretEnv: ['feraAPP_API_KEY']
 options:
   logging: CLOUD_LOGGING_ONLY
 substitutions:
@@ -16,5 +16,5 @@ substitutions:
   _SCOPE: 'creditcard'
 availableSecrets:
   secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/cainzapp_api_key/versions/latest
-      env: 'CAINZAPP_API_KEY'
+    - versionName: projects/$PROJECT_ID/secrets/feraapp_api_key/versions/latest
+      env: 'feraAPP_API_KEY'

@@ -19,7 +19,7 @@ describe('articles e2e', () => {
       const response = await firstValueFrom(
         httpService.get(`${process.env.E2E_TEST_BASE_URL}/articles`, {
           headers: {
-            'cainzapp-api-key': process.env.CAINZAPP_API_KEY,
+            'feraapp-api-key': process.env.feraAPP_API_KEY,
           },
           params: {
             limit: 10,

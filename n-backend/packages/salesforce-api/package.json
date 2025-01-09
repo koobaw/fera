@@ -1,5 +1,5 @@
 {
-  "name": "@cainz-next-gen/salesforce-api",
+  "name": "@fera-next-gen/salesforce-api",
   "version": "0.0.0",
   "private": true,
   "main": "./dist/index.js",
@@ -17,9 +17,9 @@
     "lint": "npm run format && eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
-    "@cainz-next-gen/common": "*",
-    "@cainz-next-gen/exception": "*",
-    "@cainz-next-gen/logging": "*",
+    "@fera-next-gen/common": "*",
+    "@fera-next-gen/exception": "*",
+    "@fera-next-gen/logging": "*",
     "@google-cloud/firestore": "^6.5.0",
     "@nestjs/axios": "^3.0.0",
     "@nestjs/common": "^9.0.0",

@@ -23,7 +23,7 @@ interface FirestoreDocument {
 }
 
 admin.initializeApp({
-  projectId: 'cainz-cainzapp-backend-dev',
+  projectId: 'fera-feraapp-backend-dev',
   credential: admin.credential.applicationDefault(),
 });
 

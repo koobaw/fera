@@ -10,8 +10,8 @@ import {
   HttpCode,
   Req,
 } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
-import { Claims } from '@cainz-next-gen/types';
+import { AuthGuard } from '@fera-next-gen/guard';
+import { Claims } from '@fera-next-gen/types';
 import { CheckoutService } from './checkout.service';
 import { CheckoutCompleteDto } from './dto/checkoutComplete.dto';
 import { CheckoutBeginDto } from './dto/checkoutbegin.dto';

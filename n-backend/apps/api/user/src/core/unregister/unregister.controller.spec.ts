@@ -1,6 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 
 import { UnregisterController } from './unregister.controller';
 import { UnregisterService } from './unregister.service';
@@ -13,7 +13,7 @@ describe('UnregisterController', () => {
   let logoutService: LogoutService;
   let unregisterService: UnregisterService;
 
-  process.env.CAINZAPP_API_KEY = 'VALID_API_KEY';
+  process.env.feraAPP_API_KEY = 'VALID_API_KEY';
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({

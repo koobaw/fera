@@ -2,9 +2,9 @@ import { Injectable, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import firestore from '@google-cloud/firestore';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
 import { catchError, firstValueFrom } from 'rxjs';
 import { AxiosError } from 'axios';
 import { HttpException } from '@nestjs/common/exceptions';
@@ -12,7 +12,7 @@ import {
   USERS_COLLECTION_NAME,
   POCKET_REGI_CREDIT_CARDS_COLLECTION_NAME,
   AddCreditCard,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import {
   CreditCardResponse,
   RegisterCardRequest,

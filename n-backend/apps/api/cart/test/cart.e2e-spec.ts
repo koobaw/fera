@@ -8,7 +8,7 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { ErrorMessage } from 'packages/guard/src/error-code';
 import { loadEnvsForLocal } from '../src/config/load-envs-for-local';
 import { AppModule } from '../src/app.module';
@@ -39,9 +39,9 @@ describe('Cart (e2e)', () => {
       .useValue({
         canActivate: (context: ExecutionContext) => {
           const req = context.switchToHttp().getRequest();
-          const cainzappApiKey = req.headers?.['cainzapp-api-key'];
+          const feraappApiKey = req.headers?.['feraapp-api-key'];
 
-          if (cainzappApiKey && typeof cainzappApiKey === 'string') {
+          if (feraappApiKey && typeof feraappApiKey === 'string') {
             return true;
           }
 
@@ -64,13 +64,13 @@ describe('Cart (e2e)', () => {
     it('should be able to get products from cart', async () => {
       const response = await request(app.getHttpServer())
         .get(`/123456789`)
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY });
+        .set({ 'feraapp-api-key': process.env.feraAPP_API_KEY });
       expect(response.statusCode).toBe(HttpStatus.OK);
     }, 10000);
     it('should throw a not found exception on wrong end point', async () => {
       const response = await request(app.getHttpServer())
         .get(`/carts/123456789`)
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY });
+        .set({ 'feraapp-api-key': process.env.feraAPP_API_KEY });
       expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);
     }, 10000);
     it('should throw a authorization error while sending request without api key', async () => {

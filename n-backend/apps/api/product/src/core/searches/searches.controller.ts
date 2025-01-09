@@ -8,7 +8,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 
 import { FindSearchesDto } from './dto/find.search-query.dto';
 import { SearchesService } from './searches.service';

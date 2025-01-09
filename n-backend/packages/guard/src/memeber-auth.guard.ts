@@ -1,5 +1,5 @@
-import { CommonService } from '@cainz-next-gen/common';
-import { Claims } from '@cainz-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { Claims } from '@fera-next-gen/types';
 import {
   CanActivate,
   ExecutionContext,

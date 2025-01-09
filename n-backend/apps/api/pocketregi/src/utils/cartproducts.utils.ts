@@ -1,6 +1,6 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { ConfigService } from '@nestjs/config';
 import {
   POCKET_REGI_CART_PRODUCTS_COLLECTION_NAME,
@@ -9,9 +9,9 @@ import {
   Claims,
   CartProducts,
   SubItem,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import { AxiosError } from 'axios';
-import { GlobalErrorCode } from '@cainz-next-gen/exception';
+import { GlobalErrorCode } from '@fera-next-gen/exception';
 import { ErrorCode, ErrorMessage } from '../types/constants/error-code';
 import { MuleErrorResponse } from '../core/cartproducts/interfaces/cartproducts.interface';
 import {

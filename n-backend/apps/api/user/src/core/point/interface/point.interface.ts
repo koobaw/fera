@@ -1,6 +1,6 @@
 import { ErrorCode } from 'apps/api/user/src/types/constants/error-code';
 
-import { OmitTimestampPoint } from '@cainz-next-gen/types';
+import { OmitTimestampPoint } from '@fera-next-gen/types';
 
 export interface PointResponse {
   code: number;

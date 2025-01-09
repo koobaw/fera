@@ -25,13 +25,13 @@ main:
             steps:
               - set_bacnend_dev:
                   assign:
-                    - target_bucket: backenddev-cainzapp-product-extend-description-jp
+                    - target_bucket: backenddev-feraapp-product-extend-description-jp
                   next: check_input_bucket
           - condition: ${env_str != "backend"}
             steps:
               - set_not_backend_dev:
                   assign:
-                    - target_bucket: ${env_str + "-cainzapp-product-extend-description"}
+                    - target_bucket: ${env_str + "-feraapp-product-extend-description"}
     #トリガバケットチェック
     - check_input_bucket:
         switch:

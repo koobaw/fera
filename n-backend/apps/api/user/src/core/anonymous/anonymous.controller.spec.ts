@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { FieldValue } from 'firebase-admin/firestore';
-import { AnonymousUser } from '@cainz-next-gen/types';
+import { AnonymousUser } from '@fera-next-gen/types';
 import {
   CanActivate,
   ExecutionContext,
@@ -8,7 +8,7 @@ import {
   INestApplication,
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { GlobalsModule } from '../../globals.module';
 import { AnonymousController } from './anonymous.controller';
 import { AnonymousService } from './anonymous.service';

@@ -1,8 +1,8 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
 import { FieldValue, Timestamp } from '@google-cloud/firestore';
 import { Test, TestingModule } from '@nestjs/testing';
-import { OmitTimestampPoint, Point } from '@cainz-next-gen/types';
+import { OmitTimestampPoint, Point } from '@fera-next-gen/types';
 import { HttpException } from '@nestjs/common';
 import { GlobalsModule } from '../../globals.module';
 import { CryptoUtilsService } from '../../utils/crypto.service';

@@ -1,7 +1,7 @@
-import { AuthGuard } from '@cainz-next-gen/guard';
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { Claims } from '@cainz-next-gen/types';
+import { AuthGuard } from '@fera-next-gen/guard';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { Claims } from '@fera-next-gen/types';
 
 import {
   Controller,

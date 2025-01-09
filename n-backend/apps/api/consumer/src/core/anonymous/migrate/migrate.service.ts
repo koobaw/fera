@@ -1,8 +1,8 @@
 import { validate } from 'class-validator';
 import { FieldValue } from 'firebase-admin/firestore';
 
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
 import { DocumentReference } from '@google-cloud/firestore';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
@@ -15,8 +15,8 @@ import {
   MIGRATIONS_COLLECTION_NAME,
   ANONYMOUSUSERS_PICKUPORDERS_COLLECTION_NAME,
   ANONYMOUSUSERS_FAVORITEPRODUCTS_COLLECTION_NAME,
-} from '@cainz-next-gen/types';
-import { CommonService } from '@cainz-next-gen/common';
+} from '@fera-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
 import { ErrorCode, ErrorMessage } from '../../../types/constants/error-code';
 import { AnonymousDto } from '../dto/anonymous.dto';
 import { MigrateData } from '../interface/migrate-data.interface';

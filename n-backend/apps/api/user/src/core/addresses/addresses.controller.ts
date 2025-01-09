@@ -12,11 +12,11 @@ import {
   UseGuards,
   Query,
 } from '@nestjs/common';
-import { MemberAuthGuard } from '@cainz-next-gen/guard';
-import { Claims } from '@cainz-next-gen/types';
-import { CommonService } from '@cainz-next-gen/common';
+import { MemberAuthGuard } from '@fera-next-gen/guard';
+import { Claims } from '@fera-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
 import { ConfigService } from '@nestjs/config';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { RegisterAddressesService } from './register.addresses/register.addresses.service';
 import { RegisterAddressesBodyDto } from './dto/register.addresses-body.dto';
 import { FindAddressesService } from './find.addresses/find.addresses.service';

@@ -1,4 +1,4 @@
-type CainzCardNumber = string;
+type feraCardNumber = string;
 
 type CardCancelStatus = 'C';
 type CardInactiveStatus = 'I';
@@ -16,7 +16,7 @@ type CardStatus =
   | CardDefaultCardStatus;
 
 export interface MulePointSuccessResponse {
-  id: CainzCardNumber;
+  id: feraCardNumber;
   status: CardStatus;
   points: number;
   lost: ExpirePoint[];

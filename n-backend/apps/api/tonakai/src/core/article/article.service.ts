@@ -1,17 +1,17 @@
 /* eslint-disable no-underscore-dangle */
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { catchError, firstValueFrom } from 'rxjs';
 import { AxiosError } from 'axios';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import firestore, {
   DocumentReference,
   Timestamp,
 } from '@google-cloud/firestore';
-import { TonakaiArticle, TonakaiNewerPost } from '@cainz-next-gen/types';
+import { TonakaiArticle, TonakaiNewerPost } from '@fera-next-gen/types';
 import { RawArticlesResponse } from './interface/tonakai.interface';
 import { ArticleDto } from './interface/article.interface';
 import {
@@ -72,7 +72,7 @@ export class ArticleService {
       sort: `sort_${searchParams.sortBy}:${searchParams.order}`,
       _source: 'id,title,image.url,sort_date,release_date,client_post',
     };
-    const url = this.env.get<string>('TONARINO_CAINZ_API');
+    const url = this.env.get<string>('TONARINO_fera_API');
 
     // get data from tonakai
     const { data } = await firstValueFrom(
@@ -100,7 +100,7 @@ export class ArticleService {
           publishedAt: this.convertRowPublishedAtToDate(
             article._source.release_date,
           ),
-          articleUrl: `${this.env.get<string>('MAGAZINE_CAINZ_URL')}/${
+          articleUrl: `${this.env.get<string>('MAGAZINE_fera_URL')}/${
             article._source.id
           }`,
         } as ArticleDto),
@@ -178,7 +178,7 @@ export class ArticleService {
           title: article.title,
           publishedAt: Timestamp.fromDate(article.publishedAt),
           thumbnailUrl: article.imageUrl,
-          articleUrl: `${this.env.get<string>('MAGAZINE_CAINZ_URL')}/${
+          articleUrl: `${this.env.get<string>('MAGAZINE_fera_URL')}/${
             article.id
           }`,
           createdBy: oldArticle.data()?.createdBy,
@@ -192,7 +192,7 @@ export class ArticleService {
           title: article.title,
           publishedAt: Timestamp.fromDate(article.publishedAt),
           thumbnailUrl: article.imageUrl,
-          articleUrl: `${this.env.get<string>('MAGAZINE_CAINZ_URL')}/${
+          articleUrl: `${this.env.get<string>('MAGAZINE_fera_URL')}/${
             article.id
           }`,
           createdBy: operatorName,

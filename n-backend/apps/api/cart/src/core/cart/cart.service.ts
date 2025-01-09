@@ -1,8 +1,8 @@
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { GlobalErrorCode } from '@cainz-next-gen/exception';
-import { ErrorMessage } from '@cainz-next-gen/exception/dist/error-code';
+import { GlobalErrorCode } from '@fera-next-gen/exception';
+import { ErrorMessage } from '@fera-next-gen/exception/dist/error-code';
 import {
   getCartData,
   anonymousUserdata,

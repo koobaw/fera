@@ -1,10 +1,10 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { FieldValue } from 'firebase-admin/firestore';
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 
-import { AnonymousUser, UserType } from '@cainz-next-gen/types';
-import { CommonService } from '@cainz-next-gen/common';
+import { AnonymousUser, UserType } from '@fera-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
 import { GlobalsModule } from '../../globals.module';
 import { AnonymousService } from './anonymous.service';
 

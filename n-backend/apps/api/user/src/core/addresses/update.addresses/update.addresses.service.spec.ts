@@ -1,4 +1,4 @@
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UpdateAddressesService } from './update.addresses.service';
 import { GlobalsModule } from '../../../globals.module';

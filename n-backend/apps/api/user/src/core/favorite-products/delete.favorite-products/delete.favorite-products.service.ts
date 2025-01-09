@@ -1,13 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import {
   USERS_COLLECTION_NAME,
   USERS_FAVORITES_COLLECTION_NAME,
   USERS_FAVORITES_PRODUCTS_COLLECTION_NAME,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import firestore from '@google-cloud/firestore';
 import { protos } from '@google-cloud/tasks';
 
@@ -83,7 +83,7 @@ export class DeleteFavoriteProductsService {
           queueName,
           url,
           undefined,
-          this.env.get<string>('CAINZAPP_API_KEY'),
+          this.env.get<string>('feraAPP_API_KEY'),
           correlationId,
           protos.google.cloud.tasks.v2.HttpMethod.DELETE,
           undefined,

@@ -10,8 +10,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { AuthGuard } from '@cainz-next-gen/guard';
-import { CommonService } from '@cainz-next-gen/common';
+import { AuthGuard } from '@fera-next-gen/guard';
+import { CommonService } from '@fera-next-gen/common';
 import { DetailService } from './detail.service';
 import { DetailDto } from './dto/detail.dto';
 import { TransformSavePipe } from '../../pipes/save.pipe';

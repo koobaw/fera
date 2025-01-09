@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import {
   CanActivate,
   ExecutionContext,

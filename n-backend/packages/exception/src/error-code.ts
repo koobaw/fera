@@ -12,7 +12,7 @@ export const ErrorMessage = {
   [GlobalErrorCode.BAD_PARAMETER]: 'bad parameters',
 } as const;
 
-export type CainzAppError = {
+export type feraAppError = {
   errorCode: string;
   message?: string;
 };

@@ -6,9 +6,9 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { getAuth } from 'firebase-admin/auth';
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { Claims } from '@cainz-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { Claims } from '@fera-next-gen/types';
 import { ConfigService } from '@nestjs/config';
 import { ErrorCode, ErrorMessage } from './error-code';
 
@@ -23,9 +23,9 @@ export class AuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
 
-    const cainzappApiKey = request.headers?.['cainzapp-api-key'];
-    if (cainzappApiKey && typeof cainzappApiKey === 'string') {
-      this.authenticateWebUser(cainzappApiKey);
+    const feraappApiKey = request.headers?.['feraapp-api-key'];
+    if (feraappApiKey && typeof feraappApiKey === 'string') {
+      this.authenticateWebUser(feraappApiKey);
       return true;
     }
 
@@ -44,12 +44,12 @@ export class AuthGuard implements CanActivate {
   }
 
   /**
-   *  webからのアクセスの場合、cainzapp-api-keyをチェックしてユーザーを認証する
-   * @param cainzappApiKey
+   *  webからのアクセスの場合、feraapp-api-keyをチェックしてユーザーを認証する
+   * @param feraappApiKey
    * @returns
    */
-  private authenticateWebUser(cainzappApiKey: string) {
-    if (cainzappApiKey === this.env.get<string>('CAINZAPP_API_KEY')) {
+  private authenticateWebUser(feraappApiKey: string) {
+    if (feraappApiKey === this.env.get<string>('feraAPP_API_KEY')) {
       return;
     }
     throw new HttpException(

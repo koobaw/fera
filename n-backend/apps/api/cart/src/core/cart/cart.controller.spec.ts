@@ -1,7 +1,7 @@
-import { GlobalErrorCode } from '@cainz-next-gen/exception';
+import { GlobalErrorCode } from '@fera-next-gen/exception';
 import { HttpStatus, HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ErrorMessage } from '@cainz-next-gen/exception/dist/error-code';
+import { ErrorMessage } from '@fera-next-gen/exception/dist/error-code';
 import {
   mockGetCartData,
   mockCartChangeData,

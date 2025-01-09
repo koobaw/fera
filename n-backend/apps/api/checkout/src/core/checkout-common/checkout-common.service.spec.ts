@@ -1,8 +1,8 @@
 /* eslint-disable prefer-destructuring */
 import { Test, TestingModule } from '@nestjs/testing';
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { StatusCode } from '@cainz-next-gen/order';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { StatusCode } from '@fera-next-gen/order';
 import {
   addressBookMockData,
   amazonInfoMockData,

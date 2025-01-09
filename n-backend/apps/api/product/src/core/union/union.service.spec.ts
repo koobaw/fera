@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OmitTimestampProductPrice } from '@cainz-next-gen/types';
+import { OmitTimestampProductPrice } from '@fera-next-gen/types';
 import { UnionService } from './union.service';
 import { DetailService } from '../detail/detail.service';
 import { PricesService } from '../prices/prices.service';

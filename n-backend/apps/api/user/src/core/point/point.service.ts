@@ -1,15 +1,15 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
 import {
   OmitTimestampPoint,
   Point,
   USERS_COLLECTION_NAME,
   USERS_POINTS_COLLECTION_NAME,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import firestore from '@google-cloud/firestore';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import { CryptoUtilsService } from '../../utils/crypto.service';
 import { MulePointSuccessResponse } from './interface/mule-api.interface';

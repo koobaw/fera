@@ -1,8 +1,8 @@
 import * as crypto from 'crypto';
 import { IncomingHttpHeaders } from 'http';
 import { getAuth } from 'firebase-admin/auth';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { Claims, Timestamp } from '@cainz-next-gen/types';
+import { LoggingService } from '@fera-next-gen/logging';
+import { Claims, Timestamp } from '@fera-next-gen/types';
 import {
   HttpException,
   HttpStatus,
@@ -229,7 +229,7 @@ export class CommonService {
   }
 
   /**
-   * memberId(cainzCardId)、access_tokenなどをfirebase authのclaimに保存
+   * memberId(feraCardId)、access_tokenなどをfirebase authのclaimに保存
    */
   public async saveToFirebaseAuthClaims(
     userId: string,
@@ -414,7 +414,7 @@ export class CommonService {
       headers.Authorization = bearerHeader;
     }
     if (apikeyHeader) {
-      headers['cainzapp-api-key'] = apikeyHeader;
+      headers['feraapp-api-key'] = apikeyHeader;
     }
     if (correlationId) {
       headers['x-correlation-id'] = correlationId;

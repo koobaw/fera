@@ -13,8 +13,8 @@ export async function loadEnvsForLocal() {
    */
   process.env.CRYPTO_KEY = await getSecretValue('crypto_key');
   process.env.CRYPTO_IV = await getSecretValue('crypto_iv');
-  process.env.CAINZAPP_API_KEY = await getSecretValue('cainzapp_api_key');
-  process.env.PROJECT_ID = 'cainz-cainzapp-backend-dev';
+  process.env.feraAPP_API_KEY = await getSecretValue('feraapp_api_key');
+  process.env.PROJECT_ID = 'fera-feraapp-backend-dev';
 
   // ローカルテスト時にfirebase-adminのgetAuth()を利用している場合、service_account.jsonを設定する必要があります。
   // eslint-disable-next-line turbo/no-undeclared-env-vars

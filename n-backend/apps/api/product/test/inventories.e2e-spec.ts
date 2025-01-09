@@ -19,7 +19,7 @@ describe('inventories e2e', () => {
         `${process.env.E2E_TEST_BASE_URL}/inventories/4549509524328/0840,0826`,
         {
           headers: {
-            'cainzapp-api-key': process.env.CAINZAPP_API_KEY,
+            'feraapp-api-key': process.env.feraAPP_API_KEY,
           },
           params: {
             coefficient: 1,
@@ -38,7 +38,7 @@ describe('inventories e2e', () => {
         `${process.env.E2E_TEST_BASE_URL}/inventories/4549509524328/0840,0826`,
         {
           headers: {
-            'cainzapp-api-key': process.env.CAINZAPP_API_KEY,
+            'feraapp-api-key': process.env.feraAPP_API_KEY,
           },
           params: {
             save: 'false',

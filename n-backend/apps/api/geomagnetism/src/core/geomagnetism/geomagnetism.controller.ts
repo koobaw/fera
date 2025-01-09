@@ -1,7 +1,7 @@
 import { Controller, Post, Req, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { Claims } from 'packages/types/src/claims';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { Request } from 'express';
 import { GeomagnetismAuthService } from './auth/geomagnetismAuth.service';
 import { RequestGeomagneticAuthResponse } from './interfaces/geomagnetism.interface';

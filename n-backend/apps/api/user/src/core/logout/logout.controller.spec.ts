@@ -1,6 +1,6 @@
 import { HttpStatus } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import { LogoutController } from './logout.controller';
 import { GlobalsModule } from '../../globals.module';

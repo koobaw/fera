@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import {
   Store,
   StoreDetail,
   STORES_COLLECTION_NAME,
   STORES_DETAIL_COLLECTION_NAME,
-} from '@cainz-next-gen/types';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
+} from '@fera-next-gen/types';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
 
 import { SearchStoreDto } from './dto/searchStore.dto';
 import {

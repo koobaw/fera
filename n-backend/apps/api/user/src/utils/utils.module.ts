@@ -1,6 +1,6 @@
-import { CommonModule } from '@cainz-next-gen/common';
-import { FirestoreBatchModule } from '@cainz-next-gen/firestore-batch';
-import { LoggingModule } from '@cainz-next-gen/logging';
+import { CommonModule } from '@fera-next-gen/common';
+import { FirestoreBatchModule } from '@fera-next-gen/firestore-batch';
+import { LoggingModule } from '@fera-next-gen/logging';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 

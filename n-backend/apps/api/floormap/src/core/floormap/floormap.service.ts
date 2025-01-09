@@ -1,10 +1,10 @@
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
 import { Injectable, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import mysql from 'mysql2/promise';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { HttpService } from '@nestjs/axios';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import {

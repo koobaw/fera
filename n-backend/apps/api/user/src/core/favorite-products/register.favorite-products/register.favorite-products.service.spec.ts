@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { HttpException } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { GlobalsModule } from '../../../globals.module';
 import { FavoritesMuleApiService } from '../favorites-mule-api/favorites-mule-api.service';
 import { FavoriteProductsMuleApiService } from '../favorite-products-mule-api/favorite-products-mule-api.service';

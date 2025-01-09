@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpService } from '@nestjs/axios';
 import { of, throwError } from 'rxjs';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { getAuth } from 'firebase-admin/auth';
 import { initializeApp } from 'firebase-admin/app';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
 import { LoginService } from './login.service';
 import { GlobalsModule } from '../../globals.module';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';

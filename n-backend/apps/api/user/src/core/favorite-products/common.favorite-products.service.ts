@@ -1,9 +1,9 @@
-import { CommonService } from '@cainz-next-gen/common';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { CommonService } from '@fera-next-gen/common';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import {
   USERS_COLLECTION_NAME,
   USERS_FAVORITES_COLLECTION_NAME,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import firestore from '@google-cloud/firestore';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';

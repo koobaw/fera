@@ -8,12 +8,12 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
-import { CommonService } from '@cainz-next-gen/common';
+import { AuthGuard } from '@fera-next-gen/guard';
+import { CommonService } from '@fera-next-gen/common';
 import {
   TONAKAINEWERPOSTS_COLLECTION_NAME,
   TonakaiNewerPost,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import { ConfigService } from '@nestjs/config';
 import {
   ArticleGetParamsDto,

@@ -1,11 +1,11 @@
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PredictionServiceClient } from '@google-cloud/retail/build/src/v2';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { google } from '@google-cloud/retail/build/protos/protos';
-import { CATEGORIES_COLLECTION_NAME } from '@cainz-next-gen/types';
+import { CATEGORIES_COLLECTION_NAME } from '@fera-next-gen/types';
 
 import { ErrorCode, ErrorMessage } from '../../../types/constants/error-code';
 import {

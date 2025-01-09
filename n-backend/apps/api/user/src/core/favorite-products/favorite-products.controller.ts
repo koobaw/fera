@@ -11,10 +11,10 @@ import {
   Query,
   Body,
 } from '@nestjs/common';
-import { MemberAuthGuard } from '@cainz-next-gen/guard';
-import { Claims } from '@cainz-next-gen/types';
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { MemberAuthGuard } from '@fera-next-gen/guard';
+import { Claims } from '@fera-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
 
 import { ConfigService } from '@nestjs/config';
 import { GetFavoriteProductsQueryDto } from './dto/get.favorite-products-query.dto';

@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { OmitTimestampPartialProductPrice } from '@cainz-next-gen/types';
+import { OmitTimestampPartialProductPrice } from '@fera-next-gen/types';
 
 import { Test, TestingModule } from '@nestjs/testing';
 

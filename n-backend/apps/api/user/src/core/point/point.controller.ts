@@ -1,10 +1,10 @@
 import { Request } from 'express';
 
-import { CommonService } from '@cainz-next-gen/common';
-import { Claims, OmitTimestampPoint } from '@cainz-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { Claims, OmitTimestampPoint } from '@fera-next-gen/types';
 import { Controller, Get, HttpStatus, Req, UseGuards } from '@nestjs/common';
 
-import { MemberAuthGuard } from '@cainz-next-gen/guard';
+import { MemberAuthGuard } from '@fera-next-gen/guard';
 import { PointResponse } from './interface/point.interface';
 import { PointService } from './point.service';
 

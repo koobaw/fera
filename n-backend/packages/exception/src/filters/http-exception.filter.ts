@@ -8,10 +8,10 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { Claims } from '@cainz-next-gen/types';
-import { CainzAppError, ErrorMessage, GlobalErrorCode } from '../error-code';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { Claims } from '@fera-next-gen/types';
+import { feraAppError, ErrorMessage, GlobalErrorCode } from '../error-code';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -49,7 +49,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       const status = exception.getStatus();
       const exceptionResponse = exception.getResponse();
       // 各サービスで定義しているエラー
-      if (this.isCainzAppErrorCode(exceptionResponse)) {
+      if (this.isferaAppErrorCode(exceptionResponse)) {
         response.status(status).json({
           code: status,
           errorCode: exceptionResponse.errorCode,
@@ -122,7 +122,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     return false;
   }
 
-  private isCainzAppErrorCode(code: string | object): code is CainzAppError {
+  private isferaAppErrorCode(code: string | object): code is feraAppError {
     if (typeof code === 'string') {
       return false;
     }

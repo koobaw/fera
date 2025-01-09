@@ -11,9 +11,9 @@
     "lint": "npm run format && eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
-    "@cainz-next-gen/common": "*",
-    "@cainz-next-gen/logging": "*",
-    "@cainz-next-gen/types": "*",
+    "@fera-next-gen/common": "*",
+    "@fera-next-gen/logging": "*",
+    "@fera-next-gen/types": "*",
     "@faker-js/faker": "^8.0.2",
     "@google-cloud/firestore": "^6.7.0",
     "clui": "^0.3.6",

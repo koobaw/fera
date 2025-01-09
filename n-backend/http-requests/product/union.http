@@ -12,5 +12,5 @@ GET {{base}}/{{version}}/products/{{productIds}}
 &storeCodes={{storeCodes}}
 &coefficient={{coefficient}}
 &membershipRank={{membershipRank}}
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}

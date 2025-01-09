@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin';
 
-import { TonakaiArticle } from '@cainz-next-gen/types';
+import { TonakaiArticle } from '@fera-next-gen/types';
 import { faker } from '@faker-js/faker';
 
 import { addCollectionData } from '../dummyGenerator';

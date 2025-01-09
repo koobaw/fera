@@ -1,9 +1,9 @@
 import * as admin from 'firebase-admin';
 
 import { faker } from '@faker-js/faker';
-import { Flyer } from '@cainz-next-gen/types';
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { Flyer } from '@fera-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
 import { addCollectionData } from '../dummyGenerator';
 import { makeAuditableFields } from './common/auditable';
 import { FirestoreDocument, FirestoreStructure } from '../types';

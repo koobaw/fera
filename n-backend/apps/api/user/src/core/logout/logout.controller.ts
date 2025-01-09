@@ -1,7 +1,7 @@
 import { Request } from 'express';
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { Claims } from '@cainz-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { Claims } from '@fera-next-gen/types';
 
 import {
   Controller,
@@ -12,7 +12,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { LogoutService } from './logout.service';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 

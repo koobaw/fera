@@ -6,7 +6,7 @@ import {
   HttpStatus,
   INestApplication,
 } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { AppModule } from '../../app.module';
 import { CheckinController } from './checkin.controller';
 import { CheckinService } from './checkin.service';
@@ -63,7 +63,7 @@ describe('CheckinController', () => {
 
   describe('should checkin and update the check in time', () => {
     body = {
-      qrCodeData: 'cainzapp://qr?shopcode={859}',
+      qrCodeData: 'feraapp://qr?shopcode={859}',
       checkInTime: '2023-11-15T02:00:10.000Z',
     };
 

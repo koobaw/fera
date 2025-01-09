@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getAuth } from 'firebase-admin/auth';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { ExecutionContext, HttpException } from '@nestjs/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { MemberAuthGuard } from './memeber-auth.guard';
 
 jest.mock('firebase-admin/auth');

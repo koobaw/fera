@@ -2,7 +2,7 @@ import {
   OmitTimestampProduct,
   OmitTimestampProductDetail,
   SpecCategory,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import { ErrorCode } from '../../../types/constants/error-code';
 
 export interface ProductDetailResponse {

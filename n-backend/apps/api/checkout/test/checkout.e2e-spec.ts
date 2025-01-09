@@ -7,7 +7,7 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { loadEnvsForLocal } from '../src/config/load-envs-for-local';
 import { AppModule } from '../src/app.module';
 import { CheckoutController } from '../src/core/checkout/checkout.controller';
@@ -38,9 +38,9 @@ describe('Checkout (e2e)', () => {
         .useValue({
           canActivate: (context: ExecutionContext) => {
             const req = context.switchToHttp().getRequest();
-            const cainzappApiKey = req.headers?.['cainzapp-api-key'];
+            const feraappApiKey = req.headers?.['feraapp-api-key'];
 
-            if (cainzappApiKey && typeof cainzappApiKey === 'string') {
+            if (feraappApiKey && typeof feraappApiKey === 'string') {
               return true;
             }
 
@@ -122,9 +122,9 @@ describe('Checkout (e2e)', () => {
         .useValue({
           canActivate: (context: ExecutionContext) => {
             const req = context.switchToHttp().getRequest();
-            const cainzappApiKey = req.headers?.['cainzapp-api-key'];
+            const feraappApiKey = req.headers?.['feraapp-api-key'];
 
-            if (cainzappApiKey && typeof cainzappApiKey === 'string') {
+            if (feraappApiKey && typeof feraappApiKey === 'string') {
               return true;
             }
 
@@ -179,7 +179,7 @@ describe('Checkout (e2e)', () => {
       const checkoutId = '10130759-c3fa-4136-a619-e30a4ec41aa7';
       const response = await request(app.getHttpServer())
         .post(`/${checkoutId}/complete`)
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY })
+        .set({ 'feraapp-api-key': process.env.feraAPP_API_KEY })
         .send({
           userId: 'a3a2d619-e97c-4c68-8d29-2db0231250f6',
           customerInfo: {
@@ -230,7 +230,7 @@ describe('Checkout (e2e)', () => {
 
       const response = await request(app.getHttpServer())
         .post(`/${checkoutId}/complete`)
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY })
+        .set({ 'feraapp-api-key': process.env.feraAPP_API_KEY })
         .send({
           userId: 'a3a2d619-e97c-4c68-8d29-2db0231250f6',
           customerInfo: {
@@ -281,7 +281,7 @@ describe('Checkout (e2e)', () => {
 
       const response = await request(app.getHttpServer())
         .post(`/${checkoutId}/comp`)
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY })
+        .set({ 'feraapp-api-key': process.env.feraAPP_API_KEY })
         .send({
           userId: 'a3a2d619-e97c-4c68-8d29-2db0231250f6',
           customerInfo: {
@@ -383,14 +383,14 @@ describe('Checkout (e2e)', () => {
       const CheckOutComplete2Id = '74234354598';
       const response: any = await request(app.getHttpServer())
         .post(`/${CheckOutComplete2Id}/complete2`)
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY })
+        .set({ 'feraapp-api-key': process.env.feraAPP_API_KEY })
         .send(mockCheckOutComplete2Dto);
       expect(response.statusCode).toBe(HttpStatus.OK);
     }, 10000);
     it('should throw bad parameters exception when no payment id is passed', async () => {
       const response: any = await request(app.getHttpServer())
         .post(`/${mockCheckOutComplete2Id}/complete2`)
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY })
+        .set({ 'feraapp-api-key': process.env.feraAPP_API_KEY })
         .send({ ...mockCheckOutComplete2Dto, paymentId: '' });
 
       expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
@@ -398,7 +398,7 @@ describe('Checkout (e2e)', () => {
     it('should throw not found exception when wrong checkout id is passed', async () => {
       const response: any = await request(app.getHttpServer())
         .post(`/12345/complete2`)
-        .set({ 'cainzapp-api-key': process.env.CAINZAPP_API_KEY })
+        .set({ 'feraapp-api-key': process.env.feraAPP_API_KEY })
         .send(mockCheckOutComplete2Dto);
 
       expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);

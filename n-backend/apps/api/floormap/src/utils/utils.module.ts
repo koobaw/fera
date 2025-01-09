@@ -1,6 +1,6 @@
-import { FirestoreBatchModule } from '@cainz-next-gen/firestore-batch';
-import { CommonModule } from '@cainz-next-gen/common';
-import { LoggingModule } from '@cainz-next-gen/logging';
+import { FirestoreBatchModule } from '@fera-next-gen/firestore-batch';
+import { CommonModule } from '@fera-next-gen/common';
+import { LoggingModule } from '@fera-next-gen/logging';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { FloorMapUtilService } from './floormap-util.service';

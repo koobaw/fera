@@ -3,7 +3,7 @@ import { firstValueFrom, map } from 'rxjs';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { ErrorCode, ErrorMessage } from '../types/constants/error-code';
 
 @Injectable()

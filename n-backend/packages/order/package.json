@@ -1,5 +1,5 @@
 {
-  "name": "@cainz-next-gen/order",
+  "name": "@fera-next-gen/order",
   "version": "0.0.0",
   "private": true,
   "main": "./dist/index.js",
@@ -17,10 +17,10 @@
     "lint": "npm run format && eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
-    "@cainz-next-gen/common": "^0.0.0",
-    "@cainz-next-gen/firestore-batch": "^0.0.0",
-    "@cainz-next-gen/logging": "*",
-    "@cainz-next-gen/types": "*",
+    "@fera-next-gen/common": "^0.0.0",
+    "@fera-next-gen/firestore-batch": "^0.0.0",
+    "@fera-next-gen/logging": "*",
+    "@fera-next-gen/types": "*",
     "@google-cloud/firestore": "^6.7.0",
     "@google-cloud/tasks": "^4.0.1",
     "@nestjs/axios": "^3.0.1",

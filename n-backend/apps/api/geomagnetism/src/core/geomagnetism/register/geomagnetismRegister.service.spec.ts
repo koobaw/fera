@@ -1,4 +1,4 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { HttpException, HttpStatus } from '@nestjs/common';

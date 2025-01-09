@@ -2,10 +2,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import {
   SalesforceApiModule,
   SalesforceApiService,
-} from '@cainz-next-gen/salesforce-api';
-import { CommonService } from '@cainz-next-gen/common';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
+} from '@fera-next-gen/salesforce-api';
+import { CommonService } from '@fera-next-gen/common';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
 import { LoginController } from './login.controller';
 import { LoginService } from './login.service';
 import { GlobalsModule } from '../../globals.module';

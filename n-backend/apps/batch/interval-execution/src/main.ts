@@ -1,4 +1,4 @@
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 

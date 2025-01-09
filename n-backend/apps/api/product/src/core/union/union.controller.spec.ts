@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { AuthGuard } from '@cainz-next-gen/guard';
-import { MockAuthGuard } from '@cainz-next-gen/test';
+import { AuthGuard } from '@fera-next-gen/guard';
+import { MockAuthGuard } from '@fera-next-gen/test';
 import { UnionController } from './union.controller';
 import { UnionService } from './union.service';
 import { GlobalsModule } from '../../globals.module';

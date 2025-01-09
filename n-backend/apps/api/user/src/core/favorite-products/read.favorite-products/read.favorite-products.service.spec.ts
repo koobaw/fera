@@ -4,9 +4,9 @@ import { Timestamp } from '@google-cloud/firestore';
 import {
   OmitTimestampUserFavoriteProduct,
   UserFavoriteProduct,
-} from '@cainz-next-gen/types';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+} from '@fera-next-gen/types';
+import { LoggingService } from '@fera-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { of } from 'rxjs';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';

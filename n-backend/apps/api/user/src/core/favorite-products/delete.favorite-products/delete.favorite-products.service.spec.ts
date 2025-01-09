@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { initializeApp } from 'firebase-admin/app';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
 import { DocumentReference, DocumentSnapshot } from '@google-cloud/firestore';
 import { DeleteFavoriteProductsService } from './delete.favorite-products.service';
 import { GlobalsModule } from '../../../globals.module';

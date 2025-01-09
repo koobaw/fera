@@ -41,12 +41,12 @@ export const planIds = [
   '1030',
 ];
 export const thumbnails = [
-  'https://img.cainz.com/ec/page/amido/amido_thumbnail_small.jpg?auto=compress,format&w=380',
-  'https://img.cainz.com/ec/page/amido/amido_thumbnail_small.jpg?auto=compress,format&w=380',
-  'https://img.cainz.com/ec/page/grass/grass_thumbnail_small_cp.jpg?auto=compress,format&w=380',
-  'https://img.cainz.com/ec/page/steel_rack/steel_rack_thumbnail_small.jpg?auto=compress,format&w=380',
-  'https://img.cainz.com/ec/page/chozouko/chozouko_thumbnail_small.jpg?auto=compress,format&w=380',
-  'https://img.cainz.com/ec/page/season_style/season_style_thumbnail_small.jpg?auto=format,compress&w=380',
+  'https://img.fera.com/ec/page/amido/amido_thumbnail_small.jpg?auto=compress,format&w=380',
+  'https://img.fera.com/ec/page/amido/amido_thumbnail_small.jpg?auto=compress,format&w=380',
+  'https://img.fera.com/ec/page/grass/grass_thumbnail_small_cp.jpg?auto=compress,format&w=380',
+  'https://img.fera.com/ec/page/steel_rack/steel_rack_thumbnail_small.jpg?auto=compress,format&w=380',
+  'https://img.fera.com/ec/page/chozouko/chozouko_thumbnail_small.jpg?auto=compress,format&w=380',
+  'https://img.fera.com/ec/page/season_style/season_style_thumbnail_small.jpg?auto=format,compress&w=380',
 ];
 
 export const productIds = [
@@ -102,9 +102,9 @@ export const campaigns = [
       new Date('2023-01-30T00:00:00.000+09:00'),
     ),
     campaignUrl:
-      'https://www.cainz.com/contents/household-supplies/cp-77ash05.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_os_20221208-cp-asahi_:10379',
+      'https://www.fera.com/contents/household-supplies/cp-77ash05.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_os_20221208-cp-asahi_:10379',
     thumbnailUrl:
-      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FMlbicy0OyakaFTmYZfZt%2Fimage.jpg?alt=media&token=5742da67-47ea-425f-967f-54496a86d6ea',
+      'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/announcementByStore%2FMlbicy0OyakaFTmYZfZt%2Fimage.jpg?alt=media&token=5742da67-47ea-425f-967f-54496a86d6ea',
   },
   {
     title: '抽選で総計2,100名様にポイントや賞品が当たる！',
@@ -121,9 +121,9 @@ export const campaigns = [
       new Date('2022-08-29T00:00:00.000+09:00'),
     ),
     campaignUrl:
-      'https://www.cainz.com/contents/household-supplies/cp-ashkrn02.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p1_os_20220704-cp-asahikirin_:10323',
+      'https://www.fera.com/contents/household-supplies/cp-ashkrn02.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p1_os_20220704-cp-asahikirin_:10323',
     thumbnailUrl:
-      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FhhhpbJ31D6wdOlRPTN8W%2Fimage.jpg?alt=media&token=aa621eee-a14e-476e-a18c-263773d73c04',
+      'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/announcementByStore%2FhhhpbJ31D6wdOlRPTN8W%2Fimage.jpg?alt=media&token=aa621eee-a14e-476e-a18c-263773d73c04',
   },
   {
     title: '【6/30ご購入分まで】600ポイントプレゼント！',
@@ -140,9 +140,9 @@ export const campaigns = [
       new Date('2022-07-07T00:00:00.000+09:00'),
     ),
     campaignUrl:
-      'https://www.cainz.com/contents/household-supplies/cp-64ito02.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_os_20220516-itouen_:10303',
+      'https://www.fera.com/contents/household-supplies/cp-64ito02.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_os_20220516-itouen_:10303',
     thumbnailUrl:
-      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2Fx91mwAJrXekJd5EjwnIJ%2Fimage.jpg?alt=media&token=2be96a94-259d-423a-bef9-2f158b6c0541',
+      'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/announcementByStore%2Fx91mwAJrXekJd5EjwnIJ%2Fimage.jpg?alt=media&token=2be96a94-259d-423a-bef9-2f158b6c0541',
   },
   {
     title:
@@ -160,9 +160,9 @@ export const campaigns = [
       new Date('2021-11-07T00:00:00.000+09:00'),
     ),
     campaignUrl:
-      'https://www.cainz.com/contents/household-supplies/cp-77krn01.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_cp-kirinbeer210927_:10225',
+      'https://www.fera.com/contents/household-supplies/cp-77krn01.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_cp-kirinbeer210927_:10225',
     thumbnailUrl:
-      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FtlyWGCSw0Gq6xkAEzkzc%2Fimage.jpg?alt=media&token=d498e6da-adac-4dc1-b04c-1ad2f92e39a4',
+      'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/announcementByStore%2FtlyWGCSw0Gq6xkAEzkzc%2Fimage.jpg?alt=media&token=d498e6da-adac-4dc1-b04c-1ad2f92e39a4',
   },
   {
     title:
@@ -180,9 +180,9 @@ export const campaigns = [
       new Date('2022-05-08T00:00:00.000+09:00'),
     ),
     campaignUrl:
-      'https://www.cainz.com/contents/household-supplies/cp-77ash04.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p1_os_20220302-superdrycp_:10274',
+      'https://www.fera.com/contents/household-supplies/cp-77ash04.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p1_os_20220302-superdrycp_:10274',
     thumbnailUrl:
-      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FDPpLX9JVfJzpOne722Zw%2Fimage.jpg?alt=media&token=71380d0b-22b0-4409-bc6a-cc625683b940',
+      'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/announcementByStore%2FDPpLX9JVfJzpOne722Zw%2Fimage.jpg?alt=media&token=71380d0b-22b0-4409-bc6a-cc625683b940',
   },
   {
     title: 'カインズアプリで給油がお得に！',
@@ -200,7 +200,7 @@ export const campaigns = [
     ),
     campaignUrl: '',
     thumbnailUrl:
-      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FBq9pS5xqstkDkyI63ehQ%2Fimage.jpg?alt=media&token=48728173-46da-40f6-9d0c-436dd65c0977',
+      'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/announcementByStore%2FBq9pS5xqstkDkyI63ehQ%2Fimage.jpg?alt=media&token=48728173-46da-40f6-9d0c-436dd65c0977',
   },
   {
     title: 'アサヒスーパードライ4ケースご購入で必ずもらえる！',
@@ -217,9 +217,9 @@ export const campaigns = [
       new Date('2021-09-26T00:00:00.000+09:00'),
     ),
     campaignUrl:
-      'https://www.cainz.com/contents/household-supplies/cp-77ash01.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p1_cp-asahi210814_:10199',
+      'https://www.fera.com/contents/household-supplies/cp-77ash01.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p1_cp-asahi210814_:10199',
     thumbnailUrl:
-      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FIjeFYT1DJrdWqOJtsACN%2Fimage.jpg?alt=media&token=8ef00b1d-8b14-4780-aca6-d0a12660c5bc',
+      'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/announcementByStore%2FIjeFYT1DJrdWqOJtsACN%2Fimage.jpg?alt=media&token=8ef00b1d-8b14-4780-aca6-d0a12660c5bc',
   },
   {
     title: '【まもなく終了！】買えば買うほどとくとくキャンペーン！',
@@ -236,9 +236,9 @@ export const campaigns = [
       new Date('2021-03-07T00:00:00.000+09:00'),
     ),
     campaignUrl:
-      'https://www.cainz.com/shop/e/e77spcp10/?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_cp-sapporo-tokutoku210301',
+      'https://www.fera.com/shop/e/e77spcp10/?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_cp-sapporo-tokutoku210301',
     thumbnailUrl:
-      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2Fl09tcXwGdHLPuoGeLLLK%2Fimage.jpg?alt=media&token=7fe5242f-9fb3-4da8-a7f5-3d903c8cc2c0',
+      'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/announcementByStore%2Fl09tcXwGdHLPuoGeLLLK%2Fimage.jpg?alt=media&token=7fe5242f-9fb3-4da8-a7f5-3d903c8cc2c0',
   },
   {
     title:
@@ -256,9 +256,9 @@ export const campaigns = [
       new Date('2022-10-18T00:00:00.000+09:00'),
     ),
     campaignUrl:
-      'https://www.cainz.com/contents/household-supplies/cp-itoash01.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_os_20220914-cp-itoen-asahi_:10350',
+      'https://www.fera.com/contents/household-supplies/cp-itoash01.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_os_20220914-cp-itoen-asahi_:10350',
     thumbnailUrl:
-      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FDLq0pZ0dCjwM1WAYxkwU%2Fimage.jpg?alt=media&token=e46e84c6-0fcf-4ee4-a4d8-11efb265878d',
+      'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/announcementByStore%2FDLq0pZ0dCjwM1WAYxkwU%2Fimage.jpg?alt=media&token=e46e84c6-0fcf-4ee4-a4d8-11efb265878d',
   },
   {
     title: '【ロゴキャップが当たる】カインズ限定キャンペーン',
@@ -275,9 +275,9 @@ export const campaigns = [
       new Date('2021-06-21T00:00:00.000+09:00'),
     ),
     campaignUrl:
-      'https://www.cainz.com/shop/e/e77nscp00/?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_cp-nisshuhan-logocap210407_:10060',
+      'https://www.fera.com/shop/e/e77nscp00/?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_cp-nisshuhan-logocap210407_:10060',
     thumbnailUrl:
-      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2F6GPD75AbK5FHZxNoCG4L%2Fimage.jpg?alt=media&token=33e9f644-1a8f-4a49-879a-5783bf4ab065',
+      'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/announcementByStore%2F6GPD75AbK5FHZxNoCG4L%2Fimage.jpg?alt=media&token=33e9f644-1a8f-4a49-879a-5783bf4ab065',
   },
   {
     title: '【浦和美園店限定】ARスタンプラリーに参加して景品をゲットしよう！',
@@ -295,7 +295,7 @@ export const campaigns = [
     ),
     campaignUrl: '',
     thumbnailUrl:
-      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2Fph14VvAgQjSQsdKUUuQP%2Fimage.jpg?alt=media&token=102bf589-6411-4f98-9d96-65012a8334b6',
+      'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/announcementByStore%2Fph14VvAgQjSQsdKUUuQP%2Fimage.jpg?alt=media&token=102bf589-6411-4f98-9d96-65012a8334b6',
   },
   {
     title:
@@ -313,8 +313,8 @@ export const campaigns = [
       new Date('2023-02-13T00:00:00.000+09:00'),
     ),
     campaignUrl:
-      'https://www.cainz.com/contents/household-supplies/cp-77spr04.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_os_20221208-cp-sapporo_:10380',
+      'https://www.fera.com/contents/household-supplies/cp-77spr04.html?utm_source=ap&utm_medium=referral&utm_campaign=ap_p0_os_20221208-cp-sapporo_:10380',
     thumbnailUrl:
-      'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/announcementByStore%2FUX8yYR4OM0VbTakgmyr5%2Fimage.jpg?alt=media&token=2a558b6d-5cda-4a0c-bda2-f6dd9011544d',
+      'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/announcementByStore%2FUX8yYR4OM0VbTakgmyr5%2Fimage.jpg?alt=media&token=2a558b6d-5cda-4a0c-bda2-f6dd9011544d',
   },
 ];

@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpModule, HttpService } from '@nestjs/axios';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { ConfigService } from '@nestjs/config';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { of, throwError } from 'rxjs';
 import { AxiosError } from 'axios';
 import { FieldValue } from '@google-cloud/firestore';
-import { Store } from '@cainz-next-gen/types';
+import { Store } from '@fera-next-gen/types';
 import { SettlementService } from './settlement.service';
 import { SettlementUtilsService } from '../../utils/settlement.utils';
 import { CreditUtilService } from '../../utils/credit-util.service';
@@ -104,7 +104,7 @@ const mockProducts = [
     quantity: 4,
     productName: '◆消臭昆虫ゼリーフルーツ１００Ｐ',
     imageUrls: [
-      'https://imgix.cainz.com/4936695872499/product/4936695872499_01.jpg',
+      'https://imgix.fera.com/4936695872499/product/4936695872499_01.jpg',
     ],
     taxRate: 10,
   },
@@ -113,7 +113,7 @@ const mockPayload = {
   entry: {
     orderId: '12345',
     storeCode: '3456',
-    cainzCardNumber: '144343',
+    feraCardNumber: '144343',
     isReturned: false,
     returnedDate: null,
     totalAmount: 100,
@@ -219,7 +219,7 @@ describe('SettlementService', () => {
               subtotalAmount: 480,
               productName: '◆消臭昆虫ゼリーフルーツ１００Ｐ',
               imageUrls: [
-                'https://imgix.cainz.com/4936695872499/product/4936695872499_01.jpg',
+                'https://imgix.fera.com/4936695872499/product/4936695872499_01.jpg',
               ],
               taxRate: 10,
             },

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
 import { INestApplication } from '@nestjs/common';
 import { GlobalsModule } from '../../../globals.module';
 import { AddressesMuleApiService } from '../addresses-mule-api/addresses-mule-api.service';

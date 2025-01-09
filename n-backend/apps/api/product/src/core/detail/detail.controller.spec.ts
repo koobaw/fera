@@ -14,7 +14,7 @@ describe('DetailController', () => {
   let controller: DetailController;
   let detailService: DetailService;
   let app: INestApplication;
-  process.env.CAINZAPP_API_KEY = 'VALID_API_KEY';
+  process.env.feraAPP_API_KEY = 'VALID_API_KEY';
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -59,12 +59,12 @@ describe('DetailController', () => {
         categoryId: null,
         name: 'お掃除ウェットシート デザインバケツ 本体',
         imageUrls: [
-          'https://imgix.cainz.com/4549509623410/product/4549509623410_01.jpg',
-          'https://imgix.cainz.com/4549509623410/product/4549509623410_02.jpg',
-          'https://imgix.cainz.com/4549509623410/product/4549509623410_03.jpg',
-          'https://imgix.cainz.com/4549509623410/product/4549509623410_04.jpg',
-          'https://imgix.cainz.com/4549509623410/product/4549509623410_05.jpg',
-          'https://imgix.cainz.com/4549509623410/product/4549509623410_06.jpg',
+          'https://imgix.fera.com/4549509623410/product/4549509623410_01.jpg',
+          'https://imgix.fera.com/4549509623410/product/4549509623410_02.jpg',
+          'https://imgix.fera.com/4549509623410/product/4549509623410_03.jpg',
+          'https://imgix.fera.com/4549509623410/product/4549509623410_04.jpg',
+          'https://imgix.fera.com/4549509623410/product/4549509623410_05.jpg',
+          'https://imgix.fera.com/4549509623410/product/4549509623410_06.jpg',
         ],
       },
       detail: {
@@ -213,7 +213,7 @@ describe('DetailController', () => {
 
       const response = await request(app.getHttpServer())
         .get('/detail/4549509623410')
-        .set({ 'cainzapp-api-key': 'VALID_API_KEY' })
+        .set({ 'feraapp-api-key': 'VALID_API_KEY' })
         .query({ save: 'true' });
 
       expect(response.body.code).toBe(HttpStatus.OK);
@@ -230,7 +230,7 @@ describe('DetailController', () => {
 
       const response = await request(app.getHttpServer())
         .get('/detail/4549509623410')
-        .set({ 'cainzapp-api-key': 'VALID_API_KEY' })
+        .set({ 'feraapp-api-key': 'VALID_API_KEY' })
         .query({ save: 'false' });
 
       expect(response.body.code).toBe(HttpStatus.OK);
@@ -240,7 +240,7 @@ describe('DetailController', () => {
     */
   });
   it('should be return error', async () => {
-    process.env.CAINZAPP_API_KEY = 'VALID_API_KEY';
+    process.env.feraAPP_API_KEY = 'VALID_API_KEY';
 
     jest.spyOn(detailService, 'getDetail').mockImplementation(async () => {
       const result = null;
@@ -251,7 +251,7 @@ describe('DetailController', () => {
 
     const response = await request(app.getHttpServer())
       .get('/detail/4549509623410')
-      .set({ 'cainzapp-api-key': 'VALID_API_KEY' })
+      .set({ 'feraapp-api-key': 'VALID_API_KEY' })
       .query({ save: 'false' });
 
     expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);

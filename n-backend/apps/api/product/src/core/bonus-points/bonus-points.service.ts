@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { GetBonusPointsDto } from './dto/get.bonus-point-query.dto';
 import { PointAwardCalculationApiService } from './pac-api/point-award-calculation-api.service';
 import { BonusPointResponse } from './interfaces/bonus-points.interface';

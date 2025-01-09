@@ -8,10 +8,10 @@ importScripts(
 
 const firebaseConfig = {
   apiKey: "AIzaSyCmsBCaOlO639E_eaW8-LSnjd8qSEyWmhs",
-  authDomain: "cainz-cainzapp-backend-dev.firebaseapp.com",
-  databaseURL: "https://cainz-cainzapp-backend-dev-default-rtdb.firebaseio.com",
-  projectId: "cainz-cainzapp-backend-dev",
-  storageBucket: "cainz-cainzapp-backend-dev.appspot.com",
+  authDomain: "fera-feraapp-backend-dev.firebaseapp.com",
+  databaseURL: "https://fera-feraapp-backend-dev-default-rtdb.firebaseio.com",
+  projectId: "fera-feraapp-backend-dev",
+  storageBucket: "fera-feraapp-backend-dev.appspot.com",
   messagingSenderId: "199688626981",
   appId: "1:199688626981:web:f720ec5bd01d0b4657b0cc",
   measurementId: "G-E8CKK003H5",

@@ -4,8 +4,8 @@ import {
   Errors,
   Notifications,
   ShippingAddress,
-} from '@cainz-next-gen/order/src/interfaces/orderInterfaces.interface';
-import { Auditable, ProductDetail } from '@cainz-next-gen/types';
+} from '@fera-next-gen/order/src/interfaces/orderInterfaces.interface';
+import { Auditable, ProductDetail } from '@fera-next-gen/types';
 
 export interface OrderSpecification {
   simulationNumber: string;

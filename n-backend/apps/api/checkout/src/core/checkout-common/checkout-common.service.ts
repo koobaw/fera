@@ -4,11 +4,11 @@
 /* eslint-disable no-else-return */
 /* eslint-disable no-param-reassign */
 /* eslint-disable import/no-extraneous-dependencies */
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { StatusCode, ProductItem } from '@cainz-next-gen/order';
+import { StatusCode, ProductItem } from '@fera-next-gen/order';
 import {
   CreateCustomerInfoResponse,
   CreateShippingInfoResponse,

@@ -1,6 +1,6 @@
 import { Request } from 'express';
 
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import {
   Controller,
   Get,
@@ -12,7 +12,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 
 import {

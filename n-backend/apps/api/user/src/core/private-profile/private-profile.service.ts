@@ -1,14 +1,14 @@
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
 
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
 import { HttpService } from '@nestjs/axios';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { USERS_COLLECTION_NAME, User } from '@cainz-next-gen/types';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { USERS_COLLECTION_NAME, User } from '@fera-next-gen/types';
 import { FieldValue } from '@google-cloud/firestore';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import {

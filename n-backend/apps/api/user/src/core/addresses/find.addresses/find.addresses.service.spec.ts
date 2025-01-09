@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { FindAddressesService } from './find.addresses.service';
 import { AddressesMuleApiService } from '../addresses-mule-api/addresses-mule-api.service';
 import { GlobalsModule } from '../../../globals.module';

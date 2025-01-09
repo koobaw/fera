@@ -6,8 +6,8 @@ import {
   HttpStatus,
   INestApplication,
 } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
-import { SalesforceAuthGuard } from '@cainz-next-gen/guard';
+import { CommonService } from '@fera-next-gen/common';
+import { SalesforceAuthGuard } from '@fera-next-gen/guard';
 import { ConfigService } from '@nestjs/config';
 import { ReturnController } from './return.controller';
 import { ReturnService } from './return.service';

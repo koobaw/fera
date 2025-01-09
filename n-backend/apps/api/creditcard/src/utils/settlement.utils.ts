@@ -1,6 +1,6 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import {
   USERS_COLLECTION_NAME,
   POCKET_REGI_CART_PRODUCTS_COLLECTION_NAME,
@@ -9,8 +9,8 @@ import {
   STORES_COLLECTION_NAME,
   PocketRegiCreditCard,
   Store,
-} from '@cainz-next-gen/types';
-import { LoggingService } from '@cainz-next-gen/logging';
+} from '@fera-next-gen/types';
+import { LoggingService } from '@fera-next-gen/logging';
 import { AxiosError } from 'axios';
 import { ConfigService } from '@nestjs/config';
 import { ErrorCode, ErrorMessage } from '../types/constants/error-code';
@@ -282,7 +282,7 @@ export class SettlementUtilsService {
     const entry = {
       orderId: reqData.orderId,
       storeCode: `0000${reqData.storeCode}`.slice(-4),
-      cainzCardNumber: memberId,
+      feraCardNumber: memberId,
       totalAmount: reqData.totalAmount,
       subtotalPriceByStandardTaxRate:
         totalPriceTax10 > 0 ? Math.floor(taxAmount10) : 0,

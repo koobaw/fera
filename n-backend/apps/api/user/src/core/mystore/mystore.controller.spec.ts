@@ -4,11 +4,11 @@ import { initializeApp } from 'firebase-admin/app';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import firestore from '@google-cloud/firestore';
-import { Mystore } from '@cainz-next-gen/types';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { Mystore } from '@fera-next-gen/types';
+import { LoggingService } from '@fera-next-gen/logging';
 
-import { MemberAuthGuard } from '@cainz-next-gen/guard';
-import { MockAuthGuard } from '@cainz-next-gen/test';
+import { MemberAuthGuard } from '@fera-next-gen/guard';
+import { MockAuthGuard } from '@fera-next-gen/test';
 import { MystoreController } from './mystore.controller';
 import { GlobalsModule } from '../../globals.module';
 import { MystoreMuleApiService } from './mystore-mule-api/mystore-mule-api.service';
@@ -21,7 +21,7 @@ describe('MystoreController', () => {
   let app: INestApplication;
   let readMystoreService: ReadMystoreService;
   let updateMystoreService: UpdateMystoreService;
-  process.env.CAINZAPP_API_KEY = 'VALID_API_KEY';
+  process.env.feraAPP_API_KEY = 'VALID_API_KEY';
 
   beforeAll(async () => {
     initializeApp();
@@ -102,7 +102,7 @@ describe('MystoreController', () => {
 
       const response = await request(app.getHttpServer())
         .put('/member/mystore/')
-        .set({ 'cainzapp-api-key': 'VALID_API_KEY' })
+        .set({ 'feraapp-api-key': 'VALID_API_KEY' })
         .send({
           sfdcUserId: 'dummySFDC_ID',
           encryptedMemberId: 'dummyId',
@@ -130,7 +130,7 @@ describe('MystoreController', () => {
 
       const response = await request(app.getHttpServer())
         .put('/member/mystore/')
-        .set({ 'cainzapp-api-key': 'VALID_API_KEY' })
+        .set({ 'feraapp-api-key': 'VALID_API_KEY' })
         .send({
           sfdcUserId: 'dummySFDC_ID',
           encryptedMemberId: 'dummyId',

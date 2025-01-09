@@ -1,5 +1,5 @@
 import { Controller, Get, HttpStatus, Query, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 
 import { GetBonusPointsDto } from './dto/get.bonus-point-query.dto';
 import { BonusPointsService } from './bonus-points.service';

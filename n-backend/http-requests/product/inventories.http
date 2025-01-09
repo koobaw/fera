@@ -4,5 +4,5 @@
 @save = true
 
 GET {{base}}/{{version}}/products/inventories/{{productIds}}/{{storeCodes}}?coefficient={{coefficient}}&save={{save}}
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}

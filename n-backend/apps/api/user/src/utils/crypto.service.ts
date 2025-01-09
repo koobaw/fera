@@ -1,7 +1,7 @@
-import { GlobalErrorCode } from '@cainz-next-gen/exception';
+import { GlobalErrorCode } from '@fera-next-gen/exception';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 
 /**
  * 環境ごとに秘密鍵とIVを生成したい場合は以下のコードを実行して取得

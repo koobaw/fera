@@ -1,5 +1,5 @@
 {
-  "name": "@cainz-next-gen/types",
+  "name": "@fera-next-gen/types",
   "version": "0.0.0",
   "private": true,
   "main": "./dist/index.js",

@@ -8,9 +8,9 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { FindUnionParamDto } from './dto/find.union-param.dto';
 import { TransformSavePipe } from '../../pipes/save.pipe';
 import { FindUnionQueryDto } from './dto/find.union-query.dto';

@@ -1,5 +1,5 @@
 {
-  "name": "@cainz-next-gen/common",
+  "name": "@fera-next-gen/common",
   "version": "0.0.0",
   "private": true,
   "main": "./dist/index.js",
@@ -17,8 +17,8 @@
     "lint": "npm run format && eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
-    "@cainz-next-gen/logging": "*",
-    "@cainz-next-gen/types": "*",
+    "@fera-next-gen/logging": "*",
+    "@fera-next-gen/types": "*",
     "@google-cloud/firestore": "^6.7.0",
     "@google-cloud/tasks": "^4.0.1",
     "@nestjs/common": "^9.0.0",

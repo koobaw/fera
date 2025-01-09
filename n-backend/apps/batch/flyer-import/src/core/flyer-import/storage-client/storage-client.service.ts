@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 
 import { GetSignedUrlConfig, Storage } from '@google-cloud/storage';
 import { ConfigService } from '@nestjs/config';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { ErrorCode, ErrorMessage } from '../../../types/constants/error-code';
 
 @Injectable()

@@ -11,7 +11,7 @@ export async function loadEnvsForLocal() {
   );
   process.env.CC_CLIENT_ID = await getSecretValue('cc_client_id');
   process.env.CC_ACCESS_KEY = await getSecretValue('cc_access_key');
-  process.env.CAINZAPP_API_KEY = await getSecretValue('cainzapp_api_key');
+  process.env.feraAPP_API_KEY = await getSecretValue('feraapp_api_key');
 
   // ローカルテスト時にfirebase-adminのgetAuth()を利用している場合、service_account.jsonを設定する必要があります。
   // eslint-disable-next-line turbo/no-undeclared-env-vars

@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { GlobalErrorCode } from '@cainz-next-gen/exception';
+import { GlobalErrorCode } from '@fera-next-gen/exception';
 import {
   CartErrorMessage,
   CheckoutErrorMessage,
@@ -318,9 +318,9 @@ const checkoutBeginResponseData = {
             name: 'ロング丈も掛けられる折りたたみランドリーラックパタラン',
             categoryId: 'c2320',
             imageUrls: [
-              'https://imgix.cainz.com/4549509646952/product/4549509646952_01.jpg',
-              'https://imgix.cainz.com/4549509646952/product/4549509646952_02.jpg',
-              'https://imgix.cainz.com/4549509646952/product/4549509646952_03.jpg',
+              'https://imgix.fera.com/4549509646952/product/4549509646952_01.jpg',
+              'https://imgix.fera.com/4549509646952/product/4549509646952_02.jpg',
+              'https://imgix.fera.com/4549509646952/product/4549509646952_03.jpg',
             ],
             departmentCode: '014',
             lineCode: '221',
@@ -518,9 +518,9 @@ const checkoutBeginResponseData = {
             name: 'ロング丈も掛けられる折りたたみランドリーラックパタラン',
             categoryId: 'c2320',
             imageUrls: [
-              'https://imgix.cainz.com/4549509646952/product/4549509646952_01.jpg',
-              'https://imgix.cainz.com/4549509646952/product/4549509646952_02.jpg',
-              'https://imgix.cainz.com/4549509646952/product/4549509646952_03.jpg',
+              'https://imgix.fera.com/4549509646952/product/4549509646952_01.jpg',
+              'https://imgix.fera.com/4549509646952/product/4549509646952_02.jpg',
+              'https://imgix.fera.com/4549509646952/product/4549509646952_03.jpg',
             ],
             departmentCode: '014',
             lineCode: '221',
@@ -883,7 +883,7 @@ const mockCheckoutComplete2Response: any = {
   paymentId: '123',
   accessId: 'bfe410dSFFJCv-5t1EcD7Odv7Dsn',
   token: 'C.GGPQxJSYpJpBUqUO4OO30.mcjIC5KAqJG',
-  paymentStartUrl: 'https://cainz.com/amazon/payments',
+  paymentStartUrl: 'https://fera.com/amazon/payments',
   paymentStartBy: '2023-11-03T11:40:34.329Z',
 };
 const mockCheckoutComplete2Error = new HttpException(
@@ -935,7 +935,7 @@ const mockMemberData: any = {
   CompanyName: 'カインズ',
   DepartmentName: 'Retail',
   phoneNumber: '3232323333',
-  Email: 'cainzTesting@gmail.com',
+  Email: 'feraTesting@gmail.com',
   billPayment: true,
   memberRegistrationDate: new Date().toDateString(),
 };
@@ -953,7 +953,7 @@ const customerInfoEnteredByGuest: any = {
   customerCompanyName: 'カインズ',
   customerDepartmentName: 'Retail',
   customerPhone: '3232323333',
-  customerEmail: 'cainzTesting@gmail.com',
+  customerEmail: 'feraTesting@gmail.com',
   billPayment: false,
 };
 const amazonInfoMockData: any = {
@@ -969,7 +969,7 @@ const amazonInfoMockData: any = {
       amazonAddress1: '東京都千代田区丸の内3-3-1',
       amazonAddress2: '東京都千代田区丸の内3-3-1',
       amazonPhoneNumber: '3232323333',
-      amazonMailAddress: 'cainzTesting@gmail.com',
+      amazonMailAddress: 'feraTesting@gmail.com',
     },
   },
   shipping: {
@@ -984,7 +984,7 @@ const amazonInfoMockData: any = {
       amazonAddress1: '東京都千代田区丸の内3-3-1',
       amazonAddress2: '東京都千代田区丸の内3-3-1',
       amazonPhoneNumber: '3232323333',
-      amazonMailAddress: 'cainzTesting@gmail.com',
+      amazonMailAddress: 'feraTesting@gmail.com',
     },
   },
 };

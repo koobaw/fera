@@ -1,6 +1,6 @@
 import { Request } from 'express';
 
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import {
   Controller,
   Get,
@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { TransformSavePipe } from '../../pipes/save.pipe';
 import { FindPricesDto } from './dto/find.prices.dto';
 import { PricesService } from './prices.service';

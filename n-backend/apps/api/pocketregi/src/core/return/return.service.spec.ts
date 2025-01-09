@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { HttpStatus } from '@nestjs/common';
 import { ReturnService } from './return.service';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';

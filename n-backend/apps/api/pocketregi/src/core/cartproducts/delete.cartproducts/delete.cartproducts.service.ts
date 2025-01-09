@@ -1,13 +1,13 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
 import {
   Claims,
   POCKET_REGI_CART_PRODUCTS_COLLECTION_NAME,
   POCKET_REGI_CART_PRODUCTS_SUB_COLLECTION_NAME,
   USERS_COLLECTION_NAME,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import { ErrorCode, ErrorMessage } from '../../../types/constants/error-code';
 import { ProductDeleteRequest } from '../interfaces/cartproducts.interface';
 import { PocketRegiCartCommonService } from '../../../utils/cartproducts.utils';

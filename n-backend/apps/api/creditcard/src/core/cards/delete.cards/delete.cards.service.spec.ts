@@ -1,12 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { HttpModule, HttpService } from '@nestjs/axios';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { HttpStatus } from '@nestjs/common';
 import { of, throwError } from 'rxjs';
-import { CommonService } from '@cainz-next-gen/common';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { Claims } from '@cainz-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { Claims } from '@fera-next-gen/types';
 import { AxiosError } from 'axios';
 import { DeleteCardService } from './delete.cards.service';
 import {

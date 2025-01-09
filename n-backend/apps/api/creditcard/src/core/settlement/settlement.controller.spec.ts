@@ -5,7 +5,7 @@ import {
   ExecutionContext,
   INestApplication,
 } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { SettlementController } from './settlement.controller';
 import { SettlementService } from './settlement.service';
 import { GlobalsModule } from '../../globals.module';

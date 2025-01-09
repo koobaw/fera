@@ -1,8 +1,8 @@
 /* eslint-disable prefer-destructuring */
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
-import { OrderService, ProductItem, StatusCode } from '@cainz-next-gen/order';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
+import { OrderService, ProductItem, StatusCode } from '@fera-next-gen/order';
 import { CartCommonService } from './cart-common.service';
 import {
   getCartData,

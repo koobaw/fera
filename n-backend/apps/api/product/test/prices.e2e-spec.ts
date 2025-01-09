@@ -21,7 +21,7 @@ describe('articles e2e', () => {
           `${process.env.E2E_TEST_BASE_URL}/prices/4524804125739/815/0`,
           {
             headers: {
-              'cainzapp-api-key': process.env.CAINZAPP_API_KEY,
+              'feraapp-api-key': process.env.feraAPP_API_KEY,
             },
             params: {
               save: 'false',

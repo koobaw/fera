@@ -1,5 +1,5 @@
 import { IsArray, IsNotEmpty, IsString } from 'class-validator';
-import { UserType } from '@cainz-next-gen/types';
+import { UserType } from '@fera-next-gen/types';
 
 export class AnonymousDto {
   @IsNotEmpty()

@@ -1,4 +1,4 @@
-import { LoggingModule } from '@cainz-next-gen/logging';
+import { LoggingModule } from '@fera-next-gen/logging';
 import { Firestore } from '@google-cloud/firestore';
 import { Module } from '@nestjs/common';
 

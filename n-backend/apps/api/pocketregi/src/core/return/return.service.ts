@@ -1,7 +1,7 @@
-import { CommonService } from '@cainz-next-gen/common';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { POCKET_REGI_ORDERS_COLLECTION_NAME } from '@cainz-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
+import { POCKET_REGI_ORDERS_COLLECTION_NAME } from '@fera-next-gen/types';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { Timestamp } from '@google-cloud/firestore';
 import {

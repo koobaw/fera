@@ -1,4 +1,4 @@
-import { OrderModule } from '@cainz-next-gen/order';
+import { OrderModule } from '@fera-next-gen/order';
 import { Module } from '@nestjs/common';
 import { OrderServiceTestController } from './order-service-test.controller';
 import { CartCommonService } from '../cart-common/cart-common.service';

@@ -12,14 +12,14 @@ spec:
         run.googleapis.com/container-dependencies: "{app:[collector]}"
     spec:
       containers:
-      - image: asia-northeast1-docker.pkg.dev/cainz-cainzapp-infra-dev/run-otel/sample-metrics-app
+      - image: asia-northeast1-docker.pkg.dev/fera-feraapp-infra-dev/run-otel/sample-metrics-app
         name: app
         ports:
         - containerPort: 8080
         env:
         - name: "TEST_SERVICE"
           value: "opentelemetry-cloud-run-test"
-      - image: asia-northeast1-docker.pkg.dev/cainz-cainzapp-infra-dev/run-otel/otel-collector-metrics
+      - image: asia-northeast1-docker.pkg.dev/fera-feraapp-infra-dev/run-otel/otel-collector-metrics
         name: collector
         startupProbe:
           httpGet:

@@ -1,5 +1,5 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import {
   Product,
@@ -11,8 +11,8 @@ import {
   PRODUCTS_SPECCATEGORIES_COLLECTION_NAME,
   SpecCategory,
   OmitTimestampProduct,
-} from '@cainz-next-gen/types';
-import { CommonService } from '@cainz-next-gen/common';
+} from '@fera-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
 import firestore, { DocumentReference } from '@google-cloud/firestore';
 
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
@@ -304,7 +304,7 @@ export class DetailService {
     const ret = [];
     for (let i = 1; i <= this.MAX_IMG_URLS; i++) {
       const imgNo = i.toString().padStart(2, '0');
-      const imgUrl = `https://imgix.cainz.com/${productId}/product/${productId}_${imgNo}.jpg`;
+      const imgUrl = `https://imgix.fera.com/${productId}/product/${productId}_${imgNo}.jpg`;
       ret.push(imgUrl);
     }
     return ret;

@@ -1,4 +1,4 @@
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import {
   Injectable,
   NestInterceptor,

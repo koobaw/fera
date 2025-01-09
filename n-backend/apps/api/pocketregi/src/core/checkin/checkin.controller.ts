@@ -1,8 +1,8 @@
 import { Controller, Post, Req, HttpCode, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 import { Claims } from 'packages/types/src/claims';
-import { AuthGuard } from '@cainz-next-gen/guard';
-import { CommonService } from '@cainz-next-gen/common';
+import { AuthGuard } from '@fera-next-gen/guard';
+import { CommonService } from '@fera-next-gen/common';
 import { CheckinService } from './checkin.service';
 import { CheckinResponse } from './interfaces/checkin.interface';
 

@@ -1,4 +1,4 @@
-import { HighlightedProduct } from '@cainz-next-gen/types';
+import { HighlightedProduct } from '@fera-next-gen/types';
 
 import { addCollectionData } from '../dummyGenerator';
 import { makeAuditableFields } from './common/auditable';

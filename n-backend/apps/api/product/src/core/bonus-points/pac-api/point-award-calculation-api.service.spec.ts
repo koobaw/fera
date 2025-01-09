@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { of, throwError } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import { INestApplication } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { PointAwardCalculationApiService } from './point-award-calculation-api.service';
 import { GlobalsModule } from '../../../globals.module';
 import { ErrorMessage, ErrorCode } from '../../../types/constants/error-code';

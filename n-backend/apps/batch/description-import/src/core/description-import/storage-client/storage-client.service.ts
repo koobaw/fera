@@ -1,9 +1,9 @@
 import { Storage } from '@google-cloud/storage';
 import { ConfigService } from '@nestjs/config';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { Inject, Injectable } from '@nestjs/common';
 
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { Readable } from 'stream';
 
 import * as fs from 'fs';

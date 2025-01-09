@@ -6,7 +6,7 @@
 ### register favorite product
 POST {{base}}/{{version}}/consumer/favorites/products
 Content-Type: application/json
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 
 {
   "encryptedMemberId": "{{encryptedMemberId}}",
@@ -16,4 +16,4 @@ cainzapp-api-key:{{$dotenv api-key}}
 
 ### delete favorite product
 DELETE {{base}}/{{version}}/consumer/favorites/products?objectIds={{objectIds}}
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}

@@ -12,10 +12,10 @@ import {
   Patch,
   Req,
 } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
-import { GlobalErrorCode } from '@cainz-next-gen/exception';
-import { Claims } from '@cainz-next-gen/types';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { AuthGuard } from '@fera-next-gen/guard';
+import { GlobalErrorCode } from '@fera-next-gen/exception';
+import { Claims } from '@fera-next-gen/types';
+import { LoggingService } from '@fera-next-gen/logging';
 import { CartService } from './cart.service';
 import { FromUserDto, ToUserDto } from './dto/mergeCart.dto';
 import { CartAddItemDto } from './dto/post.cart-add-item-body.dto';

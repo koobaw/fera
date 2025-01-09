@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 
 @Injectable()
 export class LoggingMiddleware implements NestMiddleware<Request, Response> {

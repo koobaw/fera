@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpModule } from '@nestjs/axios';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { CommonService } from '@fera-next-gen/common';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { CheckinService } from './checkin.service';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import { PocketRegiCheckinCommonService } from '../../utils/checkin.utils';
@@ -352,7 +352,7 @@ describe('CheckinService', () => {
     });
 
     it('it should throw error for invalid shop code for firestore sub document', async () => {
-      const qrCodeData = 'cainzapp://qr?shopcode=0123';
+      const qrCodeData = 'feraapp://qr?shopcode=0123';
 
       jest.spyOn(commonService, 'createMd5').mockReturnValue('encryptedShopId');
 
@@ -376,7 +376,7 @@ describe('CheckinService', () => {
     });
 
     it('it should throw error for shop is not eligble for pocket regi', async () => {
-      const qrCodeData = 'cainzapp://qr?shopcode=0123';
+      const qrCodeData = 'feraapp://qr?shopcode=0123';
 
       jest.spyOn(commonService, 'createMd5').mockReturnValue('encryptedShopId');
 
@@ -403,7 +403,7 @@ describe('CheckinService', () => {
     });
 
     it('it should return shop detail with success', async () => {
-      const qrCodeData = 'cainzapp://qr?shopcode=0123';
+      const qrCodeData = 'feraapp://qr?shopcode=0123';
 
       jest.spyOn(commonService, 'createMd5').mockReturnValue('encryptedShopId');
 

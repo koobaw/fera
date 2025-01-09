@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin';
 
-import { Auditable } from '@cainz-next-gen/types';
+import { Auditable } from '@fera-next-gen/types';
 
 export const makeAuditableFields = (): Auditable => ({
   createdBy: 'this/is/dummy/path:GET',

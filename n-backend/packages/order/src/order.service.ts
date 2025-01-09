@@ -11,9 +11,9 @@
 import { AmazonPayClient } from '@amazonpay/amazon-pay-api-sdk-nodejs';
 import assert from 'assert';
 import { catchError, firstValueFrom, lastValueFrom } from 'rxjs';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { HttpStatus, Injectable, HttpException } from '@nestjs/common';
@@ -28,7 +28,7 @@ import {
   StoreCodes,
   Product,
   ReceiptMethod,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import { AxiosError } from 'axios';
 import {
   GetProduct,
@@ -1260,7 +1260,7 @@ export class OrderService {
   /**
    * @param {productItems} array - Array of productItem objects
    * @param {products} array - Array of product objects
-   * @param {isMember} boolean - isMember of cainz or not
+   * @param {isMember} boolean - isMember of fera or not
    * @param {storeInfo} object - object with store information
    * @return {object}
    */

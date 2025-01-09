@@ -1,13 +1,13 @@
 import request from 'supertest';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import {
   SalesforceApiModule,
   SalesforceApiService,
-} from '@cainz-next-gen/salesforce-api';
+} from '@fera-next-gen/salesforce-api';
 import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { MemberAuthGuard } from '@cainz-next-gen/guard';
-import { MockAuthGuard } from '@cainz-next-gen/test';
+import { MemberAuthGuard } from '@fera-next-gen/guard';
+import { MockAuthGuard } from '@fera-next-gen/test';
 import { GlobalsModule } from '../../globals.module';
 import { MuleMembershipRecord } from './interface/private-profile.interface';
 import { PrivateProfileController } from './private-profile.controller';

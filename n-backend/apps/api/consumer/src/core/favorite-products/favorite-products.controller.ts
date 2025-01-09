@@ -1,4 +1,4 @@
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import {
   Body,
   Controller,
@@ -8,7 +8,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { DeleteFavoriteProductsService } from './delete.favorite-products/delete.favorite-products.service';
 import { DeleteFavoriteProductsQueryDto } from './dto/delete.favorite-products-query.dto';
 import { RegisterFavoriteProductsBodyDto } from './dto/register.favorite-products-body.dto';

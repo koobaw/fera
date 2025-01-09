@@ -1,9 +1,9 @@
 import * as admin from 'firebase-admin';
 
 import { GeoPoint } from '@google-cloud/firestore';
-import { StoreDetail } from '@cainz-next-gen/types';
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { StoreDetail } from '@fera-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
 
 import { FirestoreStructure } from '../types';
 import { makeAuditableFields } from './common/auditable';
@@ -37,7 +37,7 @@ actualStoreData.forEach((store, index) => {
         floorGuideOrder: 1,
         floorGuideName: '本館',
         floorGuideUrl:
-          'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/cainz%2FfloorGuide%2FJPG%2F813_1_%E6%9C%AC%E9%A4%A8.jpg?alt=media',
+          'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/fera%2FfloorGuide%2FJPG%2F813_1_%E6%9C%AC%E9%A4%A8.jpg?alt=media',
       },
     ],
     prefectureName: prefecture ? prefecture[1] : null,

@@ -18,8 +18,8 @@
     "<rootDir>"
   ],
   "moduleNameMapper": {
-    "@cainz-next-gen/firestore-batch": "<rootDir>/../../../packages/firestore/src",
-    "^@cainz-next-gen/(.*)$": "<rootDir>/../../../packages/$1/src"
+    "@fera-next-gen/firestore-batch": "<rootDir>/../../../packages/firestore/src",
+    "^@fera-next-gen/(.*)$": "<rootDir>/../../../packages/$1/src"
   },
   "modulePaths": [
     "<rootDir>"

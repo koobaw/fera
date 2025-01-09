@@ -1,16 +1,16 @@
 import { FieldValue } from 'firebase-admin/firestore';
 import { protos } from '@google-cloud/tasks';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
 import {
   AnonymousUser,
   UserType,
   ANONYMOUSUSERS_COLLECTION_NAME,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import { QUEUES } from './interface/anonymos-task-queue.interface';
 

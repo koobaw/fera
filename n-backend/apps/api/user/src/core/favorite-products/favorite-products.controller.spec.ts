@@ -8,10 +8,10 @@ import {
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { DocumentReference, DocumentSnapshot } from '@google-cloud/firestore';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
-import { MemberAuthGuard } from '@cainz-next-gen/guard';
-import { MockAuthGuard } from '@cainz-next-gen/test';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
+import { MemberAuthGuard } from '@fera-next-gen/guard';
+import { MockAuthGuard } from '@fera-next-gen/test';
 import { GlobalsModule } from '../../globals.module';
 import { FavoriteProductsController } from './favorite-products.controller';
 import { RegisterFavoriteProductsService } from './register.favorite-products/register.favorite-products.service';

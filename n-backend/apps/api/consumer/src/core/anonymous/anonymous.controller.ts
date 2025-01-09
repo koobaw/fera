@@ -1,8 +1,8 @@
 import { Request } from 'express';
 
-import { AuthGuard } from '@cainz-next-gen/guard';
-import { CommonService } from '@cainz-next-gen/common';
-import { Claims, MigrateTarget } from '@cainz-next-gen/types';
+import { AuthGuard } from '@fera-next-gen/guard';
+import { CommonService } from '@fera-next-gen/common';
+import { Claims, MigrateTarget } from '@fera-next-gen/types';
 import {
   Controller,
   HttpException,

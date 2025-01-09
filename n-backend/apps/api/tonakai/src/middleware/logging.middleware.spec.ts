@@ -1,7 +1,7 @@
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { LoggingMiddleware } from './logging.middleware';
 
 describe('LoggingMiddleware', () => {

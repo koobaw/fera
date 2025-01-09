@@ -2,13 +2,13 @@ import { AxiosError } from 'axios';
 import { getAuth } from 'firebase-admin/auth';
 import { catchError, firstValueFrom } from 'rxjs';
 
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
 import { HttpService } from '@nestjs/axios';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import {
   AnonymousUser,
   User,
@@ -22,7 +22,7 @@ import {
   USERS_PICKUPORDERS_COLLECTION_NAME,
   USERS_PRODUCTSEARCHQUERIES_COLLECTION_NAME,
   USERS_PRODUCTVIEWS_COLLECTION_NAME,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import { FieldValue } from 'firebase-admin/firestore';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import {
@@ -91,7 +91,7 @@ export class LoginService {
     encryptedMemberId: string,
     tokenData: TokenData,
   ) {
-    // cainzIdやaccess_tokenなどをfirebase authのclaimに保存
+    // feraIdやaccess_tokenなどをfirebase authのclaimに保存
     this.logger.info('start saveToFirebaseAuthClaims');
     await getAuth().setCustomUserClaims(userId, {
       accessToken: tokenData.accessToken,

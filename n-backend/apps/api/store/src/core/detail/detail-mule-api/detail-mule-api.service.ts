@@ -1,8 +1,8 @@
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
 
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
@@ -103,7 +103,7 @@ export class DetailMuleApiService {
                 floorGuideOrder: 1,
                 floorGuideName: '本館',
                 floorGuideUrl:
-                  'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/cainz%2FfloorGuide%2FJPG%2F859_1_%E6%9C%AC%E9%A4%A8.jpg?alt=media',
+                  'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/fera%2FfloorGuide%2FJPG%2F859_1_%E6%9C%AC%E9%A4%A8.jpg?alt=media',
               },
             ],
             prefectureName: '埼玉県',
@@ -160,7 +160,7 @@ export class DetailMuleApiService {
             {
               code: '666',
               title: '写真プリントキャンペーン',
-              body: "開催日：2023年5月15日～2023年6月19日\rイベント内容：\r昔撮った思い出のビデオテープ …時が経つにつれテープの劣化やハード機器の故障等で観たいときに観れなくなるかもしれません。この機会に大切な動画をDVDに、音楽等をCDにダビングしてみませんか？\r2023年5月15日より2023年6月19日までの期間中、テープ5本以上のご注文で1本980円（税込）でお受け致します。（通常：10本以上のご注文で1本980円）各店サービスカウンターにて承りますので是非ご利用願います。\r問い合わせ先：サービスカウンター受付\r\r<b>くみまちモールあさか</b>\rカインズとイトーヨーカドーと30の専門店がスマートなくらしを応援します。\r<a href='https://cainz-kumimachi-asaka.com/' target='_blank'>詳細はこちら</a>",
+              body: "開催日：2023年5月15日～2023年6月19日\rイベント内容：\r昔撮った思い出のビデオテープ …時が経つにつれテープの劣化やハード機器の故障等で観たいときに観れなくなるかもしれません。この機会に大切な動画をDVDに、音楽等をCDにダビングしてみませんか？\r2023年5月15日より2023年6月19日までの期間中、テープ5本以上のご注文で1本980円（税込）でお受け致します。（通常：10本以上のご注文で1本980円）各店サービスカウンターにて承りますので是非ご利用願います。\r問い合わせ先：サービスカウンター受付\r\r<b>くみまちモールあさか</b>\rカインズとイトーヨーカドーと30の専門店がスマートなくらしを応援します。\r<a href='https://fera-kumimachi-asaka.com/' target='_blank'>詳細はこちら</a>",
             },
           ],
         },

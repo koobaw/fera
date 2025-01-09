@@ -8,7 +8,7 @@ steps:
     env:
       - 'PROJECT_ID=$PROJECT_ID'
       - 'E2E_TEST_BASE_URL=https://user-eqqsu5fmdq-an.a.run.app/v1/users'
-    secretEnv: ['CAINZAPP_API_KEY']
+    secretEnv: ['feraAPP_API_KEY']
 options:
   logging: CLOUD_LOGGING_ONLY
 substitutions:
@@ -16,5 +16,5 @@ substitutions:
   _SCOPE: 'user'
 availableSecrets:
   secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/cainzapp_api_key/versions/latest
-      env: 'CAINZAPP_API_KEY'
+    - versionName: projects/$PROJECT_ID/secrets/feraapp_api_key/versions/latest
+      env: 'feraAPP_API_KEY'

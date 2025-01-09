@@ -1,4 +1,4 @@
-import { Code128DiscountDetails } from '@cainz-next-gen/types';
+import { Code128DiscountDetails } from '@fera-next-gen/types';
 
 export interface SettlementResponse {
   data?: DataDetails;

@@ -8,7 +8,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 
 import { RecommendsService } from './recommends.service';
 import { FindRecommendQueryDto } from './dto/find.recommend-query.dto';

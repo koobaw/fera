@@ -5,9 +5,9 @@ import {
   HttpStatus,
   INestApplication,
 } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import request from 'supertest';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { CardsController } from './cards.controller';
 import { GlobalsModule } from '../../globals.module';
 import {

@@ -1,4 +1,4 @@
-import { OmitTimestampProductPrice } from '@cainz-next-gen/types';
+import { OmitTimestampProductPrice } from '@fera-next-gen/types';
 import { Injectable } from '@nestjs/common';
 
 import { DetailService } from '../detail/detail.service';

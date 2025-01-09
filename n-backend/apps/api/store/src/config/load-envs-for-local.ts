@@ -9,7 +9,7 @@ export async function loadEnvsForLocal() {
   process.env.MULE_API_CLIENT_SECRET = await getSecretValue(
     'mule_api_client_secret',
   );
-  process.env.CAINZAPP_API_KEY = await getSecretValue('cainzapp_api_key');
+  process.env.feraAPP_API_KEY = await getSecretValue('feraapp_api_key');
 
   /**
    * ローカル環境で動作させる場合に必要な環境変数をここで設定

@@ -1,10 +1,10 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { catchError, firstValueFrom } from 'rxjs';
 import { HttpService } from '@nestjs/axios';
 
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosError } from 'axios';
 import { FieldValue } from '@google-cloud/firestore';
@@ -16,7 +16,7 @@ import {
   Store,
   POCKET_REGI_CART_PRODUCTS_COLLECTION_NAME,
   POCKET_REGI_CART_PRODUCTS_SUB_COLLECTION_NAME,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import {
   PurchaseOrder,

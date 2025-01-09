@@ -8,9 +8,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { Claims } from 'packages/types/src/claims';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { GetCardsService } from './get.cards/get.cards.service';
 import { RegisterCardService } from './register.cards/register.cards.service';
 import {

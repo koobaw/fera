@@ -1,6 +1,6 @@
 import { Controller, Get, HttpStatus, Query, UseGuards } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { CommonService } from '@fera-next-gen/common';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { FloormapService } from './floormap.service';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import { FloorMapUtilService } from '../../utils/floormap-util.service';

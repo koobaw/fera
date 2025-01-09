@@ -1,5 +1,5 @@
 import { ProductItem } from 'packages/order/src/interfaces/orderInterfaces.interface';
-import { Auditable, ProductDetail } from '@cainz-next-gen/types';
+import { Auditable, ProductDetail } from '@fera-next-gen/types';
 
 export type CheckoutCompleteInterface =
   | OtherPaymentInterface

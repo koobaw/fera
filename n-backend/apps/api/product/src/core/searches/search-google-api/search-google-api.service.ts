@@ -1,13 +1,13 @@
 import dayjs from 'dayjs';
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SearchServiceClient } from '@google-cloud/retail/build/src/v2';
 import { google } from '@google-cloud/retail/build/protos/protos';
 
-import { CATEGORIES_COLLECTION_NAME } from '@cainz-next-gen/types';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { CATEGORIES_COLLECTION_NAME } from '@fera-next-gen/types';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { ErrorCode, ErrorMessage } from '../../../types/constants/error-code';
 import { FindSearchesDto, SearchSortOrder } from '../dto/find.search-query.dto';
 import { PRICE_LIST } from '../const/price-list';

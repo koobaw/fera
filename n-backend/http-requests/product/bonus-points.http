@@ -6,5 +6,5 @@ GET {{base}}/{{version}}/products/bonus-points
 ?productIds={{productIds}}
 &storeCodes={{storeCodes}}
 &membershipRank={{membershipRank}}
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}

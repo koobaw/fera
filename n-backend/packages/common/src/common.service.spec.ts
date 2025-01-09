@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 import { IncomingHttpHeaders } from 'http';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import * as uuid from 'uuid';
 import { HttpException } from '@nestjs/common/exceptions';
 import { AxiosError } from 'axios';

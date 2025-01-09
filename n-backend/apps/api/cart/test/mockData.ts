@@ -17,9 +17,9 @@ const mockGetCartData = {
         name: 'ロング丈も掛けられる折りたたみランドリーラックパタラン',
         categoryId: 'c2320',
         imageUrls: [
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_01.jpg',
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_02.jpg',
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_03.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_01.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_02.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_03.jpg',
         ],
         departmentCode: '014',
         lineCode: '221',
@@ -224,9 +224,9 @@ const mockGetCartData = {
         name: 'ロング丈も掛けられる折りたたみランドリーラックパタラン',
         categoryId: 'c2320',
         imageUrls: [
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_01.jpg',
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_02.jpg',
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_03.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_01.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_02.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_03.jpg',
         ],
         departmentCode: '014',
         lineCode: '221',
@@ -431,9 +431,9 @@ const mockGetCartData = {
         name: 'ロング丈も掛けられる折りたたみランドリーラックパタラン',
         categoryId: 'c2320',
         imageUrls: [
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_01.jpg',
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_02.jpg',
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_03.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_01.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_02.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_03.jpg',
         ],
         departmentCode: '014',
         lineCode: '221',
@@ -626,7 +626,7 @@ const mockGetCartData = {
   storeInfo: {
     code: '859',
     name: 'カインズ本庄早稲田店',
-    webUrl: 'https://map.cainz.com/detail/859/',
+    webUrl: 'https://map.fera.com/detail/859/',
     address: '〒351-0005 埼玉県朝霞市根岸台3丁目20番1号',
     postCode: '351-0005',
     telNumberList: [
@@ -651,9 +651,9 @@ const mockGetCartData = {
           floorGuideOrder: 1,
           floorGuideName: '本館',
           floorGuidePdfUrl:
-            'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/cainz%2FfloorGuide%2FPDF%2F859_1_%E6%9C%AC%E9%A4%A8.pdf?alt=media',
+            'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/fera%2FfloorGuide%2FPDF%2F859_1_%E6%9C%AC%E9%A4%A8.pdf?alt=media',
           floorGuideUrl:
-            'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/cainz%2FfloorGuide%2FJPG%2F859_1_%E6%9C%AC%E9%A4%A8.jpg?alt=media',
+            'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/fera%2FfloorGuide%2FJPG%2F859_1_%E6%9C%AC%E9%A4%A8.jpg?alt=media',
         },
       ],
       prefectureName: '埼玉県',
@@ -673,13 +673,13 @@ const mockGetCartData = {
       geomagnetismMapId: 'b8e3ef31b120404b848aa9fe1f66fc5a',
       supportPocketRegi: true,
       supportCuttingService: false,
-      webCuttingServiceUrl: 'https://www.cainz.co.jp/store_cutting/813',
+      webCuttingServiceUrl: 'https://www.fera.co.jp/store_cutting/813',
       supportDIYReserve: true,
-      webDIYReserveUrl: 'https://reserve.cainz.com/store/813',
+      webDIYReserveUrl: 'https://reserve.fera.com/store/813',
       supportDogRun: true,
-      webDogRunUrl: 'https://dogrun.cainz.com/',
+      webDogRunUrl: 'https://dogrun.fera.com/',
       supportToolRental: true,
-      webToolRentalUrl: 'https://reserve.cainz.com/store/813/',
+      webToolRentalUrl: 'https://reserve.fera.com/store/813/',
       showVisitingNumber: 0,
       toCloseSettings: [
         {
@@ -713,7 +713,7 @@ const mockGetCartData = {
       {
         code: '813',
         title: '写真プリントキャンペーン',
-        body: "開催日：2023年5月15日～2023年6月19日\rイベント内容：\r昔撮った思い出のビデオテープ …時が経つにつれテープの劣化やハード機器の故障等で観たいときに観れなくなるかもしれません。この機会に大切な動画をDVDに、音楽等をCDにダビングしてみませんか？\r2023年5月15日より2023年6月19日までの期間中、テープ5本以上のご注文で1本980円（税込）でお受け致します。（通常：10本以上のご注文で1本980円）各店サービスカウンターにて承りますので是非ご利用願います。\r問い合わせ先：サービスカウンター受付\r\r<b>くみまちモールあさか</b>\rカインズとイトーヨーカドーと30の専門店がスマートなくらしを応援します。\r<a href='https://cainz-kumimachi-asaka.com/' target='_blank'>詳細はこちら</a>",
+        body: "開催日：2023年5月15日～2023年6月19日\rイベント内容：\r昔撮った思い出のビデオテープ …時が経つにつれテープの劣化やハード機器の故障等で観たいときに観れなくなるかもしれません。この機会に大切な動画をDVDに、音楽等をCDにダビングしてみませんか？\r2023年5月15日より2023年6月19日までの期間中、テープ5本以上のご注文で1本980円（税込）でお受け致します。（通常：10本以上のご注文で1本980円）各店サービスカウンターにて承りますので是非ご利用願います。\r問い合わせ先：サービスカウンター受付\r\r<b>くみまちモールあさか</b>\rカインズとイトーヨーカドーと30の専門店がスマートなくらしを応援します。\r<a href='https://fera-kumimachi-asaka.com/' target='_blank'>詳細はこちら</a>",
       },
     ],
   },
@@ -772,9 +772,9 @@ const mockGetCartChangeData = {
         name: 'ロング丈も掛けられる折りたたみランドリーラックパタラン',
         categoryId: 'c2320',
         imageUrls: [
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_01.jpg',
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_02.jpg',
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_03.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_01.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_02.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_03.jpg',
         ],
         departmentCode: '014',
         lineCode: '221',
@@ -979,9 +979,9 @@ const mockGetCartChangeData = {
         name: 'ロング丈も掛けられる折りたたみランドリーラックパタラン',
         categoryId: 'c2320',
         imageUrls: [
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_01.jpg',
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_02.jpg',
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_03.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_01.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_02.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_03.jpg',
         ],
         departmentCode: '014',
         lineCode: '221',
@@ -1186,9 +1186,9 @@ const mockGetCartChangeData = {
         name: 'ロング丈も掛けられる折りたたみランドリーラックパタラン',
         categoryId: 'c2320',
         imageUrls: [
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_01.jpg',
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_02.jpg',
-          'https://imgix.cainz.com/4549509646952/product/4549509646952_03.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_01.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_02.jpg',
+          'https://imgix.fera.com/4549509646952/product/4549509646952_03.jpg',
         ],
         departmentCode: '014',
         lineCode: '221',
@@ -1381,7 +1381,7 @@ const mockGetCartChangeData = {
   storeInfo: {
     code: '859',
     name: 'カインズ本庄早稲田店',
-    webUrl: 'https://map.cainz.com/detail/859/',
+    webUrl: 'https://map.fera.com/detail/859/',
     address: '〒351-0005 埼玉県朝霞市根岸台3丁目20番1号',
     postCode: '351-0005',
     telNumberList: [
@@ -1406,9 +1406,9 @@ const mockGetCartChangeData = {
           floorGuideOrder: 1,
           floorGuideName: '本館',
           floorGuidePdfUrl:
-            'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/cainz%2FfloorGuide%2FPDF%2F859_1_%E6%9C%AC%E9%A4%A8.pdf?alt=media',
+            'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/fera%2FfloorGuide%2FPDF%2F859_1_%E6%9C%AC%E9%A4%A8.pdf?alt=media',
           floorGuideUrl:
-            'https://firebasestorage.googleapis.com/v0/b/prd-cainz-app-cust1/o/cainz%2FfloorGuide%2FJPG%2F859_1_%E6%9C%AC%E9%A4%A8.jpg?alt=media',
+            'https://firebasestorage.googleapis.com/v0/b/prd-fera-app-cust1/o/fera%2FfloorGuide%2FJPG%2F859_1_%E6%9C%AC%E9%A4%A8.jpg?alt=media',
         },
       ],
       prefectureName: '埼玉県',
@@ -1428,13 +1428,13 @@ const mockGetCartChangeData = {
       geomagnetismMapId: 'b8e3ef31b120404b848aa9fe1f66fc5a',
       supportPocketRegi: true,
       supportCuttingService: false,
-      webCuttingServiceUrl: 'https://www.cainz.co.jp/store_cutting/813',
+      webCuttingServiceUrl: 'https://www.fera.co.jp/store_cutting/813',
       supportDIYReserve: true,
-      webDIYReserveUrl: 'https://reserve.cainz.com/store/813',
+      webDIYReserveUrl: 'https://reserve.fera.com/store/813',
       supportDogRun: true,
-      webDogRunUrl: 'https://dogrun.cainz.com/',
+      webDogRunUrl: 'https://dogrun.fera.com/',
       supportToolRental: true,
-      webToolRentalUrl: 'https://reserve.cainz.com/store/813/',
+      webToolRentalUrl: 'https://reserve.fera.com/store/813/',
       showVisitingNumber: 0,
       toCloseSettings: [
         {
@@ -1468,7 +1468,7 @@ const mockGetCartChangeData = {
       {
         code: '813',
         title: '写真プリントキャンペーン',
-        body: "開催日：2023年5月15日～2023年6月19日\rイベント内容：\r昔撮った思い出のビデオテープ …時が経つにつれテープの劣化やハード機器の故障等で観たいときに観れなくなるかもしれません。この機会に大切な動画をDVDに、音楽等をCDにダビングしてみませんか？\r2023年5月15日より2023年6月19日までの期間中、テープ5本以上のご注文で1本980円（税込）でお受け致します。（通常：10本以上のご注文で1本980円）各店サービスカウンターにて承りますので是非ご利用願います。\r問い合わせ先：サービスカウンター受付\r\r<b>くみまちモールあさか</b>\rカインズとイトーヨーカドーと30の専門店がスマートなくらしを応援します。\r<a href='https://cainz-kumimachi-asaka.com/' target='_blank'>詳細はこちら</a>",
+        body: "開催日：2023年5月15日～2023年6月19日\rイベント内容：\r昔撮った思い出のビデオテープ …時が経つにつれテープの劣化やハード機器の故障等で観たいときに観れなくなるかもしれません。この機会に大切な動画をDVDに、音楽等をCDにダビングしてみませんか？\r2023年5月15日より2023年6月19日までの期間中、テープ5本以上のご注文で1本980円（税込）でお受け致します。（通常：10本以上のご注文で1本980円）各店サービスカウンターにて承りますので是非ご利用願います。\r問い合わせ先：サービスカウンター受付\r\r<b>くみまちモールあさか</b>\rカインズとイトーヨーカドーと30の専門店がスマートなくらしを応援します。\r<a href='https://fera-kumimachi-asaka.com/' target='_blank'>詳細はこちら</a>",
       },
     ],
   },
@@ -1529,7 +1529,7 @@ const mockAnonymousUserdata = [
         product: {
           productId: '4549509524318',
           imageUrls: [
-            'https://imgix.cainz.com/4906128451037/product/4906128451037_01.jpg?auto=format,compress&w=691&h=691&fit=fill&fill=solid&fill-color=white',
+            'https://imgix.fera.com/4906128451037/product/4906128451037_01.jpg?auto=format,compress&w=691&h=691&fit=fill&fill=solid&fill-color=white',
           ],
           liquorCategory: '1',
           deliveryChargeCategoryEc: '1',
@@ -1661,7 +1661,7 @@ const mockMembersData = [
         product: {
           productId: '4549509524318',
           imageUrls: [
-            'https://imgix.cainz.com/4906128451037/product/4906128451037_01.jpg?auto=format,compress&w=691&h=691&fit=fill&fill=solid&fill-color=white',
+            'https://imgix.fera.com/4906128451037/product/4906128451037_01.jpg?auto=format,compress&w=691&h=691&fit=fill&fill=solid&fill-color=white',
           ],
           liquorCategory: '1',
           deliveryChargeCategoryEc: '1',

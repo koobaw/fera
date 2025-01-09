@@ -1,9 +1,9 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import firestore from '@google-cloud/firestore';
 
-import { Mystore } from '@cainz-next-gen/types';
+import { Mystore } from '@fera-next-gen/types';
 import { GlobalsModule } from '../../../globals.module';
 import { UpdateMystoreService } from './update.mystore.service';
 import { MystoreMuleApiService } from '../mystore-mule-api/mystore-mule-api.service';
@@ -81,7 +81,7 @@ describe('updateMystoreService', () => {
           storeCode: '859',
           storeId: '',
           store: {
-            name: 'cainz朝霞店',
+            name: 'fera朝霞店',
           },
         },
       ];
@@ -125,7 +125,7 @@ describe('updateMystoreService', () => {
         storeCode: '859',
         storeId: '',
         store: {
-          name: 'cainz朝霞店',
+          name: 'fera朝霞店',
         },
       },
     ];

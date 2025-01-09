@@ -28,15 +28,15 @@
     "skipLibCheck": true,
     "strict": true,
     "paths": {
-      "@cainz-next-gen/common": ["./packages/common/src"],
-      "@cainz-next-gen/types": ["./packages/types/src"],
-      "@cainz-next-gen/logging": ["./packages/logging/src"],
-      "@cainz-next-gen/firestore-batch": ["./packages/firestore/src"],
-      "@cainz-next-gen/exception": ["./packages/exception/src"],
-      "@cainz-next-gen/salesforce-api": ["./packages/salesforce-api/src"],
-      "@cainz-next-gen/test": ["./packages/test/src"],
-      "@cainz-next-gen/guard": ["./packages/guard/src"],
-      "@cainz-next-gen/interceptor": ["./packages/interceptor/src"]
+      "@fera-next-gen/common": ["./packages/common/src"],
+      "@fera-next-gen/types": ["./packages/types/src"],
+      "@fera-next-gen/logging": ["./packages/logging/src"],
+      "@fera-next-gen/firestore-batch": ["./packages/firestore/src"],
+      "@fera-next-gen/exception": ["./packages/exception/src"],
+      "@fera-next-gen/salesforce-api": ["./packages/salesforce-api/src"],
+      "@fera-next-gen/test": ["./packages/test/src"],
+      "@fera-next-gen/guard": ["./packages/guard/src"],
+      "@fera-next-gen/interceptor": ["./packages/interceptor/src"]
     },
     "allowJs": false
   }

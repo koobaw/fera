@@ -1,15 +1,15 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable prefer-destructuring */
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
 import { HttpModule, HttpService } from '@nestjs/axios';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { ConfigService } from '@nestjs/config';
 import {
   ReceiptMethod,
   ReceivingMethod,
   StoreCodes,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import { of } from 'rxjs';
 import { HttpStatus } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';

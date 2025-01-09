@@ -4,5 +4,5 @@
 @save = true
 
 GET {{base}}/{{version}}/products/prices/{{productIds}}/{{storeCodes}}/{{membershipRank}}?save={{save}}
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}

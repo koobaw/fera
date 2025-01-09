@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Request } from 'express';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { GlobalsModule } from '../../globals.module';
 import { InventoriesController } from './inventories.controller';
 import { InventoriesService } from './inventories.service';

@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { Claims } from 'packages/types/src/claims';
 
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { Controller, Post, Req, UseGuards } from '@nestjs/common';
 
 import { MembersService } from './members.service';

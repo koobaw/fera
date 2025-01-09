@@ -1,13 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import {
   CanActivate,
   ExecutionContext,
   HttpStatus,
   INestApplication,
 } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { FloormapController } from './floormap.controller';
 import { FloormapService } from './floormap.service';
 import { GlobalsModule } from '../../globals.module';

@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "0512e8f2-6b9f-443b-b567-a6c5b89f06fc",
-		"name": "cainzapp",
+		"name": "feraapp",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "14169476"
 	},
@@ -17,7 +17,7 @@
 							"oauth2": [
 								{
 									"key": "accessTokenUrl",
-									"value": "<this url need to dummy>https://cainz--full.sandbox.my.site.com/services/oauth2/token",
+									"value": "<this url need to dummy>https://fera--full.sandbox.my.site.com/services/oauth2/token",
 									"type": "string"
 								},
 								{
@@ -37,7 +37,7 @@
 								},
 								{
 									"key": "authUrl",
-									"value": "https://cainz--full.sandbox.my.site.com/services/oauth2/authorize",
+									"value": "https://fera--full.sandbox.my.site.com/services/oauth2/authorize",
 									"type": "string"
 								},
 								{
@@ -47,7 +47,7 @@
 								},
 								{
 									"key": "redirect_uri",
-									"value": "https://dev-next.cainz.com/mypage",
+									"value": "https://dev-next.fera.com/mypage",
 									"type": "string"
 								},
 								{
@@ -93,7 +93,7 @@
 								},
 								{
 									"key": "accessTokenUrl",
-									"value": "https://cainz--full.sandbox.my.site.com/services/oauth2/token",
+									"value": "https://fera--full.sandbox.my.site.com/services/oauth2/token",
 									"type": "string"
 								},
 								{
@@ -108,7 +108,7 @@
 								},
 								{
 									"key": "authUrl",
-									"value": "https://cainz--full.sandbox.my.site.com/services/oauth2/authorize",
+									"value": "https://fera--full.sandbox.my.site.com/services/oauth2/authorize",
 									"type": "string"
 								},
 								{
@@ -118,7 +118,7 @@
 								},
 								{
 									"key": "redirect_uri",
-									"value": "https://dev-next.cainz.com/mypage",
+									"value": "https://dev-next.fera.com/mypage",
 									"type": "string"
 								},
 								{
@@ -159,12 +159,12 @@
 								},
 								{
 									"key": "username",
-									"value": "t-yo@cainz.co.jp",
+									"value": "t-yo@fera.co.jp",
 									"type": "string"
 								},
 								{
 									"key": "accessTokenUrl",
-									"value": "https://cainz--full.sandbox.my.site.com/services/oauth2/token",
+									"value": "https://fera--full.sandbox.my.site.com/services/oauth2/token",
 									"type": "string"
 								},
 								{
@@ -184,7 +184,7 @@
 								},
 								{
 									"key": "authUrl",
-									"value": "https://cainz--full.sandbox.my.site.com/services/oauth2/authorize",
+									"value": "https://fera--full.sandbox.my.site.com/services/oauth2/authorize",
 									"type": "string"
 								},
 								{
@@ -194,7 +194,7 @@
 								},
 								{
 									"key": "redirect_uri",
-									"value": "https://dev-next.cainz.com/mypage",
+									"value": "https://dev-next.fera.com/mypage",
 									"type": "string"
 								},
 								{
@@ -245,12 +245,12 @@
 								},
 								{
 									"key": "authUrl",
-									"value": "https://customer.cainz.com/services/oauth2/authorize",
+									"value": "https://customer.fera.com/services/oauth2/authorize",
 									"type": "string"
 								},
 								{
 									"key": "redirect_uri",
-									"value": "https://customer.cainz.com/services/oauth2/success",
+									"value": "https://customer.fera.com/services/oauth2/success",
 									"type": "string"
 								},
 								{

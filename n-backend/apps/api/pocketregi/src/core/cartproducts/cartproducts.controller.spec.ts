@@ -6,8 +6,8 @@ import {
   HttpStatus,
   INestApplication,
 } from '@nestjs/common';
-import { AuthGuard } from '@cainz-next-gen/guard';
-import { CommonService } from '@cainz-next-gen/common';
+import { AuthGuard } from '@fera-next-gen/guard';
+import { CommonService } from '@fera-next-gen/common';
 import { GlobalsModule } from '../../globals.module';
 import { CartProductsController } from './cartproducts.controller';
 import { AddProductDetailService } from './add.cartproducts/add.cartproducts.service';
@@ -236,12 +236,12 @@ describe('CartProductController', () => {
         stickerDiscountCode: null,
         productName: 'クロレッツＸＰクリアミントボトル',
         imageUrls: [
-          'https://imgix.cainz.com/4547894154991/product/4547894154991_01.jpg',
-          'https://imgix.cainz.com/4547894154991/product/4547894154991_02.jpg',
-          'https://imgix.cainz.com/4547894154991/product/4547894154991_03.jpg',
-          'https://imgix.cainz.com/4547894154991/product/4547894154991_04.jpg',
-          'https://imgix.cainz.com/4547894154991/product/4547894154991_05.jpg',
-          'https://imgix.cainz.com/4547894154991/product/4547894154991_06.jpg',
+          'https://imgix.fera.com/4547894154991/product/4547894154991_01.jpg',
+          'https://imgix.fera.com/4547894154991/product/4547894154991_02.jpg',
+          'https://imgix.fera.com/4547894154991/product/4547894154991_03.jpg',
+          'https://imgix.fera.com/4547894154991/product/4547894154991_04.jpg',
+          'https://imgix.fera.com/4547894154991/product/4547894154991_05.jpg',
+          'https://imgix.fera.com/4547894154991/product/4547894154991_06.jpg',
         ],
         quantity: 1,
         taxRate: 8,

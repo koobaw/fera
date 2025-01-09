@@ -1,6 +1,6 @@
-# cainz-next-backend
+# fera-next-backend
 
-cainz のバックエンド処理をまとめたリポジトリとなります。
+fera のバックエンド処理をまとめたリポジトリとなります。
 
 ## Requirement
 
@@ -23,7 +23,7 @@ npm run test
 # install new package to specify workspace
 npm i -w [workspaceName] [packageName]
 # example: install firebase-admin into product workspaceName
-cd /path/to/your/source_code/cainz-next-backend
+cd /path/to/your/source_code/fera-next-backend
 npm i -w product firebase-admin
 
 # run test for specified workspace
@@ -34,5 +34,5 @@ npx turbo run test --scope [workspaceName]
 
 環境構築や設計資料等、ドキュメントは基本的に以下のリポジトリにある、Backend フォルダ以下で管理しています。
 
-- [cainz-next-blueprint](https://github.com/cainz-technology/cainz-next-blueprint)
-- [cainz-next-blueprint/backend](https://github.com/cainz-technology/cainz-next-blueprint/tree/main/docs/blueprints/backend)
+- [fera-next-blueprint](https://github.com/fera-technology/fera-next-blueprint)
+- [fera-next-blueprint/backend](https://github.com/fera-technology/fera-next-blueprint/tree/main/docs/blueprints/backend)

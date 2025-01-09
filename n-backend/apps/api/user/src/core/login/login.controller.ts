@@ -8,10 +8,10 @@ import {
   UseGuards,
 } from '@nestjs/common';
 
-import { CommonService } from '@cainz-next-gen/common';
-import { Claims } from '@cainz-next-gen/types';
-import { SalesforceApiService } from '@cainz-next-gen/salesforce-api';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { CommonService } from '@fera-next-gen/common';
+import { Claims } from '@fera-next-gen/types';
+import { SalesforceApiService } from '@fera-next-gen/salesforce-api';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { ConfigService } from '@nestjs/config';
 import { LoginService } from './login.service';
 import { TokenData } from './interface/login.interface';

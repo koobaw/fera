@@ -1,9 +1,9 @@
 // import firestore from '@google-cloud/firestore';
 
-import { LoggingService } from '@cainz-next-gen/logging';
-// import { OmitTimestampFlyer, Timestamp } from '@cainz-next-gen/types';
+import { LoggingService } from '@fera-next-gen/logging';
+// import { OmitTimestampFlyer, Timestamp } from '@fera-next-gen/types';
 import { Injectable } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 
 // import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 

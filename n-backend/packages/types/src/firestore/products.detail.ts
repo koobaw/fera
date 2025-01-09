@@ -223,7 +223,7 @@ export interface ProductIdentificationField {
   popProductName: string | null; // POP商品名
   productClassification: ProductClassification[] | null; // 商品分類コード名称1
   pbCategory: string | null; // PB区分
-  cainzOriginalProduct: boolean; // カインズオリジナル商品
+  feraOriginalProduct: boolean; // カインズオリジナル商品
   representativeJanCode: string | null; // 代表JANコード
   pbCategory2: string | null; // PB区分2
   ecProductNameEc: string | null; // EC用商品名

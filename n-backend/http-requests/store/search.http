@@ -1,7 +1,7 @@
 ### Full Paaram
 POST {{base}}/{{version}}/stores/search
 Content-Type: application/json
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}
 
 {
@@ -16,7 +16,7 @@ cainzapp-api-key:{{$dotenv api-key}}
 ### Empty Paaram
 POST {{base}}/{{version}}/stores/search
 Content-Type: application/json
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}
 
 {
@@ -26,7 +26,7 @@ cainzapp-api-key:{{$dotenv api-key}}
 
 POST {{base}}/{{version}}/stores/search
 Content-Type: application/json
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}
 
 {
@@ -37,7 +37,7 @@ cainzapp-api-key:{{$dotenv api-key}}
 
 POST {{base}}/{{version}}/stores/search
 Content-Type: application/json
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}
 
 {
@@ -48,7 +48,7 @@ cainzapp-api-key:{{$dotenv api-key}}
 
 POST {{base}}/{{version}}/stores/search
 Content-Type: application/json
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}
 
 {
@@ -59,7 +59,7 @@ cainzapp-api-key:{{$dotenv api-key}}
 
 POST {{base}}/{{version}}/stores/search
 Content-Type: application/json
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}
 
 {
@@ -70,7 +70,7 @@ cainzapp-api-key:{{$dotenv api-key}}
 
 POST {{base}}/{{version}}/stores/search
 Content-Type: application/json
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}
 
 {
@@ -81,7 +81,7 @@ cainzapp-api-key:{{$dotenv api-key}}
 
 POST {{base}}/{{version}}/stores/search
 Content-Type: application/json
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}
 
 {
@@ -92,7 +92,7 @@ cainzapp-api-key:{{$dotenv api-key}}
 
 POST {{base}}/{{version}}/stores/search
 Content-Type: application/json
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}
 
 {
@@ -106,7 +106,7 @@ cainzapp-api-key:{{$dotenv api-key}}
 
 POST {{base}}/{{version}}/stores/search
 Content-Type: application/json
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}
 
 {
@@ -121,7 +121,7 @@ cainzapp-api-key:{{$dotenv api-key}}
 
 POST {{base}}/{{version}}/stores/search
 Content-Type: application/json
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}
 
 {
@@ -134,7 +134,7 @@ cainzapp-api-key:{{$dotenv api-key}}
 
 POST {{base}}/{{version}}/stores/search
 Content-Type: application/json
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}
 # Authorization: Bearer {{$dotenv bearer}}
 
 {

@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { GlobalErrorCode } from '@cainz-next-gen/exception';
-import { ErrorMessage } from '@cainz-next-gen/exception/dist/error-code';
+import { GlobalErrorCode } from '@fera-next-gen/exception';
+import { ErrorMessage } from '@fera-next-gen/exception/dist/error-code';
 import { GlobalsModule } from '../../globals.module';
 import { CartService } from './cart.service';
 import { CartAddItemDto } from './dto/post.cart-add-item-body.dto';

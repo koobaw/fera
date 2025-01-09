@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import * as admin from 'firebase-admin';
 
-import { Campaign } from '@cainz-next-gen/types';
+import { Campaign } from '@fera-next-gen/types';
 import { faker } from '@faker-js/faker';
 
 import { addCollectionData } from '../dummyGenerator';
@@ -10,7 +10,7 @@ import { FirestoreDocument, FirestoreStructure } from '../types';
 
 import { campaigns } from './common/sources';
 
-const campaignUrl = 'https://www.cainz.com/contents/';
+const campaignUrl = 'https://www.fera.com/contents/';
 const dates = [
   {
     startDate: admin.firestore.Timestamp.fromDate(

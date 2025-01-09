@@ -1,6 +1,6 @@
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { DecodedIdToken, getAuth } from 'firebase-admin/auth';
 import { ConfigService } from '@nestjs/config';
 import { ExecutionContext } from '@nestjs/common';
@@ -45,13 +45,13 @@ describe('AuthGuard', () => {
     ).toBeDefined();
   });
 
-  it('should pass when cainzapp-api-key matches', async () => {
-    process.env.CAINZAPP_API_KEY = 'VALID_API_KEY';
+  it('should pass when feraapp-api-key matches', async () => {
+    process.env.feraAPP_API_KEY = 'VALID_API_KEY';
 
     const context = {
       switchToHttp: jest.fn(() => ({
         getRequest: jest.fn(() => ({
-          headers: { 'cainzapp-api-key': 'VALID_API_KEY' },
+          headers: { 'feraapp-api-key': 'VALID_API_KEY' },
         })),
       })),
     } as unknown as ExecutionContext;
@@ -64,13 +64,13 @@ describe('AuthGuard', () => {
     await expect(instance.canActivate(context)).resolves.toBe(true);
   });
 
-  it('should throw INVALID_WEB_USER error when cainzapp-api-key not match', async () => {
-    process.env.CAINZAPP_API_KEY = 'VALID_API_KEY';
+  it('should throw INVALID_WEB_USER error when feraapp-api-key not match', async () => {
+    process.env.feraAPP_API_KEY = 'VALID_API_KEY';
 
     const context = {
       switchToHttp: jest.fn(() => ({
         getRequest: jest.fn(() => ({
-          headers: { 'cainzapp-api-key': 'INVALID_API_KEY' },
+          headers: { 'feraapp-api-key': 'INVALID_API_KEY' },
         })),
       })),
     } as unknown as ExecutionContext;
@@ -134,7 +134,7 @@ describe('AuthGuard', () => {
     );
   });
 
-  it('should throw INVALID_USER error when cainzapp-api-key and token not exist', async () => {
+  it('should throw INVALID_USER error when feraapp-api-key and token not exist', async () => {
     // mocked data
     const context = {
       switchToHttp: jest.fn(() => ({

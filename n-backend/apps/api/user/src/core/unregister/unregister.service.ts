@@ -1,9 +1,9 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
 import { ConfigService } from '@nestjs/config';
-import { USERS_COLLECTION_NAME } from '@cainz-next-gen/types';
-import { CommonService } from '@cainz-next-gen/common';
+import { USERS_COLLECTION_NAME } from '@fera-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 
 @Injectable()

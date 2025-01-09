@@ -1,4 +1,4 @@
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import {
   Body,
   Controller,
@@ -8,9 +8,9 @@ import {
   HttpCode,
   HttpException,
 } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
-import { GlobalErrorCode } from '@cainz-next-gen/exception';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
+import { GlobalErrorCode } from '@fera-next-gen/exception';
+import { LoggingService } from '@fera-next-gen/logging';
 import { CheckoutCommonService } from '../checkout-common/checkout-common.service';
 import { getCartData } from '../checkout/data_json/data';
 

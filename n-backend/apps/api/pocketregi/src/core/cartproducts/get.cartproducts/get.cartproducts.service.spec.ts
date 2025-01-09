@@ -1,10 +1,10 @@
 import { AxiosError } from 'axios';
 import { throwError } from 'rxjs';
 
-import { CommonService } from '@cainz-next-gen/common';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CartProducts } from '@cainz-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CartProducts } from '@fera-next-gen/types';
 import { HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
@@ -115,7 +115,7 @@ describe('CartProductsService', () => {
                 },
               ],
               imageUrls: [
-                'https://imgix.cainz.com/4547894154991/product/4547894154991_01.jpg',
+                'https://imgix.fera.com/4547894154991/product/4547894154991_01.jpg',
               ],
               productName: 'クロレッツＸＰクリアミントボトル',
               productId: '4547894154991',
@@ -206,7 +206,7 @@ describe('CartProductsService', () => {
                 },
               ],
               imageUrls: [
-                'https://imgix.cainz.com/4547894154991/product/4547894154991_01.jpg',
+                'https://imgix.fera.com/4547894154991/product/4547894154991_01.jpg',
               ],
               productName: 'クロレッツＸＰクリアミントボトル',
               productId: '4547894154991',
@@ -253,7 +253,7 @@ describe('CartProductsService', () => {
               },
             ],
             imageUrls: [
-              'https://imgix.cainz.com/4547894154991/product/4547894154991_01.jpg',
+              'https://imgix.fera.com/4547894154991/product/4547894154991_01.jpg',
             ],
             productName: 'クロレッツＸＰクリアミントボトル',
             productId: '4547894154991',
@@ -305,7 +305,7 @@ describe('CartProductsService', () => {
               },
             ],
             imageUrls: [
-              'https://imgix.cainz.com/4547894154991/product/4547894154991_01.jpg',
+              'https://imgix.fera.com/4547894154991/product/4547894154991_01.jpg',
             ],
             productName: 'クロレッツＸＰクリアミントボトル',
             productId: '4547894154991',
@@ -336,7 +336,7 @@ describe('CartProductsService', () => {
               },
             ],
             imageUrls: [
-              'https://imgix.cainz.com/4547894154991/product/4547894154991_01.jpg',
+              'https://imgix.fera.com/4547894154991/product/4547894154991_01.jpg',
             ],
             productName: 'クロレッツＸＰクリアミントボトル',
             productId: '4547894154991',
@@ -368,7 +368,7 @@ describe('CartProductsService', () => {
               // Sales type 1 with no discount
               code128DiscountDetails: null,
               imageUrls: [
-                'https://imgix.cainz.com/4547894154990/product/4547894154990_01.jpg',
+                'https://imgix.fera.com/4547894154990/product/4547894154990_01.jpg',
               ],
               productName: 'ピクルス',
               productId: '4547894154990',
@@ -397,7 +397,7 @@ describe('CartProductsService', () => {
           {
             code128DiscountDetails: null,
             imageUrls: [
-              'https://imgix.cainz.com/4547894154990/product/4547894154990_01.jpg',
+              'https://imgix.fera.com/4547894154990/product/4547894154990_01.jpg',
             ],
             productName: 'ピクルス',
             productId: '4547894154990',
@@ -433,7 +433,7 @@ describe('CartProductsService', () => {
           .mockReturnValue({
             code128DiscountDetails: null,
             imageUrls: [
-              'https://imgix.cainz.com/4547894154990/product/4547894154990_01.jpg',
+              'https://imgix.fera.com/4547894154990/product/4547894154990_01.jpg',
             ],
             productName: 'ピクルス',
             productId: '4547894154990',
@@ -448,7 +448,7 @@ describe('CartProductsService', () => {
             // Sales type 1 with no discount
             code128DiscountDetails: null,
             imageUrls: [
-              'https://imgix.cainz.com/4547894154990/product/4547894154990_01.jpg',
+              'https://imgix.fera.com/4547894154990/product/4547894154990_01.jpg',
             ],
             productName: 'ピクルス',
             productId: '4547894154990',
@@ -484,7 +484,7 @@ describe('CartProductsService', () => {
                   },
                 ],
                 imageUrls: [
-                  'https://imgix.cainz.com/4547894154990/product/4547894154990_01.jpg',
+                  'https://imgix.fera.com/4547894154990/product/4547894154990_01.jpg',
                 ],
                 productName: 'ピクルス',
                 productId: '4547894154992',
@@ -553,7 +553,7 @@ describe('CartProductsService', () => {
                   },
                 ],
                 imageUrls: [
-                  'https://imgix.cainz.com/4547894154990/product/4547894154990_01.jpg',
+                  'https://imgix.fera.com/4547894154990/product/4547894154990_01.jpg',
                 ],
                 productName: 'ピクルス',
                 productId: '4547894154992',
@@ -579,7 +579,7 @@ describe('CartProductsService', () => {
                   },
                 ],
                 imageUrls: [
-                  'https://imgix.cainz.com/4547894154990/product/4547894154990_01.jpg',
+                  'https://imgix.fera.com/4547894154990/product/4547894154990_01.jpg',
                 ],
                 productName: 'ピクルス',
                 productId: '4547894154992',
@@ -620,7 +620,7 @@ describe('CartProductsService', () => {
               },
             ],
             imageUrls: [
-              'https://imgix.cainz.com/4547894154990/product/4547894154990_01.jpg',
+              'https://imgix.fera.com/4547894154990/product/4547894154990_01.jpg',
             ],
             productName: 'ピクルス',
             productId: '4547894154992',
@@ -642,7 +642,7 @@ describe('CartProductsService', () => {
               },
             ],
             imageUrls: [
-              'https://imgix.cainz.com/4547894154990/product/4547894154990_01.jpg',
+              'https://imgix.fera.com/4547894154990/product/4547894154990_01.jpg',
             ],
             productName: 'ピクルス',
             productId: '4547894154992',
@@ -687,7 +687,7 @@ describe('CartProductsService', () => {
                 },
               ],
               imageUrls: [
-                'https://imgix.cainz.com/4547894154991/product/4547894154991_01.jpg',
+                'https://imgix.fera.com/4547894154991/product/4547894154991_01.jpg',
               ],
               productName: 'クロレッツＸＰクリアミントボトル',
               productId: '4547894154991',
@@ -770,7 +770,7 @@ describe('CartProductsService', () => {
             },
           ],
           imageUrls: [
-            'https://imgix.cainz.com/4547894154991/product/4547894154991_01.jpg',
+            'https://imgix.fera.com/4547894154991/product/4547894154991_01.jpg',
           ],
           productName: 'クロレッツＸＰクリアミントボトル',
           productId: '4547894154991',

@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Claims } from 'packages/types/src/claims';
 import { ConfigService } from '@nestjs/config';
-import { GlobalErrorCode } from '@cainz-next-gen/exception';
-import { CommonService } from '@cainz-next-gen/common';
+import { GlobalErrorCode } from '@fera-next-gen/exception';
+import { CommonService } from '@fera-next-gen/common';
 import { AxiosError } from 'axios';
 import { ErrorCode, ErrorMessage } from '../types/constants/error-code';
 import { MuleErrorResponse } from '../core/cards/interface/creditcards.response';

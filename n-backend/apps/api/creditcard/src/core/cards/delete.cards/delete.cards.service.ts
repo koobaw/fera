@@ -6,11 +6,11 @@ import { HttpService } from '@nestjs/axios';
 import {
   USERS_COLLECTION_NAME,
   POCKET_REGI_CREDIT_CARDS_COLLECTION_NAME,
-} from '@cainz-next-gen/types';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
+} from '@fera-next-gen/types';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
 import { catchError, firstValueFrom } from 'rxjs';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import {
   CreditCardResponse,
   DeleteCard,

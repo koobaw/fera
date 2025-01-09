@@ -1,7 +1,7 @@
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 
 import { Test, TestingModule } from '@nestjs/testing';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { GlobalsModule } from '../../globals.module';
 import { FlyerImportService } from './flyer-import.service';
 import { StorageClientService } from './storage-client/storage-client.service';

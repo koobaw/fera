@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { BonusPointsService } from './bonus-points.service';
 import { PointAwardCalculationApiService } from './pac-api/point-award-calculation-api.service';
 

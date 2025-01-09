@@ -5,4 +5,4 @@ GET {{base}}/{{version}}/tonakai/articles
 ?limit={{limit}}
 &sortBy={{sortBy}}
 &order={{order}}
-cainzapp-api-key:{{$dotenv api-key}}
+feraapp-api-key:{{$dotenv api-key}}

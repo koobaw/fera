@@ -5,7 +5,7 @@ export async function loadEnvsForLocal() {
    * 環境変数の一部がデプロイ時に設定するため、デプロイ前に
    * ローカルテストやcicdの場合、デプロイ時の環境変数と同じものをここ設定
    */
-  process.env.CAINZAPP_API_KEY = await getSecretValue('cainzapp_api_key');
+  process.env.feraAPP_API_KEY = await getSecretValue('feraapp_api_key');
 
   /**
    * ローカル環境で動作させる場合に必要な環境変数をここで設定

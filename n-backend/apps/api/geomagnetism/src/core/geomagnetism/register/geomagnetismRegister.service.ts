@@ -2,9 +2,9 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom, map } from 'rxjs';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { CommonService } from '@cainz-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { CommonService } from '@fera-next-gen/common';
 import { FieldValue } from '@google-cloud/firestore';
 import { GeoMagnetismService } from '../../../utils/geoMagnetic.service';
 import {
@@ -333,7 +333,7 @@ export class GeomagnetismRegisterService {
     const accountId = this.env.get<string>('GEO_ACC_ID');
     const xApiKey = this.env.get<string>('GEO_X_API_KEY');
     try {
-      this.userPassword = `Cainz-${this.geomagneticUtls.createUserPassword(
+      this.userPassword = `fera-${this.geomagneticUtls.createUserPassword(
         this.userName,
         hmacSecretKey,
       )}`;

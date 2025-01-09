@@ -1,9 +1,9 @@
-import { LoggingService } from '@cainz-next-gen/logging';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import firestore from '@google-cloud/firestore';
 
 import { Injectable } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 
 import { parse } from 'csv-parse';
 import { finished } from 'stream/promises';
@@ -16,7 +16,7 @@ import {
   PRODUCTS_COLLECTION_NAME,
   PRODUCTS_EXTEND_DESCRIPTION_COLLECTION_NAME,
   ProductExtendDescription,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import { StorageClientService } from './storage-client/storage-client.service';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 import { ProductExtendDescriptionRead } from './interface/product-extend-description.interface';

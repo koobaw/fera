@@ -1,7 +1,7 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { Injectable } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
-import { USERS_COLLECTION_NAME } from '@cainz-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { USERS_COLLECTION_NAME } from '@fera-next-gen/types';
 
 @Injectable()
 export class PocketRegiCheckinCommonService {
@@ -11,7 +11,7 @@ export class PocketRegiCheckinCommonService {
   ) {}
 
   /**
-   * valdate qr code data, only accepted format is : cainzapp://qr?shopcode={XXX} only 2 to 4 digit shopcode will allow / QR コード データを検証します。受け入れられる形式は次のとおりです: Coin app://qr?shopcode={XXX} 2 ～ 4 桁のショップコードのみが許可されます
+   * valdate qr code data, only accepted format is : feraapp://qr?shopcode={XXX} only 2 to 4 digit shopcode will allow / QR コード データを検証します。受け入れられる形式は次のとおりです: Coin app://qr?shopcode={XXX} 2 ～ 4 桁のショップコードのみが許可されます
    * @param qrCodeStr string value / 文字列値
    * @returns true/false boolean
    */
@@ -23,7 +23,7 @@ export class PocketRegiCheckinCommonService {
     ) {
       return false;
     }
-    const pattern = /^cainzapp:\/\/qr\?shopcode=\d{2,4}$/; // it will only allow 2 to 4 digit shopcode
+    const pattern = /^feraapp:\/\/qr\?shopcode=\d{2,4}$/; // it will only allow 2 to 4 digit shopcode
 
     const isValidQrCode = pattern.test(qrCodeStr);
     return isValidQrCode;

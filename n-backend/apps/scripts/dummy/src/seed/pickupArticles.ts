@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin';
 
-import { Article } from '@cainz-next-gen/types';
+import { Article } from '@fera-next-gen/types';
 import { faker } from '@faker-js/faker';
 
 import { addCollectionData } from '../dummyGenerator';

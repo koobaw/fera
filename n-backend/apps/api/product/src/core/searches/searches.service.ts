@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { OmitTimestampProductPrice } from '@cainz-next-gen/types';
+import { OmitTimestampProductPrice } from '@fera-next-gen/types';
 import { google } from '@google-cloud/retail/build/protos/protos';
 import { FindSearchesDto } from './dto/find.search-query.dto';
 import {

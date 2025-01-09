@@ -1,4 +1,4 @@
-import { LoggingModule } from '@cainz-next-gen/logging';
+import { LoggingModule } from '@fera-next-gen/logging';
 import { Module } from '@nestjs/common';
 import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';

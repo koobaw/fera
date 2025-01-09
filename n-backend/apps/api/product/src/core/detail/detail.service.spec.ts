@@ -1,5 +1,5 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { GlobalsModule } from '../../globals.module';
@@ -240,12 +240,12 @@ describe('DetailService', () => {
             name: 'お掃除ウェットシート デザインバケツ 本体',
             categoryId: null,
             imageUrls: [
-              'https://imgix.cainz.com/4549509623410/product/4549509623410_01.jpg',
-              'https://imgix.cainz.com/4549509623410/product/4549509623410_02.jpg',
-              'https://imgix.cainz.com/4549509623410/product/4549509623410_03.jpg',
-              'https://imgix.cainz.com/4549509623410/product/4549509623410_04.jpg',
-              'https://imgix.cainz.com/4549509623410/product/4549509623410_05.jpg',
-              'https://imgix.cainz.com/4549509623410/product/4549509623410_06.jpg',
+              'https://imgix.fera.com/4549509623410/product/4549509623410_01.jpg',
+              'https://imgix.fera.com/4549509623410/product/4549509623410_02.jpg',
+              'https://imgix.fera.com/4549509623410/product/4549509623410_03.jpg',
+              'https://imgix.fera.com/4549509623410/product/4549509623410_04.jpg',
+              'https://imgix.fera.com/4549509623410/product/4549509623410_05.jpg',
+              'https://imgix.fera.com/4549509623410/product/4549509623410_06.jpg',
             ],
           },
 
@@ -424,12 +424,12 @@ describe('DetailService', () => {
           name: 'お掃除ウェットシート デザインバケツ 本体',
           categoryId: null,
           imageUrls: [
-            'https://imgix.cainz.com/4549509623410/product/4549509623410_01.jpg',
-            'https://imgix.cainz.com/4549509623410/product/4549509623410_02.jpg',
-            'https://imgix.cainz.com/4549509623410/product/4549509623410_03.jpg',
-            'https://imgix.cainz.com/4549509623410/product/4549509623410_04.jpg',
-            'https://imgix.cainz.com/4549509623410/product/4549509623410_05.jpg',
-            'https://imgix.cainz.com/4549509623410/product/4549509623410_06.jpg',
+            'https://imgix.fera.com/4549509623410/product/4549509623410_01.jpg',
+            'https://imgix.fera.com/4549509623410/product/4549509623410_02.jpg',
+            'https://imgix.fera.com/4549509623410/product/4549509623410_03.jpg',
+            'https://imgix.fera.com/4549509623410/product/4549509623410_04.jpg',
+            'https://imgix.fera.com/4549509623410/product/4549509623410_05.jpg',
+            'https://imgix.fera.com/4549509623410/product/4549509623410_06.jpg',
           ],
         },
 

@@ -1,9 +1,9 @@
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom, map } from 'rxjs';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { GeoMagnetismService } from '../../../utils/geoMagnetic.service';
 import { ErrorCode, ErrorMessage } from '../../../types/constants/error-code';
 import { RequestGeomagneticAuthResponse } from '../interfaces/geomagnetism.interface';
@@ -65,12 +65,12 @@ export class GeomagnetismAuthService {
 
     this.logger.info('start userSignIn(token)');
 
-    // Username as Cainz app (UID as username) / カインズアプリとしてのユーザー名(UIDをユーザー名とする)
+    // Username as fera app (UID as username) / カインズアプリとしてのユーザー名(UIDをユーザー名とする)
     const userName = token;
     // user password / ユーザーパスワード
 
     // Generate a password for the positioning target user using HMAC from the UID / UIDからHMACで測位対象者ユーザーのパスワードを生成
-    this.userPassword = `Cainz-${this.geomagneticUtls.createUserPassword(
+    this.userPassword = `fera-${this.geomagneticUtls.createUserPassword(
       userName,
       hmacSecretKey,
     )}`;

@@ -1,8 +1,8 @@
 /* eslint-disable no-else-return */
-import { OrderService } from '@cainz-next-gen/order';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { OrderService } from '@fera-next-gen/order';
+import { LoggingService } from '@fera-next-gen/logging';
 import { HttpService } from '@nestjs/axios';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import {
   Body,
   Controller,
@@ -14,8 +14,8 @@ import {
   Req,
   Request,
 } from '@nestjs/common';
-import { GlobalErrorCode } from '@cainz-next-gen/exception';
-import { CommonService } from '@cainz-next-gen/common';
+import { GlobalErrorCode } from '@fera-next-gen/exception';
+import { CommonService } from '@fera-next-gen/common';
 import { getCartData } from '../../data_json/data';
 import { CartErrorMessage, ErrorCode } from '../../types/constants/error-code';
 import { CartCommonService } from '../cart-common/cart-common.service';

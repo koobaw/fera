@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpService } from '@nestjs/axios';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { CommonService } from '@fera-next-gen/common';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { ConfigService } from '@nestjs/config';
 import { of, throwError } from 'rxjs';
 import { AxiosError } from 'axios';
@@ -757,7 +757,7 @@ describe('GetProductDetailService', () => {
         productId: '45478991',
         productName: 'test',
         imageUrls: [
-          'https://imgix.cainz.com/4547894154991/product/4547894154991_01.jpg',
+          'https://imgix.fera.com/4547894154991/product/4547894154991_01.jpg',
         ],
         quantity: 1,
         taxRate: 8,
@@ -830,7 +830,7 @@ describe('GetProductDetailService', () => {
         productId: '45478991',
         productName: 'test',
         imageUrls: [
-          'https://imgix.cainz.com/4547894154991/product/4547894154991_01.jpg',
+          'https://imgix.fera.com/4547894154991/product/4547894154991_01.jpg',
         ],
         quantity: 1,
         taxRate: 8,

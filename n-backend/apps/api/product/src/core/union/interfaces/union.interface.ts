@@ -1,4 +1,4 @@
-import { OmitTimestampProductPrice } from '@cainz-next-gen/types';
+import { OmitTimestampProductPrice } from '@fera-next-gen/types';
 import { InventoryResponse } from '../../inventories/interfaces/inventory.interface';
 import { ProductDetailsForResponse } from '../../detail/interfaces/detail.interface';
 

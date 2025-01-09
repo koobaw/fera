@@ -9,8 +9,8 @@ export class MockAuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
 
-    const cainzappApiKey = req.headers?.['cainzapp-api-key'];
-    if (cainzappApiKey && typeof cainzappApiKey === 'string') {
+    const feraappApiKey = req.headers?.['feraapp-api-key'];
+    if (feraappApiKey && typeof feraappApiKey === 'string') {
       return true;
     }
 

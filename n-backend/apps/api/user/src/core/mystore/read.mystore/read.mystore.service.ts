@@ -1,16 +1,16 @@
 import dayjs from 'dayjs';
 
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
 import {
   Mystore,
   USERS_COLLECTION_NAME,
   USERS_MYSTORES_COLLECTION_NAME,
   STORES_COLLECTION_NAME,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 
 import { ErrorCode, ErrorMessage } from '../../../types/constants/error-code';
 import {

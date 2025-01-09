@@ -1,5 +1,5 @@
 {
-  "name": "@cainz-next-gen/guard",
+  "name": "@fera-next-gen/guard",
   "version": "0.0.0",
   "private": true,
   "main": "./dist/index.js",
@@ -17,9 +17,9 @@
     "lint": "npm run format && eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
-    "@cainz-next-gen/common": "*",
-    "@cainz-next-gen/logging": "*",
-    "@cainz-next-gen/types": "*",
+    "@fera-next-gen/common": "*",
+    "@fera-next-gen/logging": "*",
+    "@fera-next-gen/types": "*",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.3.1",
     "express": "^4.18.2",

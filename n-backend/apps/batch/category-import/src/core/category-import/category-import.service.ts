@@ -1,13 +1,13 @@
 import dayjs from 'dayjs';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { LoggingService } from '@fera-next-gen/logging';
 import { Injectable } from '@nestjs/common';
 import {
   CATEGORIES_COLLECTION_NAME,
   Category,
   OmitTimestampCategory,
-} from '@cainz-next-gen/types';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { CommonService } from '@cainz-next-gen/common';
+} from '@fera-next-gen/types';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { CommonService } from '@fera-next-gen/common';
 import firestore, { CollectionReference } from '@google-cloud/firestore';
 import { MuleCategoryResponse } from './interfaces/mule-api.interface';
 import { CategoriesMuleApiService } from './category-mule-api/categories-mule-api.service';

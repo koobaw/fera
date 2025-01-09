@@ -1,8 +1,8 @@
 import { Request } from 'express';
 
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { Claims } from '@cainz-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { Claims } from '@fera-next-gen/types';
 import {
   Body,
   Controller,
@@ -14,7 +14,7 @@ import {
   HttpException,
 } from '@nestjs/common';
 
-import { MemberAuthGuard } from '@cainz-next-gen/guard';
+import { MemberAuthGuard } from '@fera-next-gen/guard';
 import { ErrorCode, ErrorMessage } from '../../types/constants/error-code';
 
 import { UserIdDto } from './dto/userid.dto';

@@ -25,7 +25,7 @@ module.exports = {
     // '@typescript-eslint/explicit-module-boundary-types': 'off',
     // '@typescript-eslint/no-explicit-any': 'off',
     /**
-     * cainz backend team custom rules
+     * fera backend team custom rules
      */
     'import/prefer-default-export': 'off',
     'class-methods-use-this': 'off',

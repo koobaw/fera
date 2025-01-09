@@ -1,13 +1,13 @@
-import { OmitTimestampPoint } from '@cainz-next-gen/types';
+import { OmitTimestampPoint } from '@fera-next-gen/types';
 
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import firestore from '@google-cloud/firestore';
 import { HttpStatus } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { MockAuthGuard } from '@cainz-next-gen/test';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { MockAuthGuard } from '@fera-next-gen/test';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { GlobalsModule } from '../../globals.module';
 import { PointController } from './point.controller';
 import { PointService } from './point.service';

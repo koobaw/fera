@@ -1,4 +1,4 @@
-import { Category } from '@cainz-next-gen/types';
+import { Category } from '@fera-next-gen/types';
 
 import { addCollectionData } from '../dummyGenerator';
 import { makeAuditableFields } from './common/auditable';
@@ -11,7 +11,7 @@ const categories: Category[] = [
     description:
       '洗濯用品・ハンガーのカインズオリジナル商品やアイデア商品など、くらしに役立つ商品を豊富に品揃え。人気カテゴリや各特集ページなどから簡単にお選びいただけます。',
     thumbnailUrl:
-      'https://www.cainz.com/on/demandware.static/-/Sites-site-catalog-cainz-ec/default/dwfeb154c8/ecCategory/category_nav_t10_3.jpg',
+      'https://www.fera.com/on/demandware.static/-/Sites-site-catalog-fera-ec/default/dwfeb154c8/ecCategory/category_nav_t10_3.jpg',
     displayOrder: 1,
     level: 1,
     parentCategoryCode: null,
@@ -78,7 +78,7 @@ const categories: Category[] = [
     description:
       'キッチン用品・キッチン雑貨・食器のカインズオリジナル商品やアイデア商品など、くらしに役立つ商品を豊富に品揃え。人気カテゴリや各特集ページなどから簡単にお選びいただけます。',
     thumbnailUrl:
-      'https://www.cainz.com/on/demandware.static/-/Sites-site-catalog-cainz-ec/default/dw68ea1511/ecCategory/category_nav_t10_1.jpg',
+      'https://www.fera.com/on/demandware.static/-/Sites-site-catalog-fera-ec/default/dw68ea1511/ecCategory/category_nav_t10_1.jpg',
     displayOrder: 2,
     level: 1,
     parentCategoryCode: null,

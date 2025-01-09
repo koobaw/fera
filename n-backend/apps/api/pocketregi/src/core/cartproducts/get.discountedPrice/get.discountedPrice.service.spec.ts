@@ -1,8 +1,8 @@
 import { AxiosError } from 'axios';
 import { of, throwError } from 'rxjs';
 
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
 import { HttpService } from '@nestjs/axios';
 import { HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';

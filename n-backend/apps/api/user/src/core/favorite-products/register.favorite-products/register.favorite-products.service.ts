@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
 import { protos } from '@google-cloud/tasks';
 import {
   OmitTimestampUserFavorite,
@@ -9,7 +9,7 @@ import {
   USERS_FAVORITES_COLLECTION_NAME,
   USERS_FAVORITES_PRODUCTS_COLLECTION_NAME,
   UserFavoriteProduct,
-} from '@cainz-next-gen/types';
+} from '@fera-next-gen/types';
 import firestore from '@google-cloud/firestore';
 import { ConfigService } from '@nestjs/config';
 import { ErrorCode, ErrorMessage } from '../../../types/constants/error-code';
@@ -146,7 +146,7 @@ export class RegisterFavoriteProductsService {
         QUEUE,
         url,
         undefined,
-        this.env.get<string>('CAINZAPP_API_KEY'),
+        this.env.get<string>('feraAPP_API_KEY'),
         correlationId,
         protos.google.cloud.tasks.v2.HttpMethod.POST,
         payload,

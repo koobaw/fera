@@ -1,6 +1,6 @@
-import { StoreFlyer } from '@cainz-next-gen/types';
-import { CommonService } from '@cainz-next-gen/common';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { StoreFlyer } from '@fera-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
 
 import * as admin from 'firebase-admin';
 import { FirestoreStructure } from '../types';

@@ -1,8 +1,8 @@
 import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
 
-import { LoggingService } from '@cainz-next-gen/logging';
-import { CommonService } from '@cainz-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { CommonService } from '@fera-next-gen/common';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { HttpService } from '@nestjs/axios';
@@ -66,7 +66,7 @@ export class MystoreMuleApiService {
         storeCode: '859',
         storeId: '',
         store: {
-          name: 'cainz朝霞店',
+          name: 'fera朝霞店',
         },
       },
       {
@@ -87,7 +87,7 @@ export class MystoreMuleApiService {
         storeCode: '813',
         storeId: '',
         store: {
-          name: 'cainz本庄早稲田店',
+          name: 'fera本庄早稲田店',
         },
       },
       {
@@ -108,7 +108,7 @@ export class MystoreMuleApiService {
         storeCode: '999',
         storeId: '',
         store: {
-          name: 'cainz何処園インター店',
+          name: 'fera何処園インター店',
         },
       },
     ];

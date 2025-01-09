@@ -2,13 +2,13 @@ import cluster from 'cluster';
 import os from 'os';
 import { initializeApp } from 'firebase-admin/app';
 
-import { HttpExceptionFilter } from '@cainz-next-gen/exception';
-import { LoggingService } from '@cainz-next-gen/logging';
+import { HttpExceptionFilter } from '@fera-next-gen/exception';
+import { LoggingService } from '@fera-next-gen/logging';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 
-import { CommonService } from '@cainz-next-gen/common';
+import { CommonService } from '@fera-next-gen/common';
 import { AppModule } from './app.module';
 import { loadEnvsForLocal } from './config/load-envs-for-local';
 

@@ -5,7 +5,7 @@ import {
   INestApplication,
 } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthGuard } from '@cainz-next-gen/guard';
+import { AuthGuard } from '@fera-next-gen/guard';
 import { GlobalsModule } from '../../globals.module';
 import { AnonymousController } from './anonymous.controller';
 import { AnonymousService } from './anonymous.service';

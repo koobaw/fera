@@ -1,5 +1,5 @@
 {
-  "name": "@cainz-next-gen/firestore-batch",
+  "name": "@fera-next-gen/firestore-batch",
   "version": "0.0.0",
   "private": true,
   "main": "./dist/index.js",
@@ -16,7 +16,7 @@
     "lint": "npm run format && eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
   },
   "dependencies": {
-    "@cainz-next-gen/logging": "*",
+    "@fera-next-gen/logging": "*",
     "@google-cloud/firestore": "^6.5.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/testing": "^9.0.0"

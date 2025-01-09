@@ -1,6 +1,6 @@
-import { FirestoreBatchService } from '@cainz-next-gen/firestore-batch';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { OmitTimestampPartialProductPrice } from '@cainz-next-gen/types';
+import { FirestoreBatchService } from '@fera-next-gen/firestore-batch';
+import { LoggingService } from '@fera-next-gen/logging';
+import { OmitTimestampPartialProductPrice } from '@fera-next-gen/types';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { GlobalsModule } from '../../globals.module';

@@ -1,4 +1,4 @@
-import { Store, StoreDetail } from '@cainz-next-gen/types/src/firestore';
+import { Store, StoreDetail } from '@fera-next-gen/types/src/firestore';
 
 export interface SearchApiResponse {
   code: string;

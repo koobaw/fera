@@ -1,7 +1,7 @@
 import { Request } from 'express';
-import { CommonService } from '@cainz-next-gen/common';
-import { SalesforceApiService } from '@cainz-next-gen/salesforce-api';
-import { Claims } from '@cainz-next-gen/types';
+import { CommonService } from '@fera-next-gen/common';
+import { SalesforceApiService } from '@fera-next-gen/salesforce-api';
+import { Claims } from '@fera-next-gen/types';
 import {
   Controller,
   Get,
@@ -10,7 +10,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { MemberAuthGuard } from '@cainz-next-gen/guard';
+import { MemberAuthGuard } from '@fera-next-gen/guard';
 import { PrivateProfileService } from './private-profile.service';
 
 @Controller('member/private-profile')

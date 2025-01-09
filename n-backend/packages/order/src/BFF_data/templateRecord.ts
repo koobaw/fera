@@ -116,7 +116,7 @@ const EcTemplateRecordData = [
       'AmazonPay notes *Only if [designated address delivery] is selected',
     class3: 'Not Mentioned',
     content:
-      'If you are a Cainz Online member, please log in in advance .You can easily place an order using the email address, address, and credit card information registered in your Amazon account.If you would like to use a payment method other than Amazon Pay, please proceed by clicking the "Proceed to order process" button.*Cainz Points will not be awarded if you are not logged in to Cainz Online.*Shipping charges may change if you select the shipping destination for your Amazon account.*If the address contains full-width symbols or spaces, the address may not be displayed correctly.',
+      'If you are a fera Online member, please log in in advance .You can easily place an order using the email address, address, and credit card information registered in your Amazon account.If you would like to use a payment method other than Amazon Pay, please proceed by clicking the "Proceed to order process" button.*fera Points will not be awarded if you are not logged in to fera Online.*Shipping charges may change if you select the shipping destination for your Amazon account.*If the address contains full-width symbols or spaces, the address may not be displayed correctly.',
     remarks: 'remarks12',
     publishStatus: '1',
   },
@@ -157,7 +157,7 @@ const EcTemplateRecordData = [
       'Notes regarding ordering and delivery(*wording in case of [unaccompanied item])',
     class3: 'Regarding products eligible for separate shipping ',
     content:
-      'If you are logged in and making a purchase, you can cancel from the order history on My Page before shipping is ready. If you made a purchase without logging in, please contact us using the inquiry form, as we will check whether we can accommodate your request based on the shipping preparation status.The delivery name, address, and phone number you entered will be disclosed to shipping sources other than Cainz. We will handle your information strictly in accordance with the provisions of our privacy policy.We cannot deliver to Hokkaido, Okinawa, or remote islands.',
+      'If you are logged in and making a purchase, you can cancel from the order history on My Page before shipping is ready. If you made a purchase without logging in, please contact us using the inquiry form, as we will check whether we can accommodate your request based on the shipping preparation status.The delivery name, address, and phone number you entered will be disclosed to shipping sources other than fera. We will handle your information strictly in accordance with the provisions of our privacy policy.We cannot deliver to Hokkaido, Okinawa, or remote islands.',
     remarks: 'remarks16',
     publishStatus: '1',
   },

@@ -1,7 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { LoggingService } from '@cainz-next-gen/logging';
-import { GlobalErrorCode } from '@cainz-next-gen/exception';
-import { CommonService } from '@cainz-next-gen/common';
+import { LoggingService } from '@fera-next-gen/logging';
+import { GlobalErrorCode } from '@fera-next-gen/exception';
+import { CommonService } from '@fera-next-gen/common';
 import { checkoutBeginResponseData, MockcheckoutId } from '../../../test/mock';
 import {
   ErrorCode,
@@ -290,7 +290,7 @@ export class CheckoutService {
         orderId,
         accessId: await this.generateRandomString(28),
         token: await this.generateRandomString(35),
-        paymentStartUrl: 'https://cainz.com/amazon/payments',
+        paymentStartUrl: 'https://fera.com/amazon/payments',
         paymentStartBy: date.toISOString(),
       };
       this.logger.info('end method checkoutComplete2');
